@@ -1,0 +1,680 @@
+/* Responsive Design - Mobile First Approach */
+
+/* Mobile Footer Fix - Force Full Width */
+@media (max-width: 767px) {
+  .footer { 
+    width: 100% !important;  /* Force full width */
+    max-width: 100% !important;  /* Override any max-width */
+    min-width: 100% !important;  /* Override any min-width */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* Tablet: 768px - 1023px */
+@media (max-width: 1023px) {
+  .sidebar {
+    width: 280px;
+  }
+  
+  .main-content {
+    margin-left: 280px;
+    max-width: calc(100% - 280px);
+  }
+  
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: var(--space-6);
+  }
+  
+  .footer-right {
+    align-items: center;
+  }
+  
+  .hero-cta {
+    gap: var(--space-3);
+  }
+  
+  .hero-stats {
+    gap: var(--space-8);
+  }
+  
+  .section {
+    padding: var(--space-16) 0;
+  }
+  
+  .container {
+    padding: 0 var(--space-5);
+  }
+}
+
+/* Mobile: < 768px */
+@media (max-width: 767px) {
+  /* Show mobile header on mobile */
+  .mobile-header {
+    display: block;
+  }
+  
+  /* Sidebar becomes drawer */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    height: 100vh;
+    z-index: 9999;
+    transition: left var(--transition-base);
+  }
+  
+  .sidebar.active {
+    left: 0;
+  }
+  
+  /* Main content full width */
+  .main-content {
+    margin-left: 0;
+    max-width: 100%;
+    padding-top: 60px; /* Account for fixed top nav */
+  }
+  
+  /* Mobile overlay */
+  .mobile-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Hero adjustments */
+  .hero {
+    min-height: 70vh;
+    padding: var(--space-6) 0; /* Reduced top padding by 50% to move text up */
+  }
+  
+  .hero-content {
+    padding: 0 var(--space-4);
+    margin-top: var(--space-2); /* Reduced top margin by 50% to move text up */
+  }
+  
+  .hero-name {
+    font-size: var(--text-3xl);
+    margin-bottom: 7rem; /* Extra large gap below Maheshwor Tiwari for puppy visibility */
+  }
+  
+  .hero-title {
+    font-size: var(--text-xl);
+  }
+  
+  .hero-tagline {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-8);
+  }
+  
+  .hero-cta {
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-12);
+  }
+  
+  .hero-cta .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .hero-stats {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .stat {
+    padding: var(--space-4);
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-base);
+    min-width: 120px;
+  }
+  
+  /* Single column layouts */
+  .two-column-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+  
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: var(--space-6);
+  }
+  
+  .footer-right {
+    align-items: center;
+  }
+  
+  /* Ensure footer container doesn't overflow */
+  .footer {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+  
+  .footer-content {
+    overflow-x: hidden;
+  }
+  
+  /* Fix excessive padding on mobile - remove footer padding and adjust container */
+  .footer {
+    padding: 0 0; /* Remove gap above divider on mobile */
+  }
+  
+  .footer .container {
+    padding-left: var(--space-3);  /* Reduce from space-4 (16px) to space-3 (12px) */
+    padding-right: var(--space-3); /* Reduce from space-4 (16px) to space-3 (12px) */
+  }
+  
+  /* Footer availability section - single column on mobile */
+  .footer-availability {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    text-align: center;
+    padding-left: var(--space-3);  /* Increase from space-2 (8px) to space-3 (12px) */
+    padding-right: var(--space-3); /* Increase from space-2 (8px) to space-3 (12px) */
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Fix availability text overflow and alignment - move content left */
+  .availability-info,
+  .preferred-roles {
+    text-align: left;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    margin-left: -0.5rem; /* Move content slightly to the left using rem */
+  }
+  
+  .availability-text {
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    margin-bottom: var(--space-2);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Fix preferred roles pills wrapping and spacing */
+  .role-tags {
+    justify-content: flex-start;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+    flex-wrap: wrap;
+  }
+  
+  .role-tag {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-2);
+    flex-shrink: 0;
+    min-width: fit-content;
+    white-space: nowrap; /* Prevent text breaking inside pills */
+  }
+  
+  /* Typography adjustments */
+  .section {
+    padding: var(--space-12) 0;
+  }
+  
+  .section-title {
+    font-size: var(--text-2xl);
+  }
+  
+  .container {
+    padding: 0 var(--space-4);
+  }
+  
+  /* Experience timeline adjustments */
+  .experience-timeline::before {
+    left: 20px;
+  }
+  
+  .experience-card::before {
+    left: -30px;
+    width: 16px;
+    height: 16px;
+  }
+  
+  .experience-card {
+    padding: var(--space-6);
+    margin-left: var(--space-8);
+  }
+  
+  /* Education timeline adjustments */
+  .education-timeline::before {
+    left: 20px;
+  }
+  
+  .education-item::before {
+    left: -30px;
+    width: 16px;
+    height: 16px;
+  }
+  
+  .education-item {
+    padding: var(--space-6);
+    margin-left: var(--space-8);
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  /* Project filters */
+  .project-filters {
+    gap: var(--space-2);
+  }
+  
+  .filter-btn {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+  }
+  
+  /* Contact form adjustments - Mobile Layout: Direct Contact first, then form */
+  .contact-form-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  
+  /* Reorder elements for mobile: Direct Contact first */
+  .contact-form-row .contact-info-container {
+    order: 1;
+  }
+  
+  .contact-form-row .contact-form-container {
+    order: 2;
+  }
+  
+  .contact-form-container,
+  .contact-info-container {
+    padding: var(--space-6);
+  }
+  
+  .contact-methods {
+    gap: var(--space-3);
+  }
+  
+  .contact-method {
+    padding: var(--space-3);
+  }
+  
+  /* Skills adjustments */
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  
+  .tools-domains {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+}
+
+/* Small mobile: < 480px */
+@media (max-width: 479px) {
+  .container {
+    padding: 0 var(--space-4);
+  }
+  
+  .hero-content {
+    padding: 0 var(--space-3);
+  }
+  
+  .hero-name {
+    font-size: var(--text-2xl);
+  }
+  
+  .hero-title {
+    font-size: var(--text-lg);
+  }
+  
+  .greeting {
+    font-size: var(--text-lg);
+  }
+  
+  .section {
+    padding: var(--space-10) 0;
+  }
+  
+  .section-title {
+    font-size: var(--text-xl);
+  }
+  
+  .experience-card {
+    padding: var(--space-4);
+    margin-left: var(--space-6);
+  }
+  
+  .education-item {
+    padding: var(--space-4);
+    margin-left: var(--space-6);
+  }
+  
+  .project-content {
+    padding: var(--space-4);
+  }
+  
+  .project-title {
+    font-size: var(--text-lg);
+  }
+  
+  .project-image {
+    height: 160px;
+  }
+  
+  .filter-btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+  }
+  
+  .contact-form-container,
+  .contact-info-container {
+    padding: var(--space-4);
+  }
+  
+  .contact-form {
+    gap: var(--space-4);
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  .contact-method {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-2);
+  }
+  
+  .method-icon {
+    margin: 0 auto;
+  }
+  
+  .social-btn {
+    justify-content: center;
+  }
+  
+  .certification-item {
+    flex-direction: column;
+    text-align: center;
+    padding: var(--space-3);
+  }
+  
+  /* Additional mobile footer fixes for very small screens */
+  .footer {
+    padding: 0 0; /* Remove gap above divider on very small screens */
+  }
+  
+  .footer .container {
+    padding-left: var(--space-2);  /* 8px for very small screens */
+    padding-right: var(--space-2); /* 8px for very small screens */
+  }
+  
+  .footer-availability {
+    padding-left: var(--space-2);  /* 8px */
+    padding-right: var(--space-2); /* 8px */
+  }
+  
+  .availability-info,
+  .preferred-roles {
+    padding: 0 var(--space-1);
+  }
+  
+  .availability-text {
+    font-size: var(--text-xs);
+    line-height: 1.4;
+  }
+  
+  /* Enhanced role tags for very small screens */
+  .role-tags {
+    gap: var(--space-1) var(--space-2); /* 4px vertical, 8px horizontal */
+  }
+  
+  .role-tag {
+    padding: var(--space-2) var(--space-3); /* 8px 12px instead of 4px 8px */
+    font-size: 11px; /* Fixed size instead of clamp for consistency */
+    margin-bottom: var(--space-1);
+    white-space: nowrap; /* Prevent text breaking inside pills */
+  }
+  
+  .cert-icon {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto var(--space-3);
+  }
+  
+  .cert-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .btn {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    min-height: 40px;
+  }
+  
+  .btn-group {
+    flex-direction: column;
+  }
+  
+  .btn-group .btn {
+    border-radius: var(--radius-base);
+    border: 2px solid var(--primary-color);
+  }
+  
+  .btn-group .btn:not(:first-child) {
+    border-top: none;
+  }
+}
+
+/* Landscape mobile adjustments */
+@media (max-width: 767px) and (orientation: landscape) {
+  .hero {
+    min-height: 60vh;
+    padding: var(--space-8) 0;
+  }
+  
+  .hero-stats {
+    flex-direction: row;
+    gap: var(--space-6);
+  }
+  
+  .section {
+    padding: var(--space-8) 0;
+  }
+}
+
+/* Large screens: > 1440px */
+@media (min-width: 1441px) {
+  .container {
+    max-width: 1400px;
+  }
+  
+  .sidebar {
+    max-width: 450px;
+  }
+  
+  .main-content {
+    margin-left: 450px;
+    max-width: calc(100% - 450px);
+  }
+  
+  .hero-content {
+    max-width: 900px;
+  }
+  
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Ultra-wide screens: > 1920px */
+@media (min-width: 1921px) {
+  .container {
+    max-width: 1600px;
+  }
+  
+  .projects-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Print styles */
+@media print {
+  .mobile-header,
+  .sidebar,
+  .mobile-overlay,
+  .hero-cta,
+  .project-filters,
+  .contact-form-container,
+  .footer {
+    display: none !important;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    max-width: 100%;
+  }
+  
+  .section {
+    padding: var(--space-8) 0;
+    break-inside: avoid;
+  }
+  
+  .experience-card,
+  .project-card,
+  .education-item {
+    break-inside: avoid;
+    margin-bottom: var(--space-6);
+  }
+  
+  .hero {
+    min-height: auto;
+    padding: var(--space-8) 0;
+  }
+  
+  .hero-name {
+    font-size: var(--text-2xl);
+  }
+  
+  .hero-title {
+    font-size: var(--text-lg);
+  }
+  
+  .hero-tagline {
+    font-size: var(--text-base);
+  }
+  
+  * {
+    color: black !important;
+    background: white !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .sidebar {
+    border-right-width: 2px;
+  }
+  
+  .experience-card,
+  .project-card,
+  .education-item,
+  .certification-item {
+    border-width: 2px;
+  }
+  
+  .btn {
+    border-width: 3px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar {
+    transition: none;
+  }
+  
+  .mobile-overlay {
+    transition: none;
+  }
+  
+  .hero-content > * {
+    -webkit-animation: none; /* Safari animation prefix */
+    animation: none;
+    opacity: 1;
+    -webkit-transform: none; /* Safari transform prefix */
+    transform: none;
+  }
+  
+  .experience-card,
+  .project-card,
+  .education-item,
+  .certification-item {
+    -webkit-animation: none; /* Safari animation prefix */
+    animation: none;
+    opacity: 1;
+    -webkit-transform: none; /* Safari transform prefix */
+    transform: none;
+  }
+  
+  .skill-fill {
+    transition: none;
+  }
+  
+  .btn::before {
+    display: none;
+  }
+  
+  .btn:hover {
+    -webkit-transform: none; /* Safari transform prefix */
+    transform: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --bg-tertiary: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-tertiary: #9ca3af;
+    --border-color: #374151;
+  }
+  
+  .hero {
+    background: var(--bg-primary);
+  }
+  
+  .mobile-header {
+    background-color: var(--bg-primary);
+    border-bottom-color: var(--border-color);
+  }
+}

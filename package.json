@@ -1,0 +1,61 @@
+{
+  "name": "maheshwor-tiwari-portfolio",
+  "version": "1.0.0",
+  "description": "Professional portfolio website for Maheshwor Tiwari - Data Analyst & AI Engineer",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "build": "echo 'No build process needed for static site'",
+    "deploy": "echo 'Deploy to your preferred hosting platform'",
+    "lint:css": "stylelint 'css/**/*.css'",
+    "lint:js": "eslint 'js/**/*.js'",
+    "lint:html": "htmlhint '*.html'",
+    "test:lighthouse": "lighthouse http://localhost:8000 --output html --output-path ./lighthouse-report.html",
+    "optimize:images": "echo 'Optimize images manually or use tools like ImageOptim'",
+    "validate": "npm run lint:css && npm run lint:js && npm run lint:html"
+  },
+  "keywords": [
+    "portfolio",
+    "data-analyst",
+    "ai-engineer",
+    "data-science",
+    "python",
+    "sql",
+    "tableau",
+    "machine-learning",
+    "responsive",
+    "accessible",
+    "vanilla-js",
+    "html5",
+    "css3"
+  ],
+  "author": {
+    "name": "Maheshwor Tiwari",
+    "email": "maheshtwari99@gmail.com",
+    "url": "https://maheshwortiwari.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mahesh989/portfolio-website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mahesh989/portfolio-website/issues"
+  },
+  "homepage": "https://maheshwortiwari.com",
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "stylelint": "^14.0.0",
+    "htmlhint": "^1.0.0",
+    "lighthouse": "^10.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

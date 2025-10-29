@@ -1,0 +1,132 @@
+/* Custom Button Styles to Match Design Images */
+
+/* First Image: Dark Card with Green Preview CV Button */
+.preview-cv-card {
+  background-color: #242424;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  margin: 16px 0;
+}
+
+.preview-cv-question {
+  color: #B0B0B0;
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.preview-cv-btn {
+  background-color: transparent;
+  border: 2px solid #388E3C;
+  color: #388E3C;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.preview-cv-btn:hover {
+  background-color: #388E3C;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Second Image: Gradient Preview CV Button */
+.gradient-preview-btn {
+  background: linear-gradient(135deg, #1E703F 0%, #202080 100%);
+  border: 1px solid #1E703F;
+  color: #66CD00;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.gradient-preview-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.gradient-preview-btn .icon {
+  color: #66CD00;
+}
+
+/* Third Image: LinkedIn Button - Consistent with other buttons */
+.linkedin-cert-btn {
+  /* background-color: var(--bg-secondary); - Removed */
+  border: 2px solid var(--primary-color); /* Forest green border */
+  color: var(--primary-color); /* Forest green text initially */
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.linkedin-cert-btn:hover {
+  background-color: var(--primary-color); /* Forest Green background on hover */
+  color: white; /* White text on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 139, 34, 0.3);
+}
+
+.linkedin-cert-btn .icon {
+  color: var(--primary-color); /* Forest green icon initially */
+}
+
+.linkedin-cert-btn:hover .icon {
+  color: white; /* White icon on hover */
+}
+
+/* Education section alignment fix */
+.education-item:last-child {
+  margin-bottom: 0;
+}
+
+.education-section .btn-block {
+  margin-top: 16px;
+}
+
+/* Ensure LinkedIn button aligns with bottom of Master of Theoretical Physics */
+.education-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.certifications-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+}
+
+.certifications-list {
+  flex: 1;
+}
+
+.linkedin-cert-btn {
+  margin-top: auto;
+  align-self: flex-end;
+}

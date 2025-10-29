@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Scroll Test</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: #f0f0f0;
+            overflow-y: auto;
+            border-right: 2px solid #ccc;
+            padding: 20px;
+        }
+        
+        .main-content {
+            flex: 1;
+            background: #fff;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .test-item {
+            padding: 20px;
+            margin: 10px 0;
+            background: #e0e0e0;
+            border-radius: 5px;
+        }
+        
+        .sidebar-scrolling {
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .sidebar-scrolling::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #007bff, #28a745);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="sidebar" id="sidebar">
+            <h3>Sidebar Content</h3>
+            <div class="test-item">Item 1</div>
+            <div class="test-item">Item 2</div>
+            <div class="test-item">Item 3</div>
+            <div class="test-item">Item 4</div>
+            <div class="test-item">Item 5</div>
+            <div class="test-item">Item 6</div>
+            <div class="test-item">Item 7</div>
+            <div class="test-item">Item 8</div>
+            <div class="test-item">Item 9</div>
+            <div class="test-item">Item 10</div>
+            <div class="test-item">Item 11</div>
+            <div class="test-item">Item 12</div>
+            <div class="test-item">Item 13</div>
+            <div class="test-item">Item 14</div>
+            <div class="test-item">Item 15</div>
+        </div>
+        
+        <div class="main-content" id="main-content">
+            <h3>Main Content</h3>
+            <div class="test-item">Main Item 1</div>
+            <div class="test-item">Main Item 2</div>
+            <div class="test-item">Main Item 3</div>
+            <div class="test-item">Main Item 4</div>
+            <div class="test-item">Main Item 5</div>
+            <div class="test-item">Main Item 6</div>
+            <div class="test-item">Main Item 7</div>
+            <div class="test-item">Main Item 8</div>
+            <div class="test-item">Main Item 9</div>
+            <div class="test-item">Main Item 10</div>
+            <div class="test-item">Main Item 11</div>
+            <div class="test-item">Main Item 12</div>
+            <div class="test-item">Main Item 13</div>
+            <div class="test-item">Main Item 14</div>
+            <div class="test-item">Main Item 15</div>
+        </div>
+    </div>
+
+    <script>
+        // Smart Scroll Test
+        function initSmartScrollTest() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            
+            let isHoveringSidebar = false;
+            let isHoveringMain = false;
+            
+            console.log('Testing smart scroll...');
+            console.log('Sidebar scrollHeight:', sidebar.scrollHeight);
+            console.log('Sidebar clientHeight:', sidebar.clientHeight);
+            console.log('Can sidebar scroll:', sidebar.scrollHeight > sidebar.clientHeight);
+            
+            // Track mouse position for sidebar
+            sidebar.addEventListener('mouseenter', () => {
+                isHoveringSidebar = true;
+                isHoveringMain = false;
+                console.log('Mouse entered sidebar');
+            });
+            
+            sidebar.addEventListener('mouseleave', () => {
+                isHoveringSidebar = false;
+                console.log('Mouse left sidebar');
+                setTimeout(() => {
+                    sidebar.classList.remove('sidebar-scrolling');
+                }, 300);
+            });
+            
+            // Track mouse position for main content
+            mainContent.addEventListener('mouseenter', () => {
+                isHoveringMain = true;
+                isHoveringSidebar = false;
+                console.log('Mouse entered main content');
+            });
+            
+            mainContent.addEventListener('mouseleave', () => {
+                isHoveringMain = false;
+                console.log('Mouse left main content');
+            });
+            
+            // Handle sidebar scroll when hovering sidebar
+            sidebar.addEventListener('wheel', (e) => {
+                if (isHoveringSidebar) {
+                    console.log('Sidebar wheel event - preventing default');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const scrollAmount = e.deltaY;
+                    const currentScroll = sidebar.scrollTop;
+                    const maxScroll = sidebar.scrollHeight - sidebar.clientHeight;
+                    
+                    console.log('Sidebar scroll:', { currentScroll, maxScroll, scrollAmount });
+                    
+                    // Smooth scroll within sidebar bounds
+                    const newScroll = Math.max(0, Math.min(maxScroll, currentScroll + scrollAmount));
+                    sidebar.scrollTop = newScroll;
+                    
+                    // Add visual feedback
+                    sidebar.classList.add('sidebar-scrolling');
+                }
+            }, { passive: false });
+            
+            // Prevent main content scroll when hovering sidebar
+            document.addEventListener('wheel', (e) => {
+                if (isHoveringSidebar) {
+                    console.log('Preventing main scroll while hovering sidebar');
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+            }, { passive: false });
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initSmartScrollTest);
+    </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+{
+  "personal": {
+    "name": "Maheshwor Tiwari",
+    "title": "Data Analyst | AI Engineer",
+    "tagline": "From Quantum Physics to Data Science: Turning Complex Data into Actionable Business Insights",
+    "location": "Hurstville, Sydney, NSW, Australia",
+    "email": "maheshtwari99@gmail.com",
+    "phone": "0414 032 507",
+    "visaStatus": "Applying for Subclass 485 Graduate Visa",
+    "availability": "Immediately Available | Open to Relocation",
+    "photo": "assets/images/profile/headshot.png",
+    "resumeLink": "assets/resume/maheshwor_tiwari.pdf"
+  },
+  
+  "social": {
+    "linkedin": "https://www.linkedin.com/in/maheshwortiwari",
+    "github": "https://github.com/mahesh989",
+    "medium": "https://medium.com/@maheshtwari99",
+    "tableau": "https://public.tableau.com/app/profile/maheshwor.tiwari4503"
+  },
+  
+  "about": {
+    "short": "PhD-trained Data Analyst with 2+ years transforming complex data into strategic business insights. Specializing in Python automation, SQL optimization, and interactive dashboards across property, healthcare, and construction sectors.",
+    "valueProps": [
+      "2+ years building data pipelines, dashboards, and ML models that reduce costs 30% and improve accuracy to 99%",
+      "PhD-level analytical rigor applied to practical business challenges: From quantum mechanics to business intelligence",
+      "Full-stack data professional: Python/SQL → ETL pipelines → Tableau/Power BI → Stakeholder presentations"
+    ]
+  },
+  
+  "skills": {
+    "core": [
+      {
+        "name": "Python",
+        "level": 95,
+        "icon": "assets/images/icons/python.svg",
+        "subskills": ["Pandas", "NumPy", "scikit-learn", "Matplotlib", "Seaborn"]
+      },
+      {
+        "name": "SQL",
+        "level": 95,
+        "icon": "assets/images/icons/sql.svg",
+        "subskills": ["PostgreSQL", "MySQL", "Query Optimization", "ETL"]
+      },
+      {
+        "name": "Tableau",
+        "level": 90,
+        "icon": "assets/images/icons/tableau.svg",
+        "subskills": ["Dashboard Design", "Data Visualization", "Storytelling"]
+      },
+      {
+        "name": "Power BI",
+        "level": 85,
+        "icon": "assets/images/icons/powerbi.svg",
+        "subskills": ["DAX", "Power Query", "Report Design"]
+      }
+    ],
+    "tools": [
+      "Docker", "Snowflake", "GitHub", "VS Code", "Google Analytics", "Excel"
+    ],
+    "domains": [
+      "Machine Learning", "Data Engineering", "Business Intelligence", "Statistical Analysis"
+    ]
+  },
+  
+  "experience": [
+    {
+      "id": "exp1",
+      "company": "The Bitrates",
+      "location": "Sydney, NSW, Australia",
+      "role": "Data Analyst",
+      "period": "Jul 2024 - Present",
+      "current": true,
+      "achievements": [
+        "Designed Python ML models for predictive analytics, enabling data-driven decisions that improved forecasting accuracy by 25%",
+        "Built automated data pipelines that improved efficiency by 30%, reducing manual processing time from 8 hours to 5.6 hours weekly",
+        "Developed interactive dashboards using Matplotlib and Seaborn, improving stakeholder engagement and decision-making speed"
+      ],
+      "tags": ["Python", "Machine Learning", "Automation", "Dashboards"]
+    },
+    {
+      "id": "exp2",
+      "company": "iBuild Building Solutions",
+      "location": "Victoria, Australia",
+      "role": "Data Analyst",
+      "period": "Mar 2024 - Jun 2024",
+      "achievements": [
+        "Automated data extraction for population datasets using Python, improving accuracy by 20% and team collaboration",
+        "Built Power BI dashboards that reduced client reporting time by 30%, from 10 hours to 7 hours per week",
+        "Optimized customer support response times through data analysis, improving operational efficiency by 15%"
+      ],
+      "tags": ["Python", "Power BI", "Automation", "Analytics"]
+    },
+    {
+      "id": "exp3",
+      "company": "Property Console",
+      "location": "Sydney, Australia",
+      "role": "Software Engineer & Analyst",
+      "period": "Jun 2023 - Nov 2023",
+      "achievements": [
+        "Built Python scripts tracking KPIs with 99% accuracy, ensuring data integrity across 50,000+ records",
+        "Enhanced analytics capabilities by 25% through Python optimization, reducing query execution time",
+        "Created Tableau dashboards that improved decision-making processes, leading to 10% cost reduction"
+      ],
+      "tags": ["Python", "SQL", "Tableau", "Analytics"]
+    },
+    {
+      "id": "exp4",
+      "company": "CY Cergy Paris University",
+      "location": "Cergy-Pontoise, France",
+      "role": "Research Assistant (PhD)",
+      "period": "Oct 2018 - Sep 2022",
+      "achievements": [
+        "4 years of advanced Python programming for computational modeling and complex data analysis",
+        "Published peer-reviewed research on quantum spin systems, demonstrating deep analytical capabilities",
+        "Managed large datasets and presented findings at international conferences, honing communication skills"
+      ],
+      "tags": ["Python", "Research", "Data Analysis", "Problem Solving"]
+    }
+  ],
+  
+  "projects": [
+    {
+      "id": "proj1",
+      "title": "Real-Time Corrosion Detection using YOLOv8n",
+      "description": "Optimized AI model for industrial infrastructure inspection using deep learning and computer vision techniques",
+      "impact": [
+        "Reduced model size by 11.39% while maintaining detection accuracy",
+        "Improved inference time by 39.34% for real-time edge device deployment",
+        "Achieved 89/100 grade with only 7.43% precision trade-off"
+      ],
+      "tech": ["Python", "Deep Learning", "YOLOv8", "Computer Vision", "Model Optimization"],
+      "image": "assets/images/projects/project1-thumbnail.jpg",
+      "links": {
+        "github": "https://github.com/mahesh989/corrosion-detection",
+        "demo": "#",
+        "report": "#"
+      },
+      "featured": true
+    },
+    {
+      "id": "proj2",
+      "title": "Heart Attack Risk Prediction System",
+      "description": "Machine learning system predicting cardiovascular risk using logistic regression, random forests, and deep learning",
+      "impact": [
+        "Achieved 92% accuracy with imbalanced dataset handling",
+        "Implemented undersampling techniques to improve model reliability",
+        "Created clear visualizations for medical decision support"
+      ],
+      "tech": ["Python", "Scikit-learn", "TensorFlow", "Pandas", "Data Visualization"],
+      "image": "assets/images/projects/project2-thumbnail.jpg",
+      "links": {
+        "github": "https://github.com/mahesh989/heart-attack-prediction",
+        "demo": "#"
+      },
+      "featured": true
+    },
+    {
+      "id": "proj3",
+      "title": "CV Agent - AI-Powered Resume Builder",
+      "description": "Intelligent CV creation tool using AI to optimize resumes for ATS systems and specific job requirements",
+      "impact": [
+        "Deployed live application serving 500+ users",
+        "AI-driven content suggestions improving resume quality",
+        "Real-time ATS compatibility scoring"
+      ],
+      "tech": ["Python", "AI/ML", "Web Development", "NLP"],
+      "image": "assets/images/projects/project3-thumbnail.jpg",
+      "links": {
+        "live": "https://cv-agent-demo.netlify.app",
+        "github": "https://github.com/mahesh989/cv-agent"
+      },
+      "featured": true
+    },
+    {
+      "id": "proj4",
+      "title": "SQL Data Pipeline Automation",
+      "description": "Automated ETL pipeline for property listing analysis with real-time data processing",
+      "impact": [
+        "Reduced data processing time by 30% (from 4 hours to 2.8 hours daily)",
+        "Improved data accuracy through automated validation",
+        "Enabled real-time business intelligence reporting"
+      ],
+      "tech": ["SQL", "Python", "Power BI", "ETL", "Data Engineering"],
+      "image": "assets/images/projects/project4-thumbnail.jpg",
+      "links": {
+        "github": "https://github.com/mahesh989/sql-pipeline"
+      },
+      "featured": false
+    }
+  ],
+  
+  "education": [
+    {
+      "degree": "Master of Data Science",
+      "institution": "Charles Darwin University",
+      "location": "Sydney, Australia",
+      "period": "Mar 2023 - Nov 2024",
+      "gpa": "6.35/7",
+      "highlights": [
+        "Business Intelligence",
+        "Database Concepts",
+        "Project Management",
+        "Machine Learning"
+      ]
+    },
+    {
+      "degree": "PhD in Physics (Condensed Matter)",
+      "institution": "CY Cergy Paris University",
+      "location": "Cergy-Pontoise, France",
+      "period": "Oct 2018 - Sep 2022",
+      "thesis": "Mean-field theory for quantum spin systems and the magnetocaloric effect",
+      "highlights": [
+        "Computational Modeling",
+        "Data Analysis",
+        "Python Programming",
+        "Research Methodology"
+      ]
+    },
+    {
+      "degree": "Master in Theoretical Physics",
+      "institution": "CY Cergy Paris University",
+      "location": "Cergy-Pontoise, France",
+      "period": "Sep 2016 - Jun 2018",
+      "highlights": [
+        "Quantum Mechanics",
+        "Computational Physics",
+        "Applied Mathematics"
+      ]
+    }
+  ],
+  
+  "certifications": [
+    {
+      "name": "Google Analytics",
+      "issuer": "Google Skillshop",
+      "date": "2024",
+      "credentialUrl": "https://skillshop.credential.net/18fda0a1-3556-44f8-bacb-53d1db6decd3",
+      "featured": true
+    },
+    {
+      "name": "SQL Essential Training",
+      "issuer": "LinkedIn Learning",
+      "date": "2024",
+      "credentialUrl": "https://www.linkedin.com/learning/certificates/5cf2c9981f72f7d428662d7a864fbec1e2199a298b2670b28b9dbbafd7ef20f4",
+      "featured": true
+    },
+    {
+      "name": "Snowflake Data Warehousing",
+      "issuer": "Snowflake",
+      "date": "2024",
+      "credentialUrl": "https://achieve.snowflake.com/673a1002-798d-4670-bf0c-7cacbf58d533",
+      "featured": true
+    },
+    {
+      "name": "Snowflake Data Engineering",
+      "issuer": "Snowflake",
+      "date": "2024",
+      "credentialUrl": "https://achieve.snowflake.com/d850d80f-b30f-427b-96e8-1047613fbdfb",
+      "featured": false
+    }
+  ]
+}

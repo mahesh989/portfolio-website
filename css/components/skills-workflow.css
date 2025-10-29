@@ -1,0 +1,384 @@
+/* ================================
+   COMPACT SKILLS SECTION
+   ================================ */
+
+.skills-section-compact {
+  padding: var(--space-16) 0;
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+}
+
+/* Workflow Tabs */
+.workflow-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: var(--space-12) 0 var(--space-8);
+  flex-wrap: wrap;
+}
+
+.workflow-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: var(--font-semibold);
+  color: var(--text-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+.workflow-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.workflow-tab:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.workflow-tab.active {
+  border-color: var(--primary-color);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: var(--shadow-lg);
+}
+
+.workflow-tab.active::before {
+  opacity: 0;
+}
+
+.tab-number {
+  width: 24px;
+  height: 24px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  flex-shrink: 0;
+}
+
+.workflow-tab.active .tab-number {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.tab-name {
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.tab-arrow {
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  margin: 0 var(--space-1);
+}
+
+/* Workflow Content */
+.workflow-content {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid #e5e7eb;
+  min-height: 200px;
+}
+
+.workflow-panel {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.workflow-panel.active {
+  display: block;
+}
+
+.panel-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-6);
+  text-align: center;
+}
+
+/* Skills Row */
+.skills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Skill Chips */
+.skill-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: #f9fafb;
+  border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-chip::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.skill-chip:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background: white;
+}
+
+.skill-chip:hover::before {
+  transform: scaleX(1);
+}
+
+/* Proficiency-based styling */
+.skill-chip.expert {
+  border-left: 4px solid #10b981;
+}
+
+.skill-chip.advanced {
+  border-left: 4px solid #3b82f6;
+}
+
+.skill-chip.intermediate {
+  border-left: 4px solid #8b5cf6;
+}
+
+.skill-chip img {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.skill-chip span {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.skill-chip .sub {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  font-weight: var(--font-normal);
+  margin-left: var(--space-1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================================
+   RESPONSIVE DESIGN
+   ================================ */
+
+/* Tablet: 768px - 1023px */
+@media (max-width: 1023px) {
+  .workflow-tabs {
+    gap: var(--space-1);
+    margin: var(--space-8) 0 var(--space-6);
+  }
+  
+  .workflow-tab {
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  .tab-number {
+    width: 20px;
+    height: 20px;
+    font-size: var(--text-xs);
+  }
+  
+  .tab-name {
+    font-size: var(--text-xs);
+  }
+  
+  .tab-arrow {
+    font-size: var(--text-base);
+    margin: 0 var(--space-1);
+  }
+  
+  .workflow-content {
+    padding: var(--space-6);
+  }
+  
+  .panel-title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-4);
+  }
+  
+  .skills-row {
+    gap: var(--space-3);
+  }
+  
+  .skill-chip {
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  .skill-chip img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .skill-chip span {
+    font-size: var(--text-xs);
+  }
+}
+
+/* Mobile: < 768px */
+@media (max-width: 767px) {
+  .skills-section-compact {
+    padding: var(--space-12) 0;
+  }
+  
+  .workflow-tabs {
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: var(--space-6) 0 var(--space-4);
+  }
+  
+  .tab-arrow {
+    transform: rotate(90deg);
+    margin: var(--space-1) 0;
+  }
+  
+  .workflow-tab {
+    width: 100%;
+    max-width: 200px;
+    justify-content: center;
+  }
+  
+  .workflow-content {
+    padding: var(--space-4);
+    margin: 0 var(--space-2);
+  }
+  
+  .panel-title {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-3);
+  }
+  
+  .skills-row {
+    gap: var(--space-2);
+    justify-content: flex-start;
+  }
+  
+  .skill-chip {
+    padding: var(--space-2);
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+  }
+  
+  .skill-chip img {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .skill-chip span {
+    font-size: var(--text-xs);
+  }
+  
+  .skill-chip .sub {
+    display: none; /* Hide sub-skills on mobile for space */
+  }
+}
+
+/* Small mobile: < 480px */
+@media (max-width: 479px) {
+  .workflow-content {
+    padding: var(--space-3);
+    margin: 0 var(--space-1);
+  }
+  
+  .skills-row {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .skill-chip {
+    width: 100%;
+    min-width: auto;
+    justify-content: flex-start;
+  }
+}
+
+/* ================================
+   ACCESSIBILITY & FOCUS STATES
+   ================================ */
+
+.workflow-tab:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.skill-chip:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .workflow-tab,
+  .skill-chip,
+  .workflow-panel {
+    transition: none;
+  }
+  
+  .workflow-panel {
+    animation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .workflow-tab {
+    border-width: 3px;
+  }
+  
+  .skill-chip {
+    border-width: 3px;
+  }
+}

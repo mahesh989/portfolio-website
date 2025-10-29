@@ -1,0 +1,324 @@
+/* Experience Section Styles */
+.experience-section {
+  background-color: var(--bg-primary);
+}
+
+.experience-timeline {
+  position: relative;
+}
+
+/* Removed vertical timeline line */
+/* .experience-timeline::before {
+  content: '';
+  position: absolute;
+  left: 30px;
+  top: 0;
+  bottom: var(--space-8);
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+  z-index: 1;
+} */
+
+.experience-card {
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-8);
+  padding: var(--space-8);
+  position: relative;
+  transition: all var(--transition-base);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-color);
+}
+
+.experience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.experience-card::before {
+  content: '';
+  position: absolute;
+  left: -45px;
+  top: 40px;
+  width: 20px;
+  height: 20px;
+  background: var(--accent-color);
+  border-radius: 50%;
+  border: 4px solid var(--bg-primary);
+  z-index: 2;
+  box-shadow: var(--shadow-md);
+}
+
+/* Removed special research card styling to maintain consistency */
+/* .experience-card-research {
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  border-left: 4px solid var(--accent-color);
+} */
+
+.card-header {
+  margin-bottom: var(--space-6);
+}
+
+.company-info {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.company-logo {
+  width: 60px;
+  height: 60px;
+  background: var(--primary-color);
+  border-radius: var(--radius-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.company-logo svg {
+  width: 32px;
+  height: 32px;
+  color: white;
+}
+
+.company-details {
+  flex: 1;
+}
+
+.role-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.company-name {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--primary-color);
+  margin-bottom: var(--space-3);
+}
+
+.location-period {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+
+.location,
+.period {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.location svg,
+.period svg {
+  color: var(--primary-color);
+}
+
+.badge {
+  margin-left: auto;
+}
+
+.card-body {
+  margin-top: var(--space-6);
+}
+
+.achievements-list {
+  list-style: none;
+  margin-bottom: var(--space-6);
+}
+
+.achievements-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding: var(--space-3);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-base);
+  transition: all var(--transition-fast);
+}
+
+.achievements-list li:hover {
+  background-color: var(--primary-color);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(34, 139, 34, 0.2);
+}
+
+.achievement-icon {
+  color: var(--accent-color);
+  font-weight: var(--font-bold);
+  font-size: var(--text-lg);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.achievements-list li p {
+  margin: 0;
+  line-height: var(--leading-relaxed);
+  transition: color 0.2s ease;
+}
+
+.achievements-list li:hover p {
+  color: white;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tech-tags .tag {
+  background: linear-gradient(135deg, var(--primary-light), var(--accent-color));
+  color: var(--primary-color);
+  font-weight: var(--font-medium);
+  transition: all var(--transition-fast);
+}
+
+.tech-tags .tag:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.research-summary {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-secondary);
+  background-color: var(--bg-secondary);
+  padding: var(--space-4);
+  border-radius: var(--radius-base);
+  border-left: 4px solid var(--accent-color);
+  margin-bottom: var(--space-4);
+}
+
+/* Metric Highlighting (match About section) */
+/* No specific class-based styling for experience percentages; inline styles are used. */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  /* Removed timeline line positioning */
+  /* .experience-timeline::before {
+    left: 20px;
+  } */
+  
+  .experience-card::before {
+    left: -30px;
+    width: 16px;
+    height: 16px;
+  }
+  
+  .experience-card {
+    padding: var(--space-6);
+    margin-left: var(--space-8);
+  }
+  
+  .company-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .company-logo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .company-logo svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .location-period {
+    justify-content: center;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  .badge {
+    margin-left: 0;
+    margin-top: var(--space-2);
+  }
+}
+
+@media (max-width: 480px) {
+  .experience-card {
+    padding: var(--space-4);
+    margin-left: var(--space-6);
+  }
+  
+  .role-title {
+    font-size: var(--text-lg);
+  }
+  
+  .company-name {
+    font-size: var(--text-base);
+  }
+  
+  .achievements-list li {
+    padding: var(--space-2);
+  }
+  
+  .achievement-icon {
+    font-size: var(--text-base);
+  }
+}
+
+/* Animation for cards appearing */
+.experience-card {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.experience-card:nth-child(1) { animation-delay: 0.1s; }
+.experience-card:nth-child(2) { animation-delay: 0.2s; }
+.experience-card:nth-child(3) { animation-delay: 0.3s; }
+.experience-card:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Hover effects for interactive elements */
+.achievements-list li:hover .achievement-icon {
+  transform: scale(1.2);
+  color: white;
+}
+
+.company-logo:hover {
+  transform: scale(1.1);
+}
+
+.tech-tags .tag:hover {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+}
+
+/* Focus states for accessibility */
+.experience-card:focus-within {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.achievements-list li:focus-within {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}

@@ -1,0 +1,152 @@
+/* Top Navigation Bar Styles */
+.top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+  padding: var(--space-3) 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.top-nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  display: -webkit-flex; /* Safari flexbox prefix */
+  display: flex;
+  -webkit-align-items: center; /* Safari align-items prefix */
+  align-items: center;
+  -webkit-justify-content: space-between; /* Safari justify-content prefix */
+  justify-content: space-between;
+}
+
+.top-nav-logo {
+  display: -webkit-flex; /* Safari flexbox prefix */
+  display: flex;
+  -webkit-align-items: center; /* Safari align-items prefix */
+  align-items: center;
+}
+
+.top-nav-logo .logo-text {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: var(--radius-base);
+  display: -webkit-flex; /* Safari flexbox prefix */
+  display: flex;
+  -webkit-align-items: center; /* Safari align-items prefix */
+  align-items: center;
+  -webkit-justify-content: center; /* Safari justify-content prefix */
+  justify-content: center;
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+}
+
+.top-nav-menu {
+  display: -webkit-flex; /* Safari flexbox prefix */
+  display: flex;
+  -webkit-align-items: center; /* Safari align-items prefix */
+  align-items: center;
+  gap: var(--space-16);
+}
+
+.top-nav-item {
+  padding: var(--space-2) var(--space-4);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-base);
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.top-nav-item:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
+
+.top-nav-item.active {
+  color: white;
+  background-color: transparent;
+  font-weight: var(--font-semibold);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .top-nav {
+    display: flex; /* Show on mobile like desktop */
+    padding: var(--space-2) 0; /* Reduce top nav padding for mobile */
+  }
+  
+  /* Adjust top nav for mobile */
+  .top-nav-container {
+    padding: 0 var(--space-2); /* Minimal padding for mobile */
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    gap: var(--space-2); /* Gap between logo and menu */
+  }
+  
+  .top-nav-menu {
+    gap: var(--space-1); /* Minimal gap between nav items for mobile */
+    flex-wrap: wrap; /* Allow nav items to wrap if needed */
+    justify-content: center; /* Center the nav items */
+  }
+  
+  .top-nav-item {
+    font-size: var(--text-xs); /* Very small font for mobile */
+    padding: var(--space-1) var(--space-2); /* Minimal padding for mobile */
+    white-space: nowrap; /* Prevent text wrapping */
+    flex-shrink: 0; /* Prevent items from shrinking */
+  }
+  
+  /* Make logo smaller on mobile */
+  .top-nav-logo .logo-text {
+    width: 32px;
+    height: 32px;
+    font-size: var(--text-sm);
+  }
+}
+
+/* Very small screens - ensure all nav items fit */
+@media (max-width: 480px) {
+  .top-nav-container {
+    padding: 0 var(--space-1); /* Even less padding for very small screens */
+  }
+  
+  .top-nav-menu {
+    gap: 0.25rem; /* Minimal gap for very small screens */
+  }
+  
+  .top-nav-item {
+    font-size: 0.7rem; /* Extra small font for very small screens */
+    padding: var(--space-1); /* Minimal padding */
+  }
+  
+  .top-nav-logo .logo-text {
+    width: 28px;
+    height: 28px;
+    font-size: var(--text-xs);
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-header {
+    display: none; /* Hide mobile header on desktop */
+  }
+  
+  /* Adjust main content to account for top nav */
+  .main-content {
+    margin-top: 60px; /* Add top margin to account for fixed nav */
+  }
+  
+  /* Adjust sidebar to account for top nav */
+  .sidebar {
+    top: 60px; /* Position sidebar below top nav */
+    height: calc(100vh - 60px);
+  }
+}
