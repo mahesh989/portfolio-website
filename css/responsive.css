@@ -114,7 +114,9 @@
   }
   
   .hero-cta {
+    display: -webkit-flex;
     flex-direction: column;
+    -webkit-flex-direction: column;
     gap: var(--space-3);
     margin-bottom: var(--space-12);
   }
@@ -125,7 +127,9 @@
   }
   
   .hero-stats {
+    display: -webkit-flex;
     flex-direction: column;
+    -webkit-flex-direction: column;
     gap: var(--space-4);
   }
   
@@ -138,26 +142,31 @@
   
   /* Single column layouts */
   .two-column-layout {
+    -webkit-grid-template-columns: 1fr;
     grid-template-columns: 1fr;
     gap: var(--space-12);
   }
   
   .contact-grid {
+    -webkit-grid-template-columns: 1fr;
     grid-template-columns: 1fr;
     gap: var(--space-12);
   }
   
   .projects-grid {
+    -webkit-grid-template-columns: 1fr;
     grid-template-columns: 1fr;
   }
   
   .footer-content {
+    -webkit-grid-template-columns: 1fr;
     grid-template-columns: 1fr;
     text-align: center;
     gap: var(--space-6);
   }
   
   .footer-right {
+    -webkit-align-items: center;
     align-items: center;
   }
   
@@ -183,6 +192,7 @@
   
   /* Footer availability section - single column on mobile */
   .footer-availability {
+    -webkit-grid-template-columns: 1fr;
     grid-template-columns: 1fr;
     gap: var(--space-6);
     text-align: center;
@@ -259,9 +269,11 @@
     margin-left: var(--space-8);
   }
   
-  /* Education timeline adjustments */
+  /* Education timeline adjustments - ensure vertical line hidden on mobile */
   .education-timeline::before {
-    left: 20px;
+    content: none !important;
+    display: none !important;
+    left: 20px; /* kept for safety, but element is hidden */
   }
   
   .education-item::before {
@@ -289,7 +301,9 @@
   
   /* Contact form adjustments - Mobile Layout: Direct Contact first, then form */
   .contact-form-row {
+    display: -webkit-flex;
     display: flex;
+    -webkit-flex-direction: column;
     flex-direction: column;
     gap: var(--space-8);
   }
@@ -309,6 +323,7 @@
   }
   
   .contact-methods {
+    display: -webkit-flex;
     gap: var(--space-3);
   }
   
@@ -400,6 +415,8 @@
   }
   
   .contact-method {
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
     flex-direction: column;
     text-align: center;
     gap: var(--space-2);
@@ -474,6 +491,8 @@
   }
   
   .btn-group {
+    display: -webkit-flex;
+    -webkit-flex-direction: column;
     flex-direction: column;
   }
   

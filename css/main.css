@@ -629,3 +629,13 @@ input, textarea, select {
     scroll-behavior: auto;
   }
 }
+
+/* Safari/mobile overrides to ensure consistent backgrounds and SVG colors */
+@supports (-webkit-appearance: none) or (-webkit-touch-callout: none) {
+  :root {
+    /* Align secondary backgrounds with primary to avoid mixed backgrounds */
+    --bg-secondary: var(--bg-primary);
+  }
+  /* Ensure inline SVGs using currentColor render correctly */
+  svg { color: inherit; fill: none; stroke: currentColor; }
+}

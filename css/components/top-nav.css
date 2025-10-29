@@ -82,6 +82,9 @@
   .top-nav {
     display: flex; /* Show on mobile like desktop */
     padding: var(--space-2) 0; /* Reduce top nav padding for mobile */
+    border-bottom: 0; /* Avoid 1px line artifacts on iOS Safari */
+    box-shadow: 0 1px 0 var(--border-color); /* Keep a subtle divider */
+    overflow: hidden; /* Prevent logo or content from peeking below */
   }
   
   /* Adjust top nav for mobile */

@@ -125,6 +125,15 @@
   color: var(--text-secondary);
 }
 
+/* Force forest green icon color across browsers */
+.location svg,
+.period svg,
+.education-icon svg,
+.cert-icon svg {
+  color: white;
+  stroke: currentColor;
+}
+
 .gpa {
   font-size: var(--text-sm);
   color: var(--accent-color);

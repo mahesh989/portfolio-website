@@ -382,12 +382,12 @@
 @media (max-width: 768px) {
   .hero {
     min-height: 90vh; /* Reduced height to prevent congestion */
-    padding: var(--space-4) 0 var(--space-6) 0; /* Reduced top padding by 50% to move text up */
+    padding: var(--space-2) 0 var(--space-6) 0; /* Further reduce top padding to pull greeting up */
     margin-top: 0; /* Remove any top margin */
   }
   
   .hero-content {
-    margin-top: var(--space-2); /* Reduced top margin by 50% to move text up */
+    margin-top: 0; /* Remove extra top margin for tighter spacing above greeting */
   }
   
   /* Keep puppy visible on smaller screens */
@@ -443,12 +443,12 @@
 @media (max-width: 480px) {
   .hero {
     min-height: 85vh; /* Further reduced height for very small screens */
-    padding: var(--space-3) 0 var(--space-4) 0; /* Reduced top padding by 50% to move text up */
+    padding: var(--space-2) 0 var(--space-3) 0; /* Tighten top spacing even more on very small screens */
   }
   
   .hero-content {
     padding: 0 var(--space-4);
-    margin-top: var(--space-1); /* Reduced top margin by 50% to move text up */
+    margin-top: 0; /* No extra gap above greeting on very small screens */
   }
   
   .hero-name {

@@ -191,6 +191,7 @@
   width: 20px;
   height: 20px;
   color: white;
+  stroke: currentColor;
 }
 
 .method-details {
