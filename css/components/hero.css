@@ -220,6 +220,10 @@
   line-height: 1.2;
 }
 
+/* First/last name colors */
+.name-first { color: var(--primary-color) !important; }
+.name-last { color: var(--primary-color) !important; }
+
 .greeting {
   display: block;
   font-size: var(--text-xl);

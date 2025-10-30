@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize additional functionality
   initMobileMenu();
   initScrollToTop();
+  initScrollToNext();
   initSkillBars();
   initStatsCounter();
   initTypingEffect();
@@ -53,21 +54,39 @@ function hideLoadingScreen() {
 // Mobile Menu
 function initMobileMenu() {
   const hamburger = document.querySelector('.hamburger');
+  const navMenuButton = document.querySelector('.nav-menu-button');
   const sidebar = document.querySelector('.sidebar');
   const overlay = document.querySelector('.mobile-overlay');
+  const sidebarClose = document.querySelector('.sidebar-close');
   
-  if (!hamburger || !sidebar) {
+  if ((!hamburger && !navMenuButton) || !sidebar) {
     console.warn('Mobile menu elements not found');
     return;
   }
   
   try {
-    hamburger.addEventListener('click', () => {
+    const toggleMenu = () => {
       sidebar.classList.toggle('active');
       if (overlay) overlay.classList.toggle('active');
-      hamburger.classList.toggle('active');
+      if (hamburger) hamburger.classList.toggle('active');
       document.body.classList.toggle('no-scroll');
-    });
+    };
+
+    if (hamburger) hamburger.addEventListener('click', toggleMenu);
+    if (navMenuButton) navMenuButton.addEventListener('click', toggleMenu);
+    if (sidebarClose) sidebarClose.addEventListener('click', toggleMenu);
+
+    // Auto-open sidebar on every first page load (mobile only)
+    const isMobile = window.innerWidth <= 767;
+    if (isMobile && sidebar) {
+      // Delay to ensure styles are applied on slow networks
+      setTimeout(() => {
+        sidebar.classList.add('active');
+        if (overlay) overlay.classList.add('active');
+        if (hamburger) hamburger.classList.add('active');
+        document.body.classList.add('no-scroll');
+      }, 250);
+    }
     
     // Close on overlay click
     if (overlay) {
@@ -130,6 +149,72 @@ function initScrollToTop() {
     });
   } catch (error) {
     console.error('Error initializing scroll to top:', error);
+  }
+}
+
+// Scroll to Next (one viewport height)
+function initScrollToNext() {
+  const nextBtn = document.getElementById('scrollToNextBtn');
+
+  if (!nextBtn) {
+    console.warn('Scroll to next button not found');
+    return;
+  }
+
+  try {
+    const updateVisibility = () => {
+      const atBottom = window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 10;
+      if (!atBottom) {
+        nextBtn.classList.add('visible');
+      } else {
+        nextBtn.classList.remove('visible');
+      }
+    };
+
+    window.addEventListener('scroll', throttle(updateVisibility, 200));
+    window.addEventListener('resize', throttle(updateVisibility, 200));
+    updateVisibility();
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Smooth scroll fallback for browsers without native smooth support
+    const supportsSmooth = 'scrollBehavior' in document.documentElement.style;
+    const easeInOut = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
+    const smoothScrollBy = (distance, duration = 400) => {
+      const startY = window.pageYOffset;
+      const targetY = Math.min(
+        document.body.scrollHeight - window.innerHeight,
+        startY + distance
+      );
+      if (prefersReducedMotion) {
+        window.scrollTo(0, targetY);
+        return;
+      }
+      if (supportsSmooth) {
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        return;
+      }
+      const start = performance.now();
+      const animate = (now) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const y = startY + (targetY - startY) * easeInOut(progress);
+        window.scrollTo(0, y);
+        if (progress < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    };
+
+    nextBtn.addEventListener('click', () => {
+      // Scroll by one viewport height without overshooting the bottom
+      const maxTarget = document.body.scrollHeight - window.innerHeight;
+      const desired = window.pageYOffset + window.innerHeight;
+      const distance = Math.max(0, Math.min(window.innerHeight, maxTarget - window.pageYOffset));
+      if (distance > 0) smoothScrollBy(distance);
+      setTimeout(updateVisibility, 350);
+    }, { passive: true });
+  } catch (error) {
+    console.error('Error initializing scroll to next:', error);
   }
 }
 

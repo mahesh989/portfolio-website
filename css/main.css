@@ -501,7 +501,7 @@ img {
 /* Scroll to Top Button */
 .scroll-to-top {
   position: fixed;
-  bottom: var(--space-8); /* Increased from var(--space-6) */
+  bottom: calc(1.5 * var(--space-12) + env(safe-area-inset-bottom)); /* 50% gap + safe area */
   right: var(--space-8); /* Increased from var(--space-6) */
   width: 50px;
   height: 50px;
@@ -525,6 +525,38 @@ img {
 }
 
 .scroll-to-top:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Scroll down (next page) button */
+.scroll-to-next {
+  position: fixed;
+  bottom: calc(var(--space-2) + env(safe-area-inset-bottom));
+  right: var(--space-8);
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-lg);
+  z-index: 1001;
+}
+
+.scroll-to-next.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-next:hover {
   background-color: var(--primary-hover);
   transform: translateY(-3px);
   box-shadow: var(--shadow-xl);
@@ -576,11 +608,19 @@ img {
 .social-icon {
   width: 24px;
   height: 24px;
-  transition: transform var(--transition-base);
+  transition: transform var(--transition-base), color 150ms ease, filter 150ms ease;
+  -webkit-transform: translateZ(0); /* avoid blurring during scale on Safari */
+  transform: translateZ(0);
+  will-change: transform;
+  shape-rendering: geometricPrecision;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .social-icon:hover {
-  transform: scale(1.1);
+  -webkit-transform: translateZ(0) scale(1.08);
+  transform: translateZ(0) scale(1.08);
 }
 
 /* Text Utilities */
@@ -636,6 +676,8 @@ input, textarea, select {
     /* Align secondary backgrounds with primary to avoid mixed backgrounds */
     --bg-secondary: var(--bg-primary);
   }
-  /* Ensure inline SVGs using currentColor render correctly */
-  svg { color: inherit; fill: none; stroke: currentColor; }
+  /* Keep Safari coloring behavior predictable without forcing global fills/strokes */
+  svg { color: inherit !important; }
+  /* Contact method icons must stay white on iOS */
+  .contact-section .method-icon svg { color: #ffffff !important; stroke: #ffffff !important; fill: none !important; }
 }

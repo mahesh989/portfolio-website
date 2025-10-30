@@ -57,7 +57,7 @@
 @media (max-width: 767px) {
   /* Show mobile header on mobile */
   .mobile-header {
-    display: block;
+    display: none !important; /* Hide header; use top nav only */
   }
   
   /* Sidebar becomes drawer */
@@ -79,7 +79,7 @@
   .main-content {
     margin-left: 0;
     max-width: 100%;
-    padding-top: 60px; /* Account for fixed top nav */
+    padding-top: 60px; /* Only top nav is fixed */
   }
   
   /* Mobile overlay */

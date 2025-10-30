@@ -190,8 +190,9 @@
 .method-icon svg {
   width: 20px;
   height: 20px;
-  color: white;
-  stroke: currentColor;
+  color: #ffffff; /* Explicit for Safari */
+  stroke: #ffffff; /* Ensure white stroke on iOS */
+  fill: none; /* Avoid default black fills */
 }
 
 .method-details {
@@ -309,6 +310,9 @@
   .method-icon svg {
     width: 18px;
     height: 18px;
+    color: #ffffff;
+    stroke: #ffffff;
+    fill: none;
   }
   
   .social-buttons {

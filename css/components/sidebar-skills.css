@@ -66,6 +66,7 @@
   background: white;
   border-radius: var(--radius-base);
   box-shadow: var(--shadow-xs);
+  color: var(--primary-color) !important; /* ensure currentColor works */
 }
 
 .skill-icon-large img,
@@ -75,8 +76,11 @@
 }
 
 .skill-icon-large svg {
-  color: var(--primary-color);
+  color: var(--primary-color) !important;
+  fill: var(--primary-color) !important; /* force solid fill for Chrome/mobile */
+  stroke: var(--primary-color) !important;
 }
+.skill-icon-large svg * { fill: var(--primary-color) !important; stroke: var(--primary-color) !important; }
 
 .skill-info {
   flex: 1;
@@ -206,7 +210,9 @@
 .view-all-skills-btn .skill-icon-large svg {
   width: 24px;
   height: 24px;
-  color: var(--primary-color);
+  color: var(--primary-color) !important;
+  fill: var(--primary-color) !important;
+  stroke: none !important;
 }
 
 .view-all-skills-btn .skill-info {
@@ -237,7 +243,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 12000; /* above nav/overlays */
   opacity: 0;
   transition: opacity 0.3s ease;
 }

@@ -50,21 +50,21 @@
   <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/main.css?v=8">
-  <link rel="stylesheet" href="css/layout.css?v=5">
-  <link rel="stylesheet" href="css/components/hero.css?v=45">
-  <link rel="stylesheet" href="css/components/top-nav.css?v=3">
-  <link rel="stylesheet" href="css/components/sidebar.css?v=4">
-  <link rel="stylesheet" href="css/components/sidebar-skills.css?v=14">
-  <link rel="stylesheet" href="css/components/about.css?v=1">
-  <link rel="stylesheet" href="css/components/skills-workflow.css?v=3">
-  <link rel="stylesheet" href="css/components/experience.css?v=2">
-  <link rel="stylesheet" href="css/components/projects.css?v=3">
-  <link rel="stylesheet" href="css/components/education.css?v=3">
-  <link rel="stylesheet" href="css/components/contact.css?v=54">
-  <link rel="stylesheet" href="css/components/buttons.css?v=3">
-  <link rel="stylesheet" href="css/components/custom-buttons.css?v=4">
-  <link rel="stylesheet" href="css/responsive.css?v=3">
+  <link rel="stylesheet" href="css/main.css?v=102">
+  <link rel="stylesheet" href="css/layout.css?v=102">
+  <link rel="stylesheet" href="css/components/hero.css?v=102">
+  <link rel="stylesheet" href="css/components/top-nav.css?v=102">
+  <link rel="stylesheet" href="css/components/sidebar.css?v=102">
+  <link rel="stylesheet" href="css/components/sidebar-skills.css?v=102">
+  <link rel="stylesheet" href="css/components/about.css?v=102">
+  <link rel="stylesheet" href="css/components/skills-workflow.css?v=102">
+  <link rel="stylesheet" href="css/components/experience.css?v=102">
+  <link rel="stylesheet" href="css/components/projects.css?v=102">
+  <link rel="stylesheet" href="css/components/education.css?v=102">
+  <link rel="stylesheet" href="css/components/contact.css?v=102">
+  <link rel="stylesheet" href="css/components/buttons.css?v=102">
+  <link rel="stylesheet" href="css/components/custom-buttons.css?v=102">
+  <link rel="stylesheet" href="css/responsive.css?v=102">
   
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -147,6 +147,11 @@
         <a href="#education" class="top-nav-item">Education</a>
         <a href="#contact" class="top-nav-item">Contact</a>
       </div>
+      <button class="nav-menu-button" aria-label="More options">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
 
@@ -156,6 +161,12 @@
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-inner">
+      <button class="sidebar-close" aria-label="Close sidebar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
       <!-- Profile Photo -->
       <div class="profile-photo">
         <img src="assets/images/profile/headshot.png" 
@@ -211,7 +222,7 @@
           <div class="core-skills-list">
             <div class="core-skill-item">
               <div class="skill-icon-large">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
                   <path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.01.2-.01.13-.03.07-.05.05-.07.03-.08.02-.08.01-.08-.01-.08-.02-.07-.03-.05-.05-.03-.07-.01-.13.01-.2.04-.26.1-.3.16-.33.25-.34.34-.34.45-.32.59-.3.73-.26.9-.2.13-.02.07-.01.04-.01.02-.01.01-.01v.01h-.01l-.01-.01-.02-.01-.04-.01-.07-.01-.13-.02zm-2.43 1.1l-.1.04-.19.08-.26.13-.32.17-.36.22-.38.26-.38.3-.36.34-.32.36-.26.38-.18.38-.1.36-.04.32.02.26.08.2.14.14.2.08.26.02.32-.04.36-.1.38-.18.38-.26.36-.32.34-.36.3-.38.26-.38.22-.36.17-.32.13-.26.08-.19.04-.1.01-.05.01-.02.01-.01h-.01l-.01.01-.01.01-.02.01-.05.01-.1.04z"/>
                   <path d="M12 2.5c-5.25 0-9.5 4.25-9.5 9.5s4.25 9.5 9.5 9.5 9.5-4.25 9.5-9.5-4.25-9.5-9.5-9.5zm0 17c-4.14 0-7.5-3.36-7.5-7.5s3.36-7.5 7.5-7.5 7.5 3.36 7.5 7.5-3.36 7.5-7.5 7.5z"/>
                   <path d="M12 6.5c-3.03 0-5.5 2.47-5.5 5.5s2.47 5.5 5.5 5.5 5.5-2.47 5.5-5.5-2.47-5.5-5.5-5.5zm0 9c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
@@ -226,7 +237,7 @@
             
             <div class="core-skill-item">
               <div class="skill-icon-large">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                   <path d="M4 6h16v2H4zm0 4h16v2H4zm0 4h16v2H4z"/>
                   <path d="M8 6h8v2H8zm0 4h8v2H8zm0 4h8v2H8z"/>
@@ -241,7 +252,7 @@
             
             <div class="core-skill-item">
               <div class="skill-icon-large">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
                   <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h10v2H7v-2zm0 4h6v2H7v-2z"/>
                   <path d="M9 7h2v2H9V7zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V7zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V7zm0 4h2v2h-2v-2z"/>
                 </svg>
@@ -255,7 +266,7 @@
             
             <div class="core-skill-item">
               <div class="skill-icon-large">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   <path d="M12 6l1.5 3L17 9.5l-2.5 2.5L16 15l-3-1.5L10 15l1.5-3L9 9.5l2.5-2.5L12 6z"/>
                   <circle cx="12" cy="12" r="2"/>
@@ -375,7 +386,7 @@
       <div class="hero-content">
         <h1 class="hero-name">
           <span class="greeting">Hi, I'm</span>
-          Maheshwor Tiwari
+          <span class="name-first">Maheshwor</span> <span class="name-last">Tiwari</span>
         </h1>
         
         <p class="hero-title">
@@ -698,16 +709,16 @@
                 <li>
                   <span class="achievement-icon">✓</span>
                   Automated data extraction for population datasets using Python, 
-                  improving accuracy by <b style="color:#ff6b35; font-weight:700;">20%</b> and team collaboration
+                  improving accuracy by 20% and team collaboration
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Built Power BI dashboards that reduced client reporting time by <b style="color:#ff6b35; font-weight:700;">30%</b>, from 10 hours to 7 hours per week
+                  Built Power BI dashboards that reduced client reporting time by 30%, from 10 hours to 7 hours per week
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
                   Optimized customer support response times through data analysis, 
-                  improving operational efficiency by <b style="color:#ff6b35; font-weight:700;">15%</b>
+                  improving operational efficiency by 15%
                 </li>
               </ul>
             </div>
@@ -753,18 +764,18 @@
               <ul class="achievements-list">
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Built Python scripts tracking KPIs with <b style="color:#ff6b35; font-weight:700;">99%</b> accuracy, 
+                  Built Python scripts tracking KPIs with 99% accuracy, 
                   ensuring data integrity across 50,000+ records
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Enhanced analytics capabilities by <b style="color:#ff6b35; font-weight:700;">25%</b> through Python 
+                  Enhanced analytics capabilities by 25% through Python 
                   optimization, reducing query execution time
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
                   Created Tableau dashboards that improved decision-making processes, 
-                  leading to <b style="color:#ff6b35; font-weight:700;">10%</b> cost reduction
+                  leading to 10% cost reduction
                 </li>
               </ul>
             </div>
@@ -1368,7 +1379,7 @@
           <p class="availability-text">
             <strong>Immediately Available</strong><br>
             Open to relocation<br>
-            Subclass 485 Visa (Applying)
+            Full Working Rights (Australia)
           </p>
         </div>
         
@@ -1431,6 +1442,11 @@
           <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Scroll to top">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="18,15 12,9 6,15"/>
+            </svg>
+          </button>
+          <button id="scrollToNextBtn" class="scroll-to-next" aria-label="Scroll down one page">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6,9 12,15 18,9"/>
             </svg>
           </button>
         </div>
@@ -1597,7 +1613,7 @@
   </div>
 
   <!-- JavaScript -->
-  <script type="module" src="js/main.js?v=39"></script>
+  <script type="module" src="js/main.js?v=102"></script>
   
   <!-- Debug Script -->
   <script>

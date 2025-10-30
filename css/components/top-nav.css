@@ -23,6 +23,9 @@
   justify-content: space-between;
 }
 
+/* Three-dots button hidden by default (desktop/tablet) */
+.nav-menu-button { display: none; }
+
 .top-nav-logo {
   display: -webkit-flex; /* Safari flexbox prefix */
   display: flex;
@@ -83,21 +86,34 @@
     display: flex; /* Show on mobile like desktop */
     padding: var(--space-2) 0; /* Reduce top nav padding for mobile */
     border-bottom: 0; /* Avoid 1px line artifacts on iOS Safari */
-    box-shadow: 0 1px 0 var(--border-color); /* Keep a subtle divider */
+    box-shadow: none; /* Remove divider to eliminate hairline */
     overflow: hidden; /* Prevent logo or content from peeking below */
+    -webkit-transform: translateZ(0); /* Fix subpixel gap on iOS */
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    top: 0; /* Nav at top; mobile header hidden */
   }
+  /* Show logo on mobile since header is hidden */
+  .top-nav-logo { display: -webkit-flex; display: flex; }
+  .top-nav-container { justify-content: space-between; }
   
   /* Adjust top nav for mobile */
   .top-nav-container {
     padding: 0 var(--space-2); /* Minimal padding for mobile */
-    flex-wrap: wrap; /* Allow wrapping if needed */
+    overflow: hidden; /* Clip any inner overflow on iOS */
+    flex-wrap: nowrap; /* Keep nav on a single line */
     gap: var(--space-2); /* Gap between logo and menu */
   }
   
   .top-nav-menu {
     gap: var(--space-1); /* Minimal gap between nav items for mobile */
-    flex-wrap: wrap; /* Allow nav items to wrap if needed */
+    flex-wrap: nowrap; /* Single row */
     justify-content: center; /* Center the nav items */
+    overflow-x: auto; /* Allow horizontal scroll if cramped */
+    -webkit-overflow-scrolling: touch;
+    flex: 1 1 auto; /* Take remaining space but allow button to show */
+    min-width: 0; /* Prevent overflow from pushing the button out */
   }
   
   .top-nav-item {
@@ -112,6 +128,36 @@
     width: 32px;
     height: 32px;
     font-size: var(--text-sm);
+    line-height: 32px; /* Avoid descender artifacts */
+    margin-bottom: 0; /* reset */
+    -webkit-transform: translateY(-2px); /* Lift badge slightly on iOS */
+    transform: translateY(-2px);
+    border-bottom-left-radius: 0; /* Flatten bottom to avoid green arc */
+    border-bottom-right-radius: 0;
+    overflow: hidden; /* Ensure no subpixel bleed */
+  }
+
+  /* Three-dots menu button */
+  .nav-menu-button {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    width: 22px;
+    height: 22px;
+    margin-left: var(--space-2);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex: 0 0 auto; /* Never shrink, always visible */
+  }
+  .nav-menu-button span {
+    width: 4px;
+    height: 4px;
+    background-color: var(--text-primary);
+    border-radius: 50%;
   }
 }
 

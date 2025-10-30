@@ -8,6 +8,24 @@
   position: relative;
 }
 
+/* Sidebar Close Button */
+.sidebar-close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 32px;
+  height: 32px;
+  display: none; /* show only on mobile when visible */
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  z-index: 2;
+}
+.sidebar-close:hover { color: var(--text-primary); }
+
 .sidebar-inner::after {
   content: '';
   position: absolute;
@@ -175,6 +193,8 @@
 .social-links a {
   position: relative;
   overflow: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .social-links a::before {
@@ -193,6 +213,22 @@
 
 .social-links a:hover::before {
   left: 100%;
+}
+
+.social-links a svg, .social-icon {
+  filter: none !important;
+  transition: box-shadow 180ms ease, transform 180ms ease, color 150ms ease, filter 150ms ease;
+  box-shadow: 0 0 4px rgba(34,139,34,0.10); /* soft green shadow */
+  color: var(--text-primary);
+  shape-rendering: geometricPrecision;
+  text-rendering: optimizeLegibility;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.social-links a:hover svg, .social-icon:hover {
+  filter: none !important;
+  box-shadow: 0 0 7px 2px rgba(34,139,34,0.12);
+  color: var(--primary-color);
 }
 
 /* Download CV Button */
@@ -233,6 +269,7 @@
     background: var(--bg-primary);
     box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
   }
+  .sidebar.active .sidebar-close { display: -webkit-flex; display: flex; }
   
   .sidebar-inner {
     padding: var(--space-8) var(--space-6);
