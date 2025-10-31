@@ -119,15 +119,15 @@
 }
 
 .skill-level.expert {
-  background: #10b981;
+  background: var(--accent-color);
 }
 
 .skill-level.advanced {
-  background: #3b82f6;
+  background: var(--accent-color);
 }
 
 .skill-level.intermediate {
-  background: #8b5cf6;
+  background: var(--accent-color);
 }
 
 /* Tier 2: Secondary Skills */

@@ -122,14 +122,14 @@
 .bubble-text .text-1 {
   opacity: 1;
   visibility: visible;
-  color: #228B22; /* Forest green */
+  color: var(--primary-color) !important; /* Primary accent */
 }
 
 .bubble-text .text-2 {
   opacity: 0;
   visibility: hidden;
   animation-delay: 2s;
-  color: #FF8C00; /* Orange */
+  color: var(--accent-color) !important; /* Accent */
 }
 
 .bubble-text .text-3 {

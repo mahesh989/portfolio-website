@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, viewport-fit=cover">
+  <title>Responsive Testing Tool - Portfolio Website</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      color: #88c0d0;
+      margin-bottom: 2rem;
+    }
+    
+    .test-section {
+      background: #1a1a1a;
+      border: 1px solid #404040;
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .test-section h2 {
+      color: #00bfff;
+      margin-bottom: 1rem;
+    }
+    
+    .test-result {
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .test-result.pass {
+      background: rgba(16, 185, 129, 0.1);
+      border-left: 4px solid #10b981;
+    }
+    
+    .test-result.fail {
+      background: rgba(239, 68, 68, 0.1);
+      border-left: 4px solid #ef4444;
+    }
+    
+    .test-result.info {
+      background: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid #3b82f6;
+    }
+    
+    .status {
+      font-weight: bold;
+      min-width: 60px;
+    }
+    
+    .test-result.pass .status { color: #10b981; }
+    .test-result.fail .status { color: #ef4444; }
+    .test-result.info .status { color: #3b82f6; }
+    
+    button {
+      background: #88c0d0;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 0.5rem;
+      transition: all 0.3s;
+    }
+    
+    button:hover {
+      background: #98d5e7;
+      transform: translateY(-2px);
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .stat-card {
+      background: #2a2a2a;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #228B22;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      color: #b0b0b0;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      height: 600px;
+      background: white;
+      border: 2px solid #404040;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .device-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .device-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+    
+    code {
+      background: #2a2a2a;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Responsive Testing Tool</h1>
+    
+    <!-- Device Information -->
+    <div class="test-section">
+      <h2>Device Information</h2>
+      <div id="deviceInfo"></div>
+    </div>
+    
+    <!-- Viewport Tests -->
+    <div class="test-section">
+      <h2>Viewport & Meta Tests</h2>
+      <div id="viewportTests"></div>
+    </div>
+    
+    <!-- CSS Feature Detection -->
+    <div class="test-section">
+      <h2>CSS Feature Support</h2>
+      <div id="cssTests"></div>
+    </div>
+    
+    <!-- Touch Capability -->
+    <div class="test-section">
+      <h2>Interaction Tests</h2>
+      <div id="touchTests"></div>
+    </div>
+    
+    <!-- Performance Tests -->
+    <div class="test-section">
+      <h2>Performance Metrics</h2>
+      <div id="performanceTests"></div>
+    </div>
+    
+    <!-- Statistics -->
+    <div class="test-section">
+      <h2>Test Statistics</h2>
+      <div class="stats" id="stats"></div>
+    </div>
+    
+    <!-- Actions -->
+    <div class="test-section">
+      <h2>Actions</h2>
+      <button onclick="runAllTests()">🔄 Run All Tests</button>
+      <button onclick="window.open('index.html', '_blank')">🌐 Open Main Site</button>
+      <button onclick="copyReport()">📋 Copy Report</button>
+      <button onclick="location.reload()">↻ Refresh Page</button>
+    </div>
+    
+    <!-- Device Preview -->
+    <div class="test-section">
+      <h2>Device Preview</h2>
+      <div class="device-selector">
+        <button class="device-btn" onclick="setDeviceSize(375, 667, 'iPhone SE')">iPhone SE</button>
+        <button class="device-btn" onclick="setDeviceSize(390, 844, 'iPhone 14')">iPhone 14</button>
+        <button class="device-btn" onclick="setDeviceSize(430, 932, 'iPhone 14 Pro Max')">iPhone 14 Pro Max</button>
+        <button class="device-btn" onclick="setDeviceSize(412, 915, 'Galaxy S20')">Galaxy S20</button>
+        <button class="device-btn" onclick="setDeviceSize(768, 1024, 'iPad')">iPad</button>
+        <button class="device-btn" onclick="setDeviceSize(1024, 1366, 'iPad Pro')">iPad Pro</button>
+        <button class="device-btn" onclick="setDeviceSize(1920, 1080, 'Desktop')">Desktop</button>
+      </div>
+      <div id="previewInfo" style="margin-top: 1rem; color: #b0b0b0;"></div>
+      <div class="iframe-container" id="iframeContainer">
+        <iframe src="index.html" id="previewFrame"></iframe>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    let testResults = { pass: 0, fail: 0, info: 0 };
+    
+    function addTestResult(containerId, status, message) {
+      const container = document.getElementById(containerId);
+      const div = document.createElement('div');
+      div.className = `test-result ${status}`;
+      
+      let statusText = status === 'pass' ? '✓ PASS' : status === 'fail' ? '✗ FAIL' : 'ℹ INFO';
+      div.innerHTML = `<span class="status">${statusText}</span><span>${message}</span>`;
+      container.appendChild(div);
+      
+      testResults[status]++;
+    }
+    
+    function runDeviceTests() {
+      const info = document.getElementById('deviceInfo');
+      info.innerHTML = '';
+      
+      // Screen information
+      addTestResult('deviceInfo', 'info', `Screen Size: ${window.screen.width} x ${window.screen.height}px`);
+      addTestResult('deviceInfo', 'info', `Viewport Size: ${window.innerWidth} x ${window.innerHeight}px`);
+      addTestResult('deviceInfo', 'info', `Device Pixel Ratio: ${window.devicePixelRatio}x`);
+      addTestResult('deviceInfo', 'info', `User Agent: ${navigator.userAgent}`);
+      
+      // Detect device type
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const isTablet = /(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(navigator.userAgent);
+      let deviceType = 'Desktop';
+      if (isTablet) deviceType = 'Tablet';
+      else if (isMobile) deviceType = 'Mobile';
+      
+      addTestResult('deviceInfo', 'info', `Device Type: ${deviceType}`);
+      addTestResult('deviceInfo', 'info', `Platform: ${navigator.platform}`);
+    }
+    
+    function runViewportTests() {
+      const tests = document.getElementById('viewportTests');
+      tests.innerHTML = '';
+      
+      // Check viewport meta tag
+      const viewportMeta = document.querySelector('meta[name="viewport"]');
+      if (viewportMeta) {
+        const content = viewportMeta.getAttribute('content');
+        addTestResult('viewportTests', 'pass', `Viewport meta tag found: <code>${content}</code>`);
+        
+        // Check for important viewport settings
+        if (content.includes('width=device-width')) {
+          addTestResult('viewportTests', 'pass', 'Uses device-width ✓');
+        } else {
+          addTestResult('viewportTests', 'fail', 'Missing device-width');
+        }
+        
+        if (content.includes('viewport-fit=cover')) {
+          addTestResult('viewportTests', 'pass', 'Notch support (viewport-fit=cover) ✓');
+        } else {
+          addTestResult('viewportTests', 'fail', 'Missing viewport-fit for notched devices');
+        }
+      } else {
+        addTestResult('viewportTests', 'fail', 'No viewport meta tag found!');
+      }
+      
+      // Check for horizontal scroll
+      const hasHorizontalScroll = document.documentElement.scrollWidth > document.documentElement.clientWidth;
+      if (hasHorizontalScroll) {
+        addTestResult('viewportTests', 'fail', `Horizontal scrolling detected! (${document.documentElement.scrollWidth}px > ${document.documentElement.clientWidth}px)`);
+      } else {
+        addTestResult('viewportTests', 'pass', 'No horizontal scrolling ✓');
+      }
+    }
+    
+    function runCSSTests() {
+      const tests = document.getElementById('cssTests');
+      tests.innerHTML = '';
+      
+      // Test CSS features
+      const features = [
+        { name: 'Grid Layout', test: 'display: grid' },
+        { name: 'Flexbox', test: 'display: flex' },
+        { name: 'CSS Variables', test: '--test: 1' },
+        { name: 'Container Queries', test: 'container-type: inline-size' },
+        { name: 'Aspect Ratio', test: 'aspect-ratio: 16/9' },
+        { name: 'Backdrop Filter', test: 'backdrop-filter: blur(10px)' },
+        { name: 'Gap Property', test: 'gap: 1rem' },
+        { name: 'Clamp Function', test: 'font-size: clamp(1rem, 2vw, 2rem)' }
+      ];
+      
+      features.forEach(feature => {
+        const supported = CSS.supports(feature.test);
+        addTestResult('cssTests', supported ? 'pass' : 'fail', 
+          `${feature.name}: ${supported ? 'Supported ✓' : 'Not supported'}`);
+      });
+    }
+    
+    function runTouchTests() {
+      const tests = document.getElementById('touchTests');
+      tests.innerHTML = '';
+      
+      // Touch support
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      addTestResult('touchTests', hasTouch ? 'pass' : 'info', 
+        `Touch Support: ${hasTouch ? 'Yes' : 'No (Mouse/Trackpad)'}`);
+      
+      if (hasTouch) {
+        addTestResult('touchTests', 'info', `Max Touch Points: ${navigator.maxTouchPoints}`);
+      }
+      
+      // Hover capability
+      const canHover = window.matchMedia('(hover: hover)').matches;
+      addTestResult('touchTests', canHover ? 'info' : 'info', 
+        `Hover Capability: ${canHover ? 'Yes' : 'No'}`);
+      
+      // Pointer type
+      const pointer = window.matchMedia('(pointer: coarse)').matches ? 'Touch (Coarse)' :
+                     window.matchMedia('(pointer: fine)').matches ? 'Mouse (Fine)' : 'Unknown';
+      addTestResult('touchTests', 'info', `Pointer Type: ${pointer}`);
+      
+      // Orientation
+      const orientation = window.matchMedia('(orientation: portrait)').matches ? 'Portrait' : 'Landscape';
+      addTestResult('touchTests', 'info', `Orientation: ${orientation}`);
+    }
+    
+    function runPerformanceTests() {
+      const tests = document.getElementById('performanceTests');
+      tests.innerHTML = '';
+      
+      // Connection type
+      if ('connection' in navigator) {
+        const conn = navigator.connection;
+        addTestResult('performanceTests', 'info', `Connection Type: ${conn.effectiveType || 'Unknown'}`);
+        addTestResult('performanceTests', 'info', `Downlink: ${conn.downlink || 'Unknown'} Mbps`);
+      }
+      
+      // Memory (Chrome only)
+      if ('memory' in performance) {
+        const memory = performance.memory;
+        const usedMB = (memory.usedJSHeapSize / 1048576).toFixed(2);
+        const totalMB = (memory.totalJSHeapSize / 1048576).toFixed(2);
+        addTestResult('performanceTests', 'info', `Memory Used: ${usedMB}MB / ${totalMB}MB`);
+      }
+      
+      // Page load time
+      if ('timing' in performance) {
+        const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+        if (loadTime > 0) {
+          const status = loadTime < 3000 ? 'pass' : loadTime < 5000 ? 'info' : 'fail';
+          addTestResult('performanceTests', status, `Page Load Time: ${(loadTime / 1000).toFixed(2)}s`);
+        }
+      }
+      
+      // First Paint (if available)
+      const paint = performance.getEntriesByType('paint');
+      if (paint.length > 0) {
+        const fp = paint.find(p => p.name === 'first-paint');
+        if (fp) {
+          const fpTime = fp.startTime;
+          const status = fpTime < 1000 ? 'pass' : fpTime < 2000 ? 'info' : 'fail';
+          addTestResult('performanceTests', status, `First Paint: ${fpTime.toFixed(0)}ms`);
+        }
+      }
+    }
+    
+    function updateStats() {
+      const stats = document.getElementById('stats');
+      stats.innerHTML = `
+        <div class="stat-card">
+          <span class="stat-number" style="color: #10b981;">${testResults.pass}</span>
+          <span class="stat-label">Passed</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number" style="color: #ef4444;">${testResults.fail}</span>
+          <span class="stat-label">Failed</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number" style="color: #3b82f6;">${testResults.info}</span>
+          <span class="stat-label">Info</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number" style="color: #88c0d0;">${testResults.pass + testResults.fail + testResults.info}</span>
+          <span class="stat-label">Total Tests</span>
+        </div>
+      `;
+    }
+    
+    function runAllTests() {
+      testResults = { pass: 0, fail: 0, info: 0 };
+      runDeviceTests();
+      runViewportTests();
+      runCSSTests();
+      runTouchTests();
+      runPerformanceTests();
+      updateStats();
+    }
+    
+    function setDeviceSize(width, height, name) {
+      const container = document.getElementById('iframeContainer');
+      const info = document.getElementById('previewInfo');
+      
+      container.style.width = width + 'px';
+      container.style.height = height + 'px';
+      container.style.margin = '1rem auto';
+      
+      info.innerHTML = `Preview: ${name} (${width} x ${height}px)`;
+    }
+    
+    function copyReport() {
+      let report = '📊 Responsive Test Report\\n\\n';
+      report += `Device: ${navigator.userAgent}\\n`;
+      report += `Screen: ${window.screen.width}x${window.screen.height}\\n`;
+      report += `Viewport: ${window.innerWidth}x${window.innerHeight}\\n`;
+      report += `Pixel Ratio: ${window.devicePixelRatio}x\\n\\n`;
+      report += `Results:\\n`;
+      report += `✓ Passed: ${testResults.pass}\\n`;
+      report += `✗ Failed: ${testResults.fail}\\n`;
+      report += `ℹ Info: ${testResults.info}\\n`;
+      report += `━ Total: ${testResults.pass + testResults.fail + testResults.info}\\n`;
+      
+      navigator.clipboard.writeText(report).then(() => {
+        alert('Report copied to clipboard!');
+      });
+    }
+    
+    // Run tests on load
+    runAllTests();
+    
+    // Re-run on resize
+    window.addEventListener('resize', () => {
+      runAllTests();
+    });
+    
+    // Re-run on orientation change
+    window.addEventListener('orientationchange', () => {
+      setTimeout(runAllTests, 300);
+    });
+  </script>
+</body>
+</html>
+

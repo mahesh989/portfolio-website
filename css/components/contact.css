@@ -166,7 +166,7 @@
 }
 
 .contact-method:hover {
-  background-color: #228B22; /* forest green */
+  background-color: var(--primary-color); /* primary accent */
   transform: translateX(4px);
 }
 

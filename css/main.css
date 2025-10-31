@@ -30,22 +30,22 @@
   --shadow-color: rgba(255, 255, 255, 0.05); /* Subtle white shadows */
   
   /* Vallabha Mohta Color Palette - Consolidated */
-  --primary-color: #228B22;          /* Forest Green - Primary brand */
-  --primary-hover: #1E7B1E;          /* Darker Forest Green */
-  --primary-light: #32CD32;          /* Light Forest Green */
+  --primary-color: #88c0d0;          /* Cyan - Primary brand */
+  --primary-hover: #98d5e7;          /* Lighter Cyan */
+  --primary-light: #bfe3ec;          /* Light Cyan */
   
   --secondary-color: #00bfff;         /* Cyan accent */
   --secondary-hover: #0099cc;        /* Darker cyan */
   --secondary-light: #33ccff;        /* Light cyan */
   
-  --accent-color: #ff6b35;           /* Orange accent */
-  --accent-hover: #e55a2b;           /* Darker orange */
-  --accent-light: #ff8c69;          /* Light orange */
+  --accent-color: #ebcb8b;           /* Soft amber accent */
+  --accent-hover: #d9b876;           /* Darker amber */
+  --accent-light: #f3e3b4;          /* Light amber */
   
   /* Professional Gradients - Dark Theme */
-  --gradient-primary: linear-gradient(135deg, #228B22 0%, #00bfff 100%);
-  --gradient-secondary: linear-gradient(135deg, #00bfff 0%, #ff6b35 100%);
-  --gradient-accent: linear-gradient(135deg, #ff6b35 0%, #228B22 100%);
+  --gradient-primary: linear-gradient(135deg, #88c0d0 0%, #98d5e7 100%);
+  --gradient-secondary: linear-gradient(135deg, #88c0d0 0%, #ebcb8b 100%);
+  --gradient-accent: linear-gradient(135deg, #ebcb8b 0%, #88c0d0 100%);
   --gradient-hero: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
   
   /* Fonts */

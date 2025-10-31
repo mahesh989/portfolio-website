@@ -18,8 +18,8 @@
 
 .preview-cv-btn {
   background-color: transparent;
-  border: 2px solid #388E3C;
-  color: #388E3C;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
   padding: 12px 24px;
   border-radius: 8px;
   font-size: 18px;
@@ -32,16 +32,16 @@
 }
 
 .preview-cv-btn:hover {
-  background-color: #388E3C;
+  background-color: var(--primary-color);
   color: white;
   transform: translateY(-2px);
 }
 
 /* Second Image: Gradient Preview CV Button */
 .gradient-preview-btn {
-  background: linear-gradient(135deg, #1E703F 0%, #202080 100%);
-  border: 1px solid #1E703F;
-  color: #66CD00;
+  background: linear-gradient(135deg, var(--primary-hover) 0%, #202080 100%);
+  border: 1px solid var(--primary-hover);
+  color: var(--primary-color);
   padding: 16px 32px;
   border-radius: 12px;
   font-size: 18px;
@@ -62,7 +62,7 @@
 }
 
 .gradient-preview-btn .icon {
-  color: #66CD00;
+  color: var(--primary-color);
 }
 
 /* Third Image: LinkedIn Button - Consistent with other buttons */
@@ -107,26 +107,27 @@
   margin-top: 16px;
 }
 
-/* Ensure LinkedIn button aligns with bottom of Master of Theoretical Physics */
-.education-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  align-items: start;
-}
-
+/* Ensure LinkedIn button aligns with certifications - Fixed for Safari */
 .certifications-column {
+  display: -webkit-box;
+  display: -webkit-flex;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 100%;
+  height: 100%;
 }
 
 .certifications-list {
-  flex: 1;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  flex: 1 1 auto;
+  margin-bottom: var(--space-6);
 }
 
 .linkedin-cert-btn {
-  margin-top: auto;
-  align-self: flex-end;
+  margin-top: var(--space-6);
+  -webkit-align-self: stretch;
+  align-self: stretch;
 }
