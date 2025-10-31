@@ -1,7 +1,4 @@
 /* Projects Section Styles */
-.projects-section {
-  /* background-color: var(--bg-secondary); - Removed */
-}
 
 .project-filters {
   display: -webkit-flex; /* Safari flexbox prefix */
@@ -41,8 +38,8 @@
 .projects-grid {
   display: -webkit-grid; /* Safari grid prefix */
   display: grid;
-  -webkit-grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Safari grid-template-columns prefix */
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  -webkit-grid-template-columns: repeat(2, 1fr); /* Safari grid-template-columns prefix - Fixed to 2 columns */
+  grid-template-columns: repeat(2, 1fr); /* Fixed to 2 columns for 2x2 layout */
   gap: var(--space-8);
   margin-bottom: var(--space-16);
 }
@@ -232,8 +229,8 @@
   }
   
   .projects-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
+    grid-template-columns: repeat(2, 1fr); /* Keep 2 columns on mobile */
+    gap: var(--space-4); /* Smaller gap on mobile */
   }
   
   .project-content {
@@ -260,16 +257,21 @@
   }
   
   .project-title {
-    font-size: var(--text-lg);
+    font-size: var(--text-base); /* Smaller on very small screens */
   }
   
   .project-image {
-    height: 160px;
+    height: 140px; /* Smaller height on very small screens */
   }
   
   .filter-btn {
     padding: var(--space-2) var(--space-3);
     font-size: var(--text-xs);
+  }
+  
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr); /* Still 2 columns */
+    gap: var(--space-3); /* Even smaller gap */
   }
 }
 

@@ -1,0 +1,731 @@
+/* Enhanced Responsive Design - Cross-Browser Compatibility */
+/* This file provides additional responsive enhancements for all browsers and screen sizes */
+
+/* ============================================
+   1. CROSS-BROWSER COMPATIBILITY FIXES
+   ============================================ */
+
+/* Ensure box-sizing is consistent across all browsers */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Better text rendering across browsers */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Prevent horizontal overflow on all elements */
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* Fix for iOS Safari zoom on input focus */
+input,
+textarea,
+select {
+  font-size: 16px; /* Prevents zoom on iOS */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Better touch targets for mobile (minimum 44x44px for accessibility) */
+button,
+a,
+.btn,
+.nav-item,
+.filter-btn,
+.project-link {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================
+   2. FLUID TYPOGRAPHY ENHANCEMENTS
+   ============================================ */
+
+/* More fluid font sizes using clamp() with better scaling */
+h1,
+.hero-name {
+  font-size: clamp(1.75rem, 4vw + 1rem, 3.5rem);
+}
+
+h2,
+.section-title {
+  font-size: clamp(1.5rem, 3vw + 0.75rem, 2.5rem);
+}
+
+h3,
+.project-title {
+  font-size: clamp(1.25rem, 2.5vw + 0.5rem, 1.875rem);
+}
+
+p,
+.hero-tagline {
+  font-size: clamp(0.875rem, 1vw + 0.5rem, 1.125rem);
+  line-height: 1.6;
+}
+
+/* Better button sizing */
+.btn {
+  font-size: clamp(0.875rem, 1vw + 0.5rem, 1rem);
+  padding: clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
+}
+
+/* ============================================
+   3. RESPONSIVE IMAGES
+   ============================================ */
+
+/* Ensure all images are responsive */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Prevent layout shift with aspect ratio boxes */
+.project-image {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.profile-photo img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+/* Lazy loading support */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* ============================================
+   4. ENHANCED GRID & FLEXBOX FALLBACKS
+   ============================================ */
+
+/* Better grid fallback for older browsers */
+@supports not (display: grid) {
+  .projects-grid,
+  .two-column-layout,
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .project-card {
+    flex: 1 1 calc(33.333% - 1rem);
+    min-width: 300px;
+  }
+}
+
+/* Better flexbox wrapping for small screens */
+.hero-cta,
+.hero-stats,
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.5rem, 2vw, 1rem);
+}
+
+/* ============================================
+   5. ENHANCED MOBILE RESPONSIVENESS
+   ============================================ */
+
+/* Extra small devices (< 360px) */
+@media (max-width: 359px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+  
+  .hero-name {
+    font-size: 1.5rem;
+  }
+  
+  .hero-cta .btn {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .top-nav-item {
+    font-size: 0.625rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+/* Small mobile devices (360px - 479px) */
+@media (min-width: 360px) and (max-width: 479px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  body {
+    font-size: 14px;
+  }
+}
+
+/* Medium mobile devices (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tablets portrait (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .two-column-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tablets landscape & small desktops (1024px - 1279px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .sidebar {
+    width: 300px;
+  }
+  
+  .main-content {
+    margin-left: 300px;
+  }
+}
+
+/* Medium desktops (1280px - 1439px) */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+/* Large desktops (1440px - 1919px) */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .container {
+    max-width: 1400px;
+  }
+  
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Ultra-wide screens (1920px+) */
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1600px;
+  }
+  
+  .projects-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .sidebar {
+    max-width: 450px;
+  }
+}
+
+/* ============================================
+   6. ORIENTATION-SPECIFIC STYLES
+   ============================================ */
+
+/* Landscape mobile devices */
+@media (max-width: 767px) and (orientation: landscape) {
+  .hero {
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+  
+  .hero-stats {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+  
+  .section {
+    padding: 2rem 0;
+  }
+}
+
+/* Portrait tablets */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+  .sidebar {
+    width: 280px;
+  }
+  
+  .main-content {
+    margin-left: 280px;
+  }
+}
+
+/* ============================================
+   7. TOUCH-FRIENDLY ENHANCEMENTS
+   ============================================ */
+
+/* Better touch targets for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .btn,
+  .nav-item,
+  .filter-btn,
+  .social-links a {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .hamburger {
+    width: 44px;
+    height: 44px;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .btn:hover,
+  .project-card:hover {
+    transform: none;
+  }
+  
+  /* Add active states instead */
+  .btn:active {
+    transform: scale(0.95);
+  }
+}
+
+/* ============================================
+   8. HIGH-DPI DISPLAYS (RETINA)
+   ============================================ */
+
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi),
+       (min-resolution: 2dppx) {
+  /* Ensure images look sharp on retina displays */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+  
+  /* Thinner borders for retina */
+  .project-card,
+  .experience-card,
+  .sidebar {
+    border-width: 0.5px;
+  }
+}
+
+/* ============================================
+   9. SAFE AREA INSETS (iOS NOTCH)
+   ============================================ */
+
+/* Support for iOS safe areas */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+  
+  .top-nav {
+    padding-top: max(var(--space-3), env(safe-area-inset-top));
+  }
+  
+  .sidebar {
+    padding-bottom: max(var(--space-8), env(safe-area-inset-bottom));
+  }
+}
+
+/* ============================================
+   10. PRINT STYLES ENHANCEMENT
+   ============================================ */
+
+@media print {
+  /* Optimize for printing */
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+  
+  h1 { font-size: 24pt; }
+  h2 { font-size: 20pt; }
+  h3 { font-size: 16pt; }
+  
+  .hero,
+  .project-card,
+  .experience-card {
+    page-break-inside: avoid;
+  }
+  
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+  }
+}
+
+/* ============================================
+   11. DARK MODE ENHANCEMENTS
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  /* Better contrast for dark mode */
+  .btn-outline {
+    border-width: 2px;
+  }
+  
+  .project-card,
+  .experience-card {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Better shadows for dark mode */
+  .project-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ============================================
+   12. REDUCED MOTION SUPPORT
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .hero-puppy-container {
+    animation: none !important;
+  }
+}
+
+/* ============================================
+   13. BROWSER-SPECIFIC FIXES
+   ============================================ */
+
+/* Firefox-specific fixes */
+@-moz-document url-prefix() {
+  .sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--bg-secondary);
+  }
+}
+
+/* Safari-specific fixes */
+@supports (-webkit-appearance: none) {
+  /* Fix for Safari flex bugs */
+  .hero-cta,
+  .footer-content {
+    -webkit-flex-wrap: wrap;
+  }
+  
+  /* Better transform performance */
+  .project-card,
+  .btn {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Edge-specific fixes */
+@supports (-ms-ime-align: auto) {
+  .projects-grid {
+    display: -ms-grid;
+    -ms-grid-columns: 1fr 1fr 1fr;
+  }
+}
+
+/* ============================================
+   14. UTILITY CLASSES FOR RESPONSIVE DESIGN
+   ============================================ */
+
+/* Display utilities */
+.mobile-only { display: none; }
+.desktop-only { display: block; }
+
+@media (max-width: 767px) {
+  .mobile-only { display: block; }
+  .desktop-only { display: none; }
+}
+
+/* Spacing utilities */
+.spacing-xs { margin-bottom: 0.5rem; }
+.spacing-sm { margin-bottom: 1rem; }
+.spacing-md { margin-bottom: 1.5rem; }
+.spacing-lg { margin-bottom: 2rem; }
+.spacing-xl { margin-bottom: 3rem; }
+
+/* Responsive padding */
+.container-fluid {
+  padding-left: clamp(1rem, 5vw, 3rem);
+  padding-right: clamp(1rem, 5vw, 3rem);
+}
+
+/* ============================================
+   15. ADVANCED RESPONSIVE TECHNIQUES
+   ============================================ */
+
+/* Container queries support (when available) */
+@supports (container-type: inline-size) {
+  .project-card {
+    container-type: inline-size;
+    container-name: project;
+  }
+  
+  @container project (min-width: 400px) {
+    .project-title {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+/* Aspect ratio support with fallback */
+.video-container {
+  aspect-ratio: 16 / 9;
+}
+
+@supports not (aspect-ratio: 16 / 9) {
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 ratio */
+    height: 0;
+  }
+  
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* Better focus indicators for keyboard navigation */
+@media (prefers-reduced-motion: no-preference) {
+  *:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    transition: outline-offset 0.2s ease;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn,
+  .project-card,
+  .experience-card {
+    border: 2px solid currentColor;
+  }
+  
+  .btn:hover {
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+  }
+}
+
+/* Forced colors mode (Windows High Contrast) */
+@media (forced-colors: active) {
+  .btn,
+  .project-card {
+    border: 1px solid;
+  }
+  
+  .social-icon {
+    forced-color-adjust: none;
+  }
+}
+
+/* ============================================
+   16. PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* GPU acceleration for animations */
+.project-card,
+.btn,
+.hero-content > *,
+.sidebar {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Content visibility for better performance */
+@supports (content-visibility: auto) {
+  .project-card,
+  .experience-card,
+  .education-item {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+  }
+}
+
+/* ============================================
+   17. ENHANCED MOBILE MENU
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Prevent body scroll when sidebar is open */
+  body.sidebar-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+  
+  /* Better sidebar animation */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .sidebar.active {
+    transform: translateX(0);
+  }
+  
+  /* Smooth overlay transition */
+  .mobile-overlay {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+}
+
+/* ============================================
+   18. ACCESSIBILITY ENHANCEMENTS
+   ============================================ */
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip navigation improvements */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 10001;
+  border-radius: 0 0 4px 0;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Better focus indicators */
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   19. FLEXIBLE LAYOUTS
+   ============================================ */
+
+/* Flexible column system */
+.flex-cols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.flex-col {
+  flex: 1 1 100%;
+}
+
+@media (min-width: 768px) {
+  .flex-col-md-6 {
+    flex: 1 1 calc(50% - 0.5rem);
+  }
+  
+  .flex-col-md-4 {
+    flex: 1 1 calc(33.333% - 0.667rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .flex-col-lg-3 {
+    flex: 1 1 calc(25% - 0.75rem);
+  }
+}
+
+/* ============================================
+   20. FINAL TOUCHES
+   ============================================ */
+
+/* Smooth scrolling with offset for fixed header */
+html {
+  scroll-padding-top: 80px;
+}
+
+/* Better line clamping */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Responsive video embeds */
+.video-embed {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
