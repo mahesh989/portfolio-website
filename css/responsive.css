@@ -15,6 +15,7 @@
 @media (max-width: 1023px) {
   .sidebar {
     width: 280px;
+    position: fixed; /* Rolled back to fixed */
   }
   
   .main-content {
@@ -69,6 +70,11 @@
     height: 100vh;
     z-index: 9999;
     transition: left var(--transition-base);
+    /* Ensure sidebar scrolls independently on mobile */
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain; /* Critical: Prevent scroll from reaching body */
   }
   
   .sidebar.active {
@@ -80,6 +86,64 @@
     margin-left: 0;
     max-width: 100%;
     padding-top: 60px; /* Only top nav is fixed */
+    /* Always allow scrolling when sidebar is closed */
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  /* When sidebar is active, prevent main content from scrolling BUT allow hover */
+  body.no-scroll .main-content {
+    overflow-y: hidden !important;
+    touch-action: none !important;
+    /* Critical: Keep pointer-events enabled so hover effects work even when sidebar is open */
+    pointer-events: auto !important;
+    /* Prevent scroll position jumping */
+    position: relative;
+  }
+  
+  /* When sidebar is NOT active, ensure main content scrolls normally */
+  body:not(.no-scroll) .main-content,
+  .main-content:not(body.no-scroll .main-content) {
+    overflow-y: auto !important;
+    touch-action: auto !important;
+  }
+  
+  /* Ensure sidebar can scroll when active - allow full scrolling to show all content */
+  .sidebar.active {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    /* Ensure sidebar inner content can scroll fully */
+    height: 100vh !important;
+    max-height: 100vh !important;
+  }
+  
+  /* Ensure sidebar inner content is visible and scrollable */
+  .sidebar.active .sidebar-inner {
+    min-height: 100%;
+    padding-bottom: var(--space-12); /* Extra bottom padding to ensure last item (Preview CV) is fully visible when scrolling */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Ensure all sidebar content sections are visible */
+  .sidebar.active .contact-info,
+  .sidebar.active .sidebar-nav,
+  .sidebar.active .download-cv,
+  .sidebar.active .btn {
+    /* All content should be visible when scrolling */
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* Ensure overlay doesn't block main content when inactive */
+  .mobile-overlay:not(.active) {
+    pointer-events: none !important;
+    z-index: -1 !important;
   }
   
   /* Mobile overlay */

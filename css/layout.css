@@ -68,7 +68,7 @@
   height: 6px;
   background-color: var(--text-primary);
   border-radius: 50%;
-  transition: all var(--transition-base);
+  transition: transform var(--transition-hover), box-shadow var(--transition-hover), color var(--transition-hover), background-color var(--transition-hover), border-color var(--transition-hover);
   transform-origin: center;
 }
 
@@ -96,24 +96,52 @@
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
-  transition: all var(--transition-base);
+  transition: opacity var(--transition-hover), visibility var(--transition-hover);
   z-index: 9998;
+  /* Critical: Always disable pointer events by default to prevent blocking interactions */
+  pointer-events: none !important;
+  /* On desktop, completely hide it */
+  display: none;
 }
 
 .mobile-overlay.active {
   opacity: 1;
   visibility: visible;
+  /* Enable pointer events only when active AND on mobile */
+  pointer-events: auto;
+  display: block;
+}
+
+/* On desktop, overlay should never exist or block interactions */
+@media (min-width: 768px) {
+  .mobile-overlay {
+    /* Completely disable overlay on desktop - no interference at all */
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: -1 !important; /* Push it behind everything */
+  }
+  
+  .mobile-overlay.active {
+    /* Even if accidentally active, disable on desktop */
+    display: none !important;
+    pointer-events: none !important;
+  }
 }
 
 /* Main Layout Container */
 .main-layout {
+  display: -webkit-flex; /* Safari flexbox prefix */
   display: flex;
   min-height: 100vh;
+  /* Ensure container allows natural scrolling for simultaneous sidebar/main movement */
+  position: relative;
 }
 
 /* Sidebar */
 .sidebar {
-  position: fixed;
+  position: fixed; /* Rolled back to fixed - will use JS for scroll sync */
   top: 0;
   left: 0;
   width: 30%;
@@ -123,8 +151,12 @@
   background-color: var(--bg-secondary);
   border-right: 1px solid var(--border-color);
   overflow-y: auto;
+  overflow-x: hidden;
   z-index: 100;
   transition: transform var(--transition-base);
+  /* Ensure sidebar scrolls independently and smoothly */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain; /* Prevent scroll chaining to body */
 }
 
 .sidebar-inner {
@@ -141,10 +173,18 @@
   background-color: var(--bg-primary);
   padding-left: var(--space-8);
   padding-right: var(--space-8); /* Add right padding to balance left padding */
+  position: relative;
+  z-index: 1; /* Ensure content is above overlay when inactive */
+  /* Ensure interactions work immediately - critical for hover effects */
+  pointer-events: auto !important;
 }
 
 /* Ensure main content respects sidebar max-width */
 @media (min-width: 1334px) {
+  .sidebar {
+    position: fixed; /* Rolled back to fixed */
+  }
+  
   .main-content {
     margin-left: 400px; /* Match sidebar max-width */
     max-width: calc(100% - 400px);
@@ -323,7 +363,7 @@
   background-color: var(--bg-tertiary);
   color: var(--text-secondary);
   border-radius: 50%;
-  transition: all var(--transition-base);
+  transition: transform var(--transition-hover), box-shadow var(--transition-hover), color var(--transition-hover), background-color var(--transition-hover), border-color var(--transition-hover);
 }
 
 .social-links a:hover {
@@ -559,7 +599,7 @@
   background-color: var(--bg-tertiary);
   color: var(--text-secondary);
   border-radius: 50%;
-  transition: all var(--transition-base);
+  transition: transform var(--transition-hover), box-shadow var(--transition-hover), color var(--transition-hover), background-color var(--transition-hover), border-color var(--transition-hover);
 }
 
 .footer-social a:hover {
@@ -608,6 +648,7 @@
 @media (max-width: 1023px) {
   .sidebar {
     width: 280px;
+    position: fixed; /* Rolled back to fixed */
   }
   
   .main-content {
@@ -674,6 +715,12 @@
     padding-top: 60px; /* Account for fixed header */
     padding-left: var(--space-4);
     padding-right: var(--space-4);
+    /* Prevent main content from scrolling when sidebar is open */
+    overflow: hidden;
+    height: 100vh;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: none;
+    touch-action: none;
   }
   
   /* Mobile overlay */

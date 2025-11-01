@@ -88,10 +88,11 @@
   --space-20: 5rem;     /* 80px */
   --space-24: 6rem;     /* 96px */
   
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-base: 250ms ease;
-  --transition-slow: 350ms ease;
+  /* Transitions - optimized for instant hover response */
+  --transition-fast: 100ms ease;
+  --transition-base: 150ms ease;
+  --transition-slow: 250ms ease;
+  --transition-hover: 100ms ease; /* Extra fast for hover effects */
   
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -145,7 +146,9 @@ body {
 }
 
 body.no-scroll {
-  overflow: hidden;
+  overflow: hidden !important;
+  /* Don't use position: fixed as it prevents sidebar scrolling */
+  /* The sidebar itself will scroll independently with overflow-y: auto */
 }
 
 /* Universal overflow prevention */
@@ -188,7 +191,7 @@ p {
 a {
   color: var(--primary-color);
   text-decoration: none;
-  transition: color var(--transition-fast);
+  transition: color var(--transition-hover);
 }
 
 a:hover {
@@ -246,7 +249,7 @@ img {
   border-radius: var(--radius-base);
   border: 2px solid transparent;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: background-color var(--transition-hover), color var(--transition-hover), border-color var(--transition-hover), transform var(--transition-hover), box-shadow var(--transition-hover);
   text-decoration: none;
 }
 
@@ -513,7 +516,7 @@ img {
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px);
-  transition: all var(--transition-base);
+  transition: opacity var(--transition-hover), visibility var(--transition-hover), transform var(--transition-hover), background-color var(--transition-hover), box-shadow var(--transition-hover);
   box-shadow: var(--shadow-lg);
   z-index: 1001; /* Increased z-index to be above footer */
 }
@@ -545,7 +548,7 @@ img {
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px);
-  transition: all var(--transition-base);
+  transition: opacity var(--transition-hover), visibility var(--transition-hover), transform var(--transition-hover), background-color var(--transition-hover), box-shadow var(--transition-hover);
   box-shadow: var(--shadow-lg);
   z-index: 1001;
 }
@@ -608,7 +611,7 @@ img {
 .social-icon {
   width: 24px;
   height: 24px;
-  transition: transform var(--transition-base), color 150ms ease, filter 150ms ease;
+  transition: transform var(--transition-hover), color var(--transition-hover), filter var(--transition-hover);
   -webkit-transform: translateZ(0); /* avoid blurring during scale on Safari */
   transform: translateZ(0);
   will-change: transform;

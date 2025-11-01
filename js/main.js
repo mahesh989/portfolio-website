@@ -59,34 +59,75 @@ function initMobileMenu() {
   const overlay = document.querySelector('.mobile-overlay');
   const sidebarClose = document.querySelector('.sidebar-close');
   
+  // Critical: Ensure overlay doesn't block interactions on desktop/initial load
+  if (overlay) {
+    const isMobile = window.innerWidth <= 767;
+    if (!isMobile) {
+      // On desktop, completely disable overlay
+      overlay.style.display = 'none';
+      overlay.style.pointerEvents = 'none';
+      overlay.style.zIndex = '-1';
+      overlay.classList.remove('active');
+    } else {
+      // On mobile, ensure it's inactive by default
+      overlay.classList.remove('active');
+      overlay.style.pointerEvents = 'none';
+    }
+  }
+  
   if ((!hamburger && !navMenuButton) || !sidebar) {
     console.warn('Mobile menu elements not found');
     return;
   }
   
   try {
+    const mainContent = document.querySelector('.main-content');
+    
     const toggleMenu = () => {
+      const isActive = sidebar.classList.contains('active');
       sidebar.classList.toggle('active');
       if (overlay) overlay.classList.toggle('active');
       if (hamburger) hamburger.classList.toggle('active');
-      document.body.classList.toggle('no-scroll');
+      
+      if (!isActive) {
+        // Sidebar opening - prevent body/main content scrolling
+        document.body.classList.add('no-scroll');
+        if (mainContent) {
+          mainContent.style.overflow = 'hidden';
+          mainContent.style.touchAction = 'none';
+        }
+      } else {
+        // Sidebar closing - restore body/main content scrolling
+        document.body.classList.remove('no-scroll');
+        if (mainContent) {
+          mainContent.style.overflow = '';
+          mainContent.style.touchAction = '';
+        }
+      }
     };
 
     if (hamburger) hamburger.addEventListener('click', toggleMenu);
     if (navMenuButton) navMenuButton.addEventListener('click', toggleMenu);
     if (sidebarClose) sidebarClose.addEventListener('click', toggleMenu);
 
-    // Auto-open sidebar on every first page load (mobile only)
+    // DISABLED: Auto-open sidebar on page load - causing scroll issues
+    // User can manually open sidebar via hamburger button
+    // This prevents scroll locking and content visibility issues
+    /*
     const isMobile = window.innerWidth <= 767;
     if (isMobile && sidebar) {
-      // Delay to ensure styles are applied on slow networks
       setTimeout(() => {
         sidebar.classList.add('active');
         if (overlay) overlay.classList.add('active');
         if (hamburger) hamburger.classList.add('active');
         document.body.classList.add('no-scroll');
+        if (mainContent) {
+          mainContent.style.overflow = 'hidden';
+          mainContent.style.touchAction = 'none';
+        }
       }, 250);
     }
+    */
     
     // Close on overlay click
     if (overlay) {
@@ -95,6 +136,11 @@ function initMobileMenu() {
         overlay.classList.remove('active');
         hamburger.classList.remove('active');
         document.body.classList.remove('no-scroll');
+        // Restore main content scrolling
+        if (mainContent) {
+          mainContent.style.overflow = '';
+          mainContent.style.touchAction = '';
+        }
       });
     }
     
@@ -106,6 +152,11 @@ function initMobileMenu() {
         if (overlay) overlay.classList.remove('active');
         hamburger.classList.remove('active');
         document.body.classList.remove('no-scroll');
+        // Restore main content scrolling
+        if (mainContent) {
+          mainContent.style.overflow = '';
+          mainContent.style.touchAction = '';
+        }
       });
     });
     
@@ -116,6 +167,11 @@ function initMobileMenu() {
         if (overlay) overlay.classList.remove('active');
         hamburger.classList.remove('active');
         document.body.classList.remove('no-scroll');
+        // Restore main content scrolling
+        if (mainContent) {
+          mainContent.style.overflow = '';
+          mainContent.style.touchAction = '';
+        }
       }
     });
   } catch (error) {

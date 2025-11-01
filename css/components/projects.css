@@ -18,7 +18,7 @@
   border-radius: var(--radius-full);
   font-weight: var(--font-medium);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: border-color var(--transition-hover), color var(--transition-hover), transform var(--transition-hover);
 }
 
 .filter-btn:hover {
@@ -49,9 +49,11 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-base);
+  transition: transform var(--transition-hover), box-shadow var(--transition-hover), border-color var(--transition-hover);
   position: relative;
   border: 1px solid var(--border-color);
+  /* Performance optimization for immediate hover response */
+  will-change: transform, box-shadow;
 }
 
 .project-card:hover {
@@ -64,6 +66,8 @@
 .project-card.featured-project {
   border: 2px solid var(--accent-color);
   position: relative;
+  /* Allow stars to overflow the border - they need to be visible outside the card */
+  overflow: visible;
 }
 
 .project-badge {
@@ -75,48 +79,59 @@
 
 .project-image {
   position: relative;
-  height: 200px;
-  overflow: hidden;
+  height: 160px; /* Reduced by 20% from 200px */
+  overflow: hidden; /* Image clipping still works even if parent has overflow: visible */
 }
 
 .project-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-slow);
+  transition: transform var(--transition-hover); /* Fast hover response */
+  will-change: transform; /* Performance optimization */
 }
 
 .project-card:hover .project-image img {
-  -webkit-transform: scale(1.1); /* Safari transform prefix */
-  transform: scale(1.1);
+  -webkit-transform: scale(1.05); /* Reduced from 1.1 to 1.05 for less text shift */
+  transform: scale(1.05);
 }
 
 .project-overlay {
   position: absolute;
-  top: 0;
+  top: 10%; /* Reduced vertical size by 20% - 10% from top and bottom */
   left: 0;
   right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(16, 185, 129, 0.9));
+  bottom: 10%; /* Reduced vertical size by 20% */
+  background: linear-gradient(135deg, rgba(136, 192, 208, 0.7), rgba(235, 203, 139, 0.7));
   opacity: 0;
-  transition: opacity var(--transition-base);
+  transition: opacity var(--transition-hover);
   display: -webkit-flex; /* Safari flexbox prefix */
   display: flex;
-  -webkit-align-items: center; /* Safari align-items prefix */
-  align-items: center;
-  -webkit-justify-content: center; /* Safari justify-content prefix */
+  -webkit-align-items: flex-start; /* Changed from center to allow content to be positioned lower */
+  align-items: flex-start;
+  -webkit-justify-content: center; /* Safari flexbox prefix */
   justify-content: center;
+  /* Move content down by 20% of card height */
+  /* Overlay spans 80% of card height. To move 20% of card down from center:
+     Center would be at 50% of card = 40% into overlay (since overlay starts at 10%).
+     Move 20% of card down = 20/80 = 25% more of overlay height.
+     Total: 40% + 25% = 65% from overlay top. Use padding-top with calc. */
+  padding-top: 30%; /* Percentage-based padding (width-relative) that approximates 20% card height movement */
+  will-change: opacity; /* Performance optimization */
 }
 
-.project-card:hover .project-overlay {
-  opacity: 1;
-}
-
+/* Project links container - already positioned by overlay padding */
 .project-links {
   display: -webkit-flex; /* Safari flexbox prefix */
   display: flex;
   gap: var(--space-4);
 }
+
+.project-card:hover .project-overlay {
+  opacity: 0.6; /* Reduced from 1 to 0.6 for better text readability */
+}
+
+/* .project-links moved above - see earlier definition */
 
 .project-link {
   display: -webkit-flex; /* Safari flexbox prefix */
@@ -130,7 +145,7 @@
   border-radius: var(--radius-base);
   text-decoration: none;
   font-weight: var(--font-medium);
-  transition: all var(--transition-base);
+  transition: background-color var(--transition-hover), transform var(--transition-hover);
   -webkit-backdrop-filter: blur(10px); /* Safari backdrop-filter prefix */
   backdrop-filter: blur(10px);
 }
@@ -142,14 +157,23 @@
 }
 
 .project-content {
-  padding: var(--space-8);
+  /* Adjust padding to accommodate increased title spacing while keeping card size same */
+  padding-top: calc(var(--space-8) * 0.85); /* Reduce by 15% to compensate for title margin-top */
+  padding-right: var(--space-8); /* Right stays same */
+  padding-bottom: var(--space-8);
+  padding-left: var(--space-8); /* Left stays same - gap increase comes from title margin-left */
 }
 
 .project-title {
   font-size: var(--text-xl);
   font-weight: var(--font-bold);
   color: var(--text-primary);
-  margin-bottom: var(--space-4);
+  /* Increase gap around title text by 15% on top, left, and bottom (right stays same) */
+  /* To achieve 15% increase: reduce padding by 15%, add margin of 30% (15% restore + 15% increase) */
+  margin-top: calc(var(--space-8) * 0.30); /* 30% of original: 32px * 0.30 = 9.6px (restores 4.8px + adds 4.8px) */
+  margin-left: calc(var(--space-8) * 0.15); /* 15% increase: 32px * 0.15 = 4.8px */
+  margin-right: 0; /* No change on right side */
+  margin-bottom: calc(var(--space-4) * 1.15); /* Increased by 15%: 16px * 1.15 = 18.4px */
   line-height: var(--leading-tight);
 }
 
@@ -189,6 +213,7 @@
   content: '✓';
   color: var(--accent-color);
   font-weight: var(--font-bold);
+  transition: transform var(--transition-hover); /* Fast hover response */
   font-size: var(--text-base);
 }
 
@@ -204,7 +229,7 @@
   background: linear-gradient(135deg, var(--primary-light), var(--accent-color));
   color: var(--primary-color);
   font-weight: var(--font-medium);
-  transition: all var(--transition-fast);
+  transition: transform var(--transition-hover), box-shadow var(--transition-hover);
 }
 
 .tech-stack .tech-tag:hover {
@@ -234,11 +259,23 @@
   }
   
   .project-content {
-    padding: var(--space-6);
+    /* Adjust padding to accommodate increased title spacing while keeping card size same */
+    padding-top: calc(var(--space-6) * 0.85); /* Reduce by 15% to compensate for title margin-top */
+    padding-right: var(--space-6); /* Right stays same */
+    padding-bottom: var(--space-6);
+    padding-left: var(--space-6); /* Left stays same - gap increase comes from title margin-left */
+  }
+  
+  /* Increase project title spacing by 15% on tablet - based on space-6 padding */
+  .project-title {
+    margin-top: calc(var(--space-6) * 0.30); /* 30% of original: 24px * 0.30 = 7.2px (restores 3.6px + adds 3.6px) */
+    margin-left: calc(var(--space-6) * 0.15); /* 15% increase from tablet content padding */
+    margin-right: 0; /* No change on right side */
+    margin-bottom: calc(var(--space-4) * 1.15); /* Increased by 15% */
   }
   
   .project-image {
-    height: 180px;
+    height: 144px; /* Reduced by 20% from 180px (160px base * 0.9 = 144px for tablets) */
   }
   
   .project-links {
@@ -253,15 +290,24 @@
 
 @media (max-width: 480px) {
   .project-content {
-    padding: var(--space-4);
+    /* Adjust padding to accommodate increased title spacing while keeping card size same */
+    padding-top: calc(var(--space-4) * 0.85); /* Reduce by 15% to compensate for title margin-top */
+    padding-right: var(--space-4); /* Right stays same */
+    padding-bottom: var(--space-4);
+    padding-left: var(--space-4); /* Left stays same - gap increase comes from title margin-left */
   }
   
   .project-title {
     font-size: var(--text-base); /* Smaller on very small screens */
+    /* Increase project title spacing by 15% on mobile - based on space-4 padding */
+    margin-top: calc(var(--space-4) * 0.30); /* 30% of original: 16px * 0.30 = 4.8px (restores 2.4px + adds 2.4px) */
+    margin-left: calc(var(--space-4) * 0.15); /* 15% increase from mobile content padding */
+    margin-right: 0; /* No change on right side */
+    margin-bottom: calc(var(--space-4) * 1.15); /* Increased by 15% */
   }
   
   .project-image {
-    height: 140px; /* Smaller height on very small screens */
+    height: 112px; /* Reduced by 20% from 140px (160px base * 0.7 = 112px for mobile) */
   }
   
   .filter-btn {
@@ -294,174 +340,639 @@
   opacity: 0;
   -webkit-transform: scale(0.8); /* Safari transform prefix */
   transform: scale(0.8);
-  transition: all 0.3s ease-out;
+  transition: opacity var(--transition-base), transform var(--transition-base);
 }
 
 .project-card.filtered-in {
   opacity: 1;
   -webkit-transform: scale(1); /* Safari transform prefix */
   transform: scale(1);
-  transition: all 0.3s ease-out;
+  transition: opacity var(--transition-base), transform var(--transition-base);
 }
 
-/* Featured project special effects */
-.featured-project::before {
-  content: '';
+/* Featured project special effects - Float/Bounce animation to make it stand out */
+/* Combined animation: fade in first, then float continuously - faster speed */
+.project-card.featured-project {
+  /* Same background as other cards */
+  background-color: var(--bg-primary);
+  /* Override the base fadeInUp animation - combine both effects */
+  -webkit-animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDown 2s ease-in-out 0.8s infinite;
+  -moz-animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDown 2s ease-in-out 0.8s infinite;
+  -ms-animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDown 2s ease-in-out 0.8s infinite;
+  animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDown 2s ease-in-out 0.8s infinite;
+  will-change: transform;
+  /* Ensure it's visible and can animate */
+  opacity: 1;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* First featured project with delay */
+.project-card.featured-project:nth-child(1) { 
+  -webkit-animation: featuredProjectEntry 0.8s ease-out 0.1s forwards, floatUpDown 2s ease-in-out 0.9s infinite;
+  -moz-animation: featuredProjectEntry 0.8s ease-out 0.1s forwards, floatUpDown 2s ease-in-out 0.9s infinite;
+  -ms-animation: featuredProjectEntry 0.8s ease-out 0.1s forwards, floatUpDown 2s ease-in-out 0.9s infinite;
+  animation: featuredProjectEntry 0.8s ease-out 0.1s forwards, floatUpDown 2s ease-in-out 0.9s infinite;
+}
+
+/* Combined entry animation for featured project */
+@-webkit-keyframes featuredProjectEntry {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(30px) translateZ(0);
+    transform: translateY(30px) translateZ(0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0) translateZ(0);
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+@keyframes featuredProjectEntry {
+  from {
+    opacity: 0;
+    transform: translateY(30px) translateZ(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateZ(0);
+  }
+}
+
+/* Keyframes with all browser prefixes */
+@-webkit-keyframes floatUpDown {
+  0%, 100% {
+    -webkit-transform: translateY(0) translateZ(0);
+    transform: translateY(0) translateZ(0);
+  }
+  50% {
+    -webkit-transform: translateY(-10px) translateZ(0);
+    transform: translateY(-10px) translateZ(0);
+  }
+}
+
+@-moz-keyframes floatUpDown {
+  0%, 100% {
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+  50% {
+    -moz-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+}
+
+@-ms-keyframes floatUpDown {
+  0%, 100% {
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+  50% {
+    -ms-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(0) translateZ(0);
+  }
+  50% {
+    transform: translateY(-10px) translateZ(0);
+  }
+}
+
+/* Pause animation on hover for better interaction - cross-browser */
+/* Ensure hover transform works alongside paused animation */
+.project-card.featured-project:hover {
+  /* Stars continue animating - no pause */
+  /* Maintain hover effect from parent .project-card:hover */
+  -webkit-transform: translateY(-8px) translateZ(0);
+  -moz-transform: translateY(-8px);
+  -ms-transform: translateY(-8px);
+  transform: translateY(-8px) translateZ(0);
+  /* Ensure immediate hover response */
+  will-change: transform;
+}
+
+/* Responsive adjustments for float animation */
+@media (max-width: 768px) {
+  .project-card.featured-project {
+    /* Faster animation on tablets too */
+    -webkit-animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDownMobile 2.5s ease-in-out 0.8s infinite;
+    -moz-animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDownMobile 2.5s ease-in-out 0.8s infinite;
+    -ms-animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDownMobile 2.5s ease-in-out 0.8s infinite;
+    animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDownMobile 2.5s ease-in-out 0.8s infinite;
+  }
+  
+  /* Adjust star sizes for tablets - 60% larger (18px * 1.6 = 28.8px) */
+  .project-card.featured-project::before,
+  .project-card.featured-project::after {
+    width: 28.8px;
+    height: 28.8px;
+    font-size: 22px;
+    top: -15.4px; /* Border centered: -1px - 14.4px */
+  }
+  
+  .project-card.featured-project::before {
+    left: -15.4px;
+  }
+  
+  .project-card.featured-project::after {
+    left: calc(-15.4px + 35px); /* Offset for side-by-side */
+  }
+  
+  /* Tablet orbit keyframes - centered on border */
+  @-webkit-keyframes starOrbit1 {
+    0% { top: -15.4px; left: -15.4px; }
+    25% { top: -15.4px; left: calc(100% - 13.4px); }
+    50% { top: calc(100% - 13.4px); left: calc(100% - 13.4px); }
+    75% { top: calc(100% - 13.4px); left: -15.4px; }
+    100% { top: -15.4px; left: -15.4px; }
+  }
+  
+  @-moz-keyframes starOrbit1 {
+    0% { top: -15.4px; left: -15.4px; }
+    25% { top: -15.4px; left: calc(100% - 13.4px); }
+    50% { top: calc(100% - 13.4px); left: calc(100% - 13.4px); }
+    75% { top: calc(100% - 13.4px); left: -15.4px; }
+    100% { top: -15.4px; left: -15.4px; }
+  }
+  
+  @-webkit-keyframes starOrbit2 {
+    0% { top: -15.4px; left: calc(-15.4px + 35px); }
+    25% { top: calc(-15.4px + 35px); left: calc(100% - 13.4px); }
+    50% { top: calc(100% - 13.4px); left: calc(100% - 13.4px - 35px); }
+    75% { top: calc(100% - 13.4px - 35px); left: -15.4px; }
+    100% { top: -15.4px; left: calc(-15.4px + 35px); }
+  }
+  
+  @-moz-keyframes starOrbit2 {
+    0% { top: -15.4px; left: calc(-15.4px + 35px); }
+    25% { top: calc(-15.4px + 35px); left: calc(100% - 13.4px); }
+    50% { top: calc(100% - 13.4px); left: calc(100% - 13.4px - 35px); }
+    75% { top: calc(100% - 13.4px - 35px); left: -15.4px; }
+    100% { top: -15.4px; left: calc(-15.4px + 35px); }
+  }
+  
+  @keyframes starOrbit1 {
+    0% { top: -15.4px; left: -15.4px; }
+    25% { top: -15.4px; left: calc(100% - 13.4px); }
+    50% { top: calc(100% - 13.4px); left: calc(100% - 13.4px); }
+    75% { top: calc(100% - 13.4px); left: -15.4px; }
+    100% { top: -15.4px; left: -15.4px; }
+  }
+  
+  @keyframes starOrbit2 {
+    0% { top: -15.4px; left: calc(-15.4px + 35px); }
+    25% { top: calc(-15.4px + 35px); left: calc(100% - 13.4px); }
+    50% { top: calc(100% - 13.4px); left: calc(100% - 13.4px - 35px); }
+    75% { top: calc(100% - 13.4px - 35px); left: -15.4px; }
+    100% { top: -15.4px; left: calc(-15.4px + 35px); }
+  }
+  
+  @-webkit-keyframes floatUpDownMobile {
+    0%, 100% {
+      -webkit-transform: translateY(0) translateZ(0);
+      transform: translateY(0) translateZ(0);
+    }
+    50% {
+      -webkit-transform: translateY(-6px) translateZ(0);
+      transform: translateY(-6px) translateZ(0);
+    }
+  }
+  
+  @-moz-keyframes floatUpDownMobile {
+    0%, 100% {
+      -moz-transform: translateY(0);
+      transform: translateY(0);
+    }
+    50% {
+      -moz-transform: translateY(-6px);
+      transform: translateY(-6px);
+    }
+  }
+  
+  @-ms-keyframes floatUpDownMobile {
+    0%, 100% {
+      -ms-transform: translateY(0);
+      transform: translateY(0);
+    }
+    50% {
+      -ms-transform: translateY(-6px);
+      transform: translateY(-6px);
+    }
+  }
+  
+  @keyframes floatUpDownMobile {
+    0%, 100% {
+      transform: translateY(0) translateZ(0);
+    }
+    50% {
+      transform: translateY(-6px) translateZ(0);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .project-card.featured-project {
+    /* Faster animation on mobile too */
+    -webkit-animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDownSmall 2.5s ease-in-out 0.8s infinite;
+    -moz-animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDownSmall 2.5s ease-in-out 0.8s infinite;
+    -ms-animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDownSmall 2.5s ease-in-out 0.8s infinite;
+    animation: featuredProjectEntry 0.8s ease-out forwards, floatUpDownSmall 2.5s ease-in-out 0.8s infinite;
+  }
+  
+  /* Adjust star sizes for mobile - 60% larger (16px * 1.6 = 25.6px) */
+  .project-card.featured-project::before,
+  .project-card.featured-project::after {
+    width: 25.6px;
+    height: 25.6px;
+    font-size: 19px;
+    top: -13.8px; /* Border centered: -1px - 12.8px */
+  }
+  
+  .project-card.featured-project::before {
+    left: -13.8px;
+  }
+  
+  .project-card.featured-project::after {
+    left: calc(-13.8px + 30px); /* Offset for side-by-side */
+  }
+  
+  /* Mobile orbit keyframes - centered on border */
+  @-webkit-keyframes starOrbit1 {
+    0% { top: -13.8px; left: -13.8px; }
+    25% { top: -13.8px; left: calc(100% - 11.8px); }
+    50% { top: calc(100% - 11.8px); left: calc(100% - 11.8px); }
+    75% { top: calc(100% - 11.8px); left: -13.8px; }
+    100% { top: -13.8px; left: -13.8px; }
+  }
+  
+  @-moz-keyframes starOrbit1 {
+    0% { top: -13.8px; left: -13.8px; }
+    25% { top: -13.8px; left: calc(100% - 11.8px); }
+    50% { top: calc(100% - 11.8px); left: calc(100% - 11.8px); }
+    75% { top: calc(100% - 11.8px); left: -13.8px; }
+    100% { top: -13.8px; left: -13.8px; }
+  }
+  
+  @-webkit-keyframes starOrbit2 {
+    0% { top: -13.8px; left: calc(-13.8px + 30px); }
+    25% { top: calc(-13.8px + 30px); left: calc(100% - 11.8px); }
+    50% { top: calc(100% - 11.8px); left: calc(100% - 11.8px - 30px); }
+    75% { top: calc(100% - 11.8px - 30px); left: -13.8px; }
+    100% { top: -13.8px; left: calc(-13.8px + 30px); }
+  }
+  
+  @-moz-keyframes starOrbit2 {
+    0% { top: -13.8px; left: calc(-13.8px + 30px); }
+    25% { top: calc(-13.8px + 30px); left: calc(100% - 11.8px); }
+    50% { top: calc(100% - 11.8px); left: calc(100% - 11.8px - 30px); }
+    75% { top: calc(100% - 11.8px - 30px); left: -13.8px; }
+    100% { top: -13.8px; left: calc(-13.8px + 30px); }
+  }
+  
+  @keyframes starOrbit1 {
+    0% { top: -13.8px; left: -13.8px; }
+    25% { top: -13.8px; left: calc(100% - 11.8px); }
+    50% { top: calc(100% - 11.8px); left: calc(100% - 11.8px); }
+    75% { top: calc(100% - 11.8px); left: -13.8px; }
+    100% { top: -13.8px; left: -13.8px; }
+  }
+  
+  @keyframes starOrbit2 {
+    0% { top: -13.8px; left: calc(-13.8px + 30px); }
+    25% { top: calc(-13.8px + 30px); left: calc(100% - 11.8px); }
+    50% { top: calc(100% - 11.8px); left: calc(100% - 11.8px - 30px); }
+    75% { top: calc(100% - 11.8px - 30px); left: -13.8px; }
+    100% { top: -13.8px; left: calc(-13.8px + 30px); }
+  }
+  
+  @-webkit-keyframes floatUpDownSmall {
+    0%, 100% {
+      -webkit-transform: translateY(0) translateZ(0);
+      transform: translateY(0) translateZ(0);
+    }
+    50% {
+      -webkit-transform: translateY(-4px) translateZ(0);
+      transform: translateY(-4px) translateZ(0);
+    }
+  }
+  
+  @-moz-keyframes floatUpDownSmall {
+    0%, 100% {
+      -moz-transform: translateY(0);
+      transform: translateY(0);
+    }
+    50% {
+      -moz-transform: translateY(-4px);
+      transform: translateY(-4px);
+    }
+  }
+  
+  @-ms-keyframes floatUpDownSmall {
+    0%, 100% {
+      -ms-transform: translateY(0);
+      transform: translateY(0);
+    }
+    50% {
+      -ms-transform: translateY(-4px);
+      transform: translateY(-4px);
+    }
+  }
+  
+  @keyframes floatUpDownSmall {
+    0%, 100% {
+      transform: translateY(0) translateZ(0);
+    }
+    50% {
+      transform: translateY(-4px) translateZ(0);
+    }
+  }
+}
+
+/* Stars continue animating on hover - do not pause */
+/* Removed pause on hover - stars should continue running */
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .project-card.featured-project {
+    -webkit-animation: none;
+    -moz-animation: none;
+    -ms-animation: none;
+    -o-animation: none;
+    animation: none;
+  }
+  
+  .project-card.featured-project::before,
+  .project-card.featured-project::after {
+    -webkit-animation: none;
+    -moz-animation: none;
+    -ms-animation: none;
+    -o-animation: none;
+    animation: none;
+  }
+}
+
+/* Touch device optimization */
+@media (hover: none) and (pointer: coarse) {
+  .project-card.featured-project {
+    /* Faster animation on touch devices too */
+    -webkit-animation-duration: 0.8s, 2.5s;
+    -moz-animation-duration: 0.8s, 2.5s;
+    -ms-animation-duration: 0.8s, 2.5s;
+    -o-animation-duration: 0.8s, 2.5s;
+    animation-duration: 0.8s, 2.5s;
+  }
+}
+
+/* Accent border for featured project - no background, just border */
+/* Background removed to match other cards - keeping only the border accent */
+.project-card.featured-project::before {
+  /* First star - Amber color, 60% larger (20.8px * 1.6 = 33.3px) */
+  content: '★';
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, var(--accent-color), var(--primary-color), var(--accent-color));
-  border-radius: var(--radius-lg);
-  z-index: -1;
-  animation: borderGlow 3s ease-in-out infinite;
-}
-
-@keyframes borderGlow {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
-/* Sparkling Stars Effect */
-.featured-project::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(2px 2px at 20px 30px, white, transparent),
-    radial-gradient(2px 2px at 40px 70px, white, transparent),
-    radial-gradient(1px 1px at 90px 40px, white, transparent),
-    radial-gradient(1px 1px at 130px 80px, white, transparent),
-    radial-gradient(2px 2px at 160px 30px, white, transparent),
-    radial-gradient(1px 1px at 180px 60px, white, transparent),
-    radial-gradient(2px 2px at 50px 90px, white, transparent),
-    radial-gradient(1px 1px at 120px 20px, white, transparent);
-  background-repeat: repeat;
-  background-size: 200px 100px;
-  -webkit-animation: sparkle 4s linear infinite; /* Safari animation prefix */
-  animation: sparkle 4s linear infinite;
+  /* Centered on 2px border: border center at -1px, star center at -1px, corner at -1px - 16.65px = -17.65px */
+  top: -17.65px;
+  left: -17.65px;
+  width: 33.3px; /* 60% larger (20.8px * 1.6 = 33.3px) */
+  height: 33.3px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  font-size: 25px; /* Scaled proportionally */
+  color: var(--accent-color); /* Amber */
+  z-index: 10;
   pointer-events: none;
-  z-index: 1;
-  border-radius: var(--radius-lg);
+  /* Shining/glow effect - enhanced for larger size */
+  text-shadow: 
+    0 0 12px var(--accent-color),
+    0 0 18px var(--accent-color),
+    0 0 24px var(--accent-color);
+  filter: drop-shadow(0 0 6px var(--accent-color));
+  /* Animation - runs around the border */
+  -webkit-animation: starOrbit1 4s linear infinite, starShine 1.5s ease-in-out infinite;
+  -moz-animation: starOrbit1 4s linear infinite, starShine 1.5s ease-in-out infinite;
+  -ms-animation: starOrbit1 4s linear infinite, starShine 1.5s ease-in-out infinite;
+  animation: starOrbit1 4s linear infinite, starShine 1.5s ease-in-out infinite;
 }
 
-@-webkit-keyframes sparkle {
-  0% { 
-    opacity: 0;
-    -webkit-opacity: 0;
-    -webkit-transform: scale(0.8) rotate(0deg);
-    transform: scale(0.8) rotate(0deg);
+/* Second star - Cyan color, runs parallel to first star along border */
+.project-card.featured-project::after {
+  content: '★';
+  position: absolute;
+  /* Starting position: top border, offset to the right */
+  top: -17.65px;
+  left: calc(-17.65px + 40px);
+  width: 33.3px; /* Same size as first star */
+  height: 33.3px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  font-size: 25px;
+  color: var(--primary-color); /* Cyan */
+  z-index: 10;
+  pointer-events: none;
+  /* Shining/glow effect - cyan */
+  text-shadow: 
+    0 0 12px var(--primary-color),
+    0 0 18px var(--primary-color),
+    0 0 24px var(--primary-color);
+  filter: drop-shadow(0 0 6px var(--primary-color));
+  /* Animation - parallel orbit path with proper offset on all sides */
+  -webkit-animation: starOrbit2 4s linear infinite, starShine 1.5s ease-in-out 0.75s infinite;
+  -moz-animation: starOrbit2 4s linear infinite, starShine 1.5s ease-in-out 0.75s infinite;
+  -ms-animation: starOrbit2 4s linear infinite, starShine 1.5s ease-in-out 0.75s infinite;
+  animation: starOrbit2 4s linear infinite, starShine 1.5s ease-in-out 0.75s infinite;
+}
+
+/* First star orbit (Amber) - centered on 2px border line */
+@-webkit-keyframes starOrbit1 {
+  0% {
+    top: -17.65px; /* Top border center: -1px - 16.65px */
+    left: -17.65px; /* Left border center: -1px - 16.65px */
   }
-  10% { 
-    opacity: 1;
-    -webkit-opacity: 1;
-    -webkit-transform: scale(1) rotate(5deg);
-    transform: scale(1) rotate(5deg);
+  25% {
+    top: -17.65px; /* Top border center */
+    left: calc(100% - 15.65px); /* Right border center: 100% + 1px - 16.65px */
   }
-  20% { 
-    opacity: 0.8;
-    -webkit-opacity: 0.8;
-    -webkit-transform: scale(1.1) rotate(-3deg);
-    transform: scale(1.1) rotate(-3deg);
+  50% {
+    top: calc(100% - 15.65px); /* Bottom border center: 100% + 1px - 16.65px */
+    left: calc(100% - 15.65px); /* Right border center */
   }
-  30% { 
-    opacity: 1;
-    -webkit-opacity: 1;
-    -webkit-transform: scale(0.9) rotate(2deg);
-    transform: scale(0.9) rotate(2deg);
+  75% {
+    top: calc(100% - 15.65px); /* Bottom border center */
+    left: -17.65px; /* Left border center */
   }
-  40% { 
-    opacity: 0.6;
-    -webkit-opacity: 0.6;
-    -webkit-transform: scale(1.2) rotate(-1deg);
-    transform: scale(1.2) rotate(-1deg);
-  }
-  50% { 
-    opacity: 1;
-    -webkit-opacity: 1;
-    -webkit-transform: scale(1) rotate(0deg);
-    transform: scale(1) rotate(0deg);
-  }
-  60% { 
-    opacity: 0.7;
-    -webkit-opacity: 0.7;
-    -webkit-transform: scale(0.8) rotate(3deg);
-    transform: scale(0.8) rotate(3deg);
-  }
-  70% { 
-    opacity: 1;
-    -webkit-opacity: 1;
-    -webkit-transform: scale(1.1) rotate(-2deg);
-    transform: scale(1.1) rotate(-2deg);
-  }
-  80% { 
-    opacity: 0.5;
-    -webkit-opacity: 0.5;
-    -webkit-transform: scale(0.9) rotate(1deg);
-    transform: scale(0.9) rotate(1deg);
-  }
-  90% { 
-    opacity: 1;
-    -webkit-opacity: 1;
-    -webkit-transform: scale(1) rotate(0deg);
-    transform: scale(1) rotate(0deg);
-  }
-  100% { 
-    opacity: 0;
-    -webkit-opacity: 0;
-    -webkit-transform: scale(0.8) rotate(0deg);
-    transform: scale(0.8) rotate(0deg);
+  100% {
+    top: -17.65px;
+    left: -17.65px;
   }
 }
 
-@keyframes sparkle {
-  0% { 
-    opacity: 0;
-    transform: scale(0.8) rotate(0deg);
+@-moz-keyframes starOrbit1 {
+  0% {
+    top: -17.65px;
+    left: -17.65px;
   }
-  10% { 
+  25% {
+    top: -17.65px;
+    left: calc(100% - 15.65px);
+  }
+  50% {
+    top: calc(100% - 15.65px);
+    left: calc(100% - 15.65px);
+  }
+  75% {
+    top: calc(100% - 15.65px);
+    left: -17.65px;
+  }
+  100% {
+    top: -17.65px;
+    left: -17.65px;
+  }
+}
+
+@keyframes starOrbit1 {
+  0% {
+    top: -17.65px;
+    left: -17.65px;
+  }
+  25% {
+    top: -17.65px;
+    left: calc(100% - 15.65px);
+  }
+  50% {
+    top: calc(100% - 15.65px);
+    left: calc(100% - 15.65px);
+  }
+  75% {
+    top: calc(100% - 15.65px);
+    left: -17.65px;
+  }
+  100% {
+    top: -17.65px;
+    left: -17.65px;
+  }
+}
+
+/* Second star orbit (Cyan) - parallel path with proper offset on all sides */
+@-webkit-keyframes starOrbit2 {
+  0% {
+    /* Top border - offset horizontally to the right */
+    top: -17.65px;
+    left: calc(-17.65px + 40px);
+  }
+  25% {
+    /* Right border - offset vertically downward */
+    top: calc(-17.65px + 40px);
+    left: calc(100% - 15.65px);
+  }
+  50% {
+    /* Bottom border - offset horizontally to the left */
+    top: calc(100% - 15.65px);
+    left: calc(100% - 15.65px - 40px);
+  }
+  75% {
+    /* Left border - offset vertically upward */
+    top: calc(100% - 15.65px - 40px);
+    left: -17.65px;
+  }
+  100% {
+    top: -17.65px;
+    left: calc(-17.65px + 40px);
+  }
+}
+
+@-moz-keyframes starOrbit2 {
+  0% {
+    top: -17.65px;
+    left: calc(-17.65px + 40px);
+  }
+  25% {
+    top: calc(-17.65px + 40px);
+    left: calc(100% - 15.65px);
+  }
+  50% {
+    top: calc(100% - 15.65px);
+    left: calc(100% - 15.65px - 40px);
+  }
+  75% {
+    top: calc(100% - 15.65px - 40px);
+    left: -17.65px;
+  }
+  100% {
+    top: -17.65px;
+    left: calc(-17.65px + 40px);
+  }
+}
+
+@keyframes starOrbit2 {
+  0% {
+    top: -17.65px;
+    left: calc(-17.65px + 40px);
+  }
+  25% {
+    top: calc(-17.65px + 40px);
+    left: calc(100% - 15.65px);
+  }
+  50% {
+    top: calc(100% - 15.65px);
+    left: calc(100% - 15.65px - 40px);
+  }
+  75% {
+    top: calc(100% - 15.65px - 40px);
+    left: -17.65px;
+  }
+  100% {
+    top: -17.65px;
+    left: calc(-17.65px + 40px);
+  }
+}
+
+/* Shining/glowing effect - all browser prefixes */
+@-webkit-keyframes starShine {
+  0%, 100% {
     opacity: 1;
-    transform: scale(1) rotate(5deg);
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
-  20% { 
-    opacity: 0.8;
-    transform: scale(1.1) rotate(-3deg);
-  }
-  30% { 
-    opacity: 1;
-    transform: scale(0.9) rotate(2deg);
-  }
-  40% { 
+  50% {
     opacity: 0.6;
-    transform: scale(1.2) rotate(-1deg);
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
   }
-  50% { 
+}
+
+@-moz-keyframes starShine {
+  0%, 100% {
     opacity: 1;
-    transform: scale(1) rotate(0deg);
+    -moz-transform: scale(1);
+    transform: scale(1);
   }
-  60% { 
-    opacity: 0.7;
-    transform: scale(0.8) rotate(3deg);
+  50% {
+    opacity: 0.6;
+    -moz-transform: scale(1.3);
+    transform: scale(1.3);
   }
-  70% { 
+}
+
+@keyframes starShine {
+  0%, 100% {
     opacity: 1;
-    transform: scale(1.1) rotate(-2deg);
+    transform: scale(1);
   }
-  80% { 
-    opacity: 0.5;
-    transform: scale(0.9) rotate(1deg);
-  }
-  90% { 
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-  100% { 
-    opacity: 0;
-    transform: scale(0.8) rotate(0deg);
+  50% {
+    opacity: 0.6;
+    transform: scale(1.3);
   }
 }
 

@@ -28,7 +28,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.3s ease;
+  transition: background-color var(--transition-hover), color var(--transition-hover), border-color var(--transition-hover), transform var(--transition-hover);
 }
 
 .preview-cv-btn:hover {
@@ -51,7 +51,7 @@
   align-items: center;
   gap: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+  transition: background-color var(--transition-hover), color var(--transition-hover), border-color var(--transition-hover), transform var(--transition-hover);
   width: 100%;
   justify-content: center;
 }
@@ -78,7 +78,7 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  transition: all 0.3s ease;
+  transition: background-color var(--transition-hover), color var(--transition-hover), border-color var(--transition-hover), transform var(--transition-hover);
   width: 100%;
   justify-content: center;
 }

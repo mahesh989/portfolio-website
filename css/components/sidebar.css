@@ -67,7 +67,7 @@
 .contact-item {
   border-bottom: 1px solid var(--border-color);
   padding: var(--space-3) 0;
-  transition: all var(--transition-fast);
+  transition: color var(--transition-hover), background-color var(--transition-hover);
 }
 
 .contact-item:last-child {
@@ -92,7 +92,7 @@
 
 .nav-item {
   position: relative;
-  transition: all var(--transition-fast);
+  transition: color var(--transition-hover), background-color var(--transition-hover);
 }
 
 .nav-item::before {
