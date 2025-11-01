@@ -8,7 +8,7 @@
   position: relative;
   overflow: hidden; /* Prevent all overflow */
   z-index: 1;
-  padding-top: 4rem; /* Reduced to remove gap above circle animation */
+  padding-top: 8rem; /* Increased by 2rem from 6rem */
   padding-bottom: var(--space-6); /* Increased bottom padding to accommodate bubble */
   width: 100%;
   max-width: 100vw; /* Ensure it doesn't exceed viewport width */
@@ -19,15 +19,15 @@
 .hero-content {
   text-align: center;
   max-width: 800px;
-  padding: 0 var(--space-6) var(--space-4) var(--space-6);
+  padding: 0 var(--space-6) var(--space-4) var(--space-6); /* Removed top padding to move content up */
   position: relative;
   z-index: 2;
-  margin-top: 0; /* Reset margin - no negative offset */
+  margin-top: -4rem; /* Move content up to be just below nav bar */
 }
 
 .hero-puppy-container {
   position: absolute;
-  top: var(--space-4); /* Reduced to remove gap above circle */
+  top: var(--space-6);
   left: var(--space-6);
   z-index: 1;
   -webkit-animation: puppy-glide-x 8s ease-in-out infinite alternate; /* Safari animation prefix */

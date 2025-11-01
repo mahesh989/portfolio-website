@@ -4,8 +4,39 @@
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* FIX: Improve scrolling behavior */
+.sidebar {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Ensure sidebar content is scrollable */
 .sidebar-inner {
   position: relative;
+  height: 100%;
+}
+
+/* Desktop: Allow normal transforms and scrolling */
+@media (min-width: 768px) {
+  .sidebar {
+    transform: none;
+  }
+  
+  .sidebar-inner {
+    overflow-y: visible; /* Allow content to scroll with sidebar */
+  }
+}
+
+/* Mobile: Remove transforms and ensure scrolling */
+@media (max-width: 767px) {
+  .sidebar {
+    transform: none !important;
+  }
+  
+  .sidebar-inner {
+    overflow-y: auto;
+  }
 }
 
 /* Sidebar Close Button */
@@ -22,9 +53,13 @@
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  z-index: 2;
+  z-index: 10000; /* High z-index to ensure visibility */
 }
-.sidebar-close:hover { color: var(--text-primary); }
+.sidebar-close:hover { 
+  color: var(--text-primary); 
+  background: var(--bg-secondary);
+  border-radius: 50%;
+}
 
 .sidebar-inner::after {
   content: '';
@@ -263,16 +298,29 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* Mobile Sidebar Adjustments */
+/* FIX: Ensure close button is visible and accessible on mobile */
 @media (max-width: 767px) {
   .sidebar {
     background: var(--bg-primary);
     box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
+    width: 100vw;
   }
-  .sidebar.active .sidebar-close { display: -webkit-flex; display: flex; }
+  
+  .sidebar-close { 
+    display: flex !important; 
+  }
   
   .sidebar-inner {
     padding: var(--space-8) var(--space-6);
+    width: 100%;
+    min-height: 100%;
+    padding-bottom: 100px; /* Extra space for scrolling */
+  }
+  
+  /* FIX: Ensure content doesn't overflow horizontally */
+  .sidebar-inner > * {
+    max-width: 100%;
+    overflow-x: hidden;
   }
   
   .profile-photo img {

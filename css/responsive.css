@@ -15,7 +15,6 @@
 @media (max-width: 1023px) {
   .sidebar {
     width: 280px;
-    position: fixed; /* Rolled back to fixed */
   }
   
   .main-content {
@@ -54,102 +53,137 @@
   }
 }
 
-/* Mobile: < 768px */
+/* Mobile: < 768px - AUTO-OPENING SIDEBAR FIXED VERSION */
 @media (max-width: 767px) {
-  /* Show mobile header on mobile */
-  .mobile-header {
-    display: none !important; /* Hide header; use top nav only */
+  /* CRITICAL: Reset body scrolling */
+  html, body {
+    height: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    position: relative !important;
   }
-  
-  /* Sidebar becomes drawer */
+
+  /* Show mobile header */
+  .mobile-header {
+    display: flex !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9990;
+    background: var(--bg-primary);
+    height: 60px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  /* Sidebar becomes drawer - AUTO-OPEN BY DEFAULT */
   .sidebar {
     position: fixed;
     top: 0;
-    left: -100%;
-    width: 280px;
-    height: 100vh;
-    z-index: 9999;
-    transition: left var(--transition-base);
-    /* Ensure sidebar scrolls independently on mobile */
+    left: 0; /* CHANGED: Start open instead of -100% */
+    width: 100%;
+    height: 100% !important;
+    z-index: 10000;
+    transition: left 0.3s ease;
     overflow-y: auto;
-    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain; /* Critical: Prevent scroll from reaching body */
+    overscroll-behavior: contain;
+    background: var(--bg-primary);
   }
-  
+
+  .sidebar:not(.active) {
+    left: -100%; /* CHANGED: Only hide when not active */
+  }
+
   .sidebar.active {
     left: 0;
   }
-  
-  /* Main content full width */
+
+  /* FIXED: Close button positioning */
+  .sidebar-close {
+    display: flex !important;
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+    z-index: 10001 !important;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    box-shadow: var(--shadow-lg);
+    width: 44px;
+    height: 44px;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  /* MAIN CONTENT FIX - Hidden when sidebar is open */
   .main-content {
-    margin-left: 0;
-    max-width: 100%;
-    padding-top: 60px; /* Only top nav is fixed */
-    /* Always allow scrolling when sidebar is closed */
+    margin-left: 0 !important;
+    max-width: 100% !important;
+    padding-top: 60px !important;
+    min-height: calc(100vh - 60px) !important;
     overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    height: auto;
-    min-height: 100vh;
+    -webkit-overflow-scrolling: touch !important;
+    position: relative !important;
+    z-index: 1 !important;
   }
-  
-  /* When sidebar is active, prevent main content from scrolling BUT allow hover */
-  body.no-scroll .main-content {
-    overflow-y: hidden !important;
-    touch-action: none !important;
-    /* Critical: Keep pointer-events enabled so hover effects work even when sidebar is open */
-    pointer-events: auto !important;
-    /* Prevent scroll position jumping */
-    position: relative;
-  }
-  
-  /* When sidebar is NOT active, ensure main content scrolls normally */
-  body:not(.no-scroll) .main-content,
-  .main-content:not(body.no-scroll .main-content) {
-    overflow-y: auto !important;
-    touch-action: auto !important;
-  }
-  
-  /* Ensure sidebar can scroll when active - allow full scrolling to show all content */
-  .sidebar.active {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    /* Ensure sidebar inner content can scroll fully */
+
+  /* When sidebar is active, hide main content scrolling */
+  body.sidebar-open .main-content {
+    overflow: hidden !important;
     height: 100vh !important;
-    max-height: 100vh !important;
-  }
-  
-  /* Ensure sidebar inner content is visible and scrollable */
-  .sidebar.active .sidebar-inner {
-    min-height: 100%;
-    padding-bottom: var(--space-12); /* Extra bottom padding to ensure last item (Preview CV) is fully visible when scrolling */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Ensure all sidebar content sections are visible */
-  .sidebar.active .contact-info,
-  .sidebar.active .sidebar-nav,
-  .sidebar.active .download-cv,
-  .sidebar.active .btn {
-    /* All content should be visible when scrolling */
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  /* Ensure overlay doesn't block main content when inactive */
-  .mobile-overlay:not(.active) {
     pointer-events: none !important;
-    z-index: -1 !important;
   }
-  
-  /* Mobile overlay */
-  .mobile-overlay.active {
-    opacity: 1;
-    visibility: visible;
+
+  /* Mobile overlay - fixed */
+  .mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    opacity: 1; /* CHANGED: Start visible */
+    visibility: visible; /* CHANGED: Start visible */
+    transition: all 0.3s ease;
+    pointer-events: all;
+  }
+
+  .mobile-overlay:not(.active) {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* Hero section fixes */
+  .hero {
+    min-height: auto !important;
+    padding: var(--space-8) 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .hero-content {
+    padding: 0 var(--space-4) !important;
+    margin-top: 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  /* Ensure all sections are visible and scrollable */
+  .section {
+    padding: var(--space-12) 0 !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  /* Fix viewport height issues */
+  .container {
+    max-width: 100% !important;
+    padding: 0 var(--space-4) !important;
+    overflow: visible !important;
   }
   
   /* Hero adjustments */

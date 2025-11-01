@@ -8,6 +8,13 @@ export function initSidebarScroll() {
     return;
   }
   
+  // CRITICAL FIX: Only run on desktop (>767px)
+  const isDesktop = window.innerWidth > 767;
+  if (!isDesktop) {
+    console.log('Mobile detected - skipping simultaneous scroll');
+    return; // Exit early on mobile
+  }
+  
   let isHoveringSidebar = false;
   let isHoveringMain = false;
   let scrollTimeout = null;
@@ -18,6 +25,10 @@ export function initSidebarScroll() {
   console.log('Sidebar scrollHeight:', sidebar.scrollHeight);
   console.log('Sidebar clientHeight:', sidebar.clientHeight);
   console.log('Can sidebar scroll:', sidebar.scrollHeight > sidebar.clientHeight);
+  
+  // CRITICAL: Set initial state - assume user is in main content area
+  isHoveringMain = true;
+  isHoveringSidebar = false;
   
   // Track mouse position for sidebar
   sidebar.addEventListener('mouseenter', () => {
@@ -53,6 +64,9 @@ export function initSidebarScroll() {
       e.preventDefault();
       e.stopPropagation();
       
+      // Set flag to prevent main content sync
+      isScrolling = true;
+      
       // Throttle scroll events to prevent vibration
       const now = Date.now();
       if (now - lastScrollTime < 16) { // ~60fps throttling
@@ -71,10 +85,15 @@ export function initSidebarScroll() {
       
       // Add visual feedback
       sidebar.classList.add('sidebar-scrolling');
+      
+      // Clear flag after scroll completes
+      setTimeout(() => {
+        isScrolling = false;
+      }, 100);
     }
   }, { passive: false });
   
-  // Prevent main content scroll when hovering sidebar - IMPROVED
+  // Prevent main content scroll when hovering sidebar - CRITICAL FIX
   document.addEventListener('wheel', (e) => {
     if (isHoveringSidebar) {
       e.preventDefault();
@@ -83,26 +102,55 @@ export function initSidebarScroll() {
     }
   }, { passive: false });
   
+  // CRITICAL: Also prevent window scroll events from syncing when hovering sidebar
+  window.addEventListener('wheel', (e) => {
+    if (isHoveringSidebar) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, { passive: false });
+  
   // Handle main content scroll - THROTTLED
+  // CRITICAL FIX: Always sync sidebar with main content scroll, not just when hovering
   let mainScrollTimeout = null;
+  
+  // Function to sync sidebar with main content
+  function syncSidebarWithMain() {
+    const mainScroll = window.pageYOffset;
+    
+    // Calculate proportional scroll position (same speed as main)
+    const mainMaxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const sidebarMaxScroll = sidebar.scrollHeight - sidebar.clientHeight;
+    
+    if (mainMaxScroll > 0 && sidebarMaxScroll > 0) {
+      const scrollRatio = mainScroll / mainMaxScroll;
+      const sidebarScroll = scrollRatio * sidebarMaxScroll;
+      
+      // Apply scroll to sidebar
+      sidebar.scrollTop = sidebarScroll;
+    }
+  }
+  
+  // CRITICAL: Initialize sync immediately on load
+  setTimeout(() => {
+    syncSidebarWithMain();
+    console.log('Initial sidebar sync completed at load');
+  }, 100);
+  
+  // CRITICAL: Also sync after a longer delay to catch late-loading content
+  setTimeout(() => {
+    syncSidebarWithMain();
+    console.log('Secondary sidebar sync completed');
+  }, 500);
+  
   window.addEventListener('scroll', () => {
-    if (isHoveringMain && !isScrolling) {
+    // CRITICAL: Only sync when NOT hovering sidebar AND not actively scrolling sidebar
+    if (!isHoveringSidebar && !isScrolling) {
       clearTimeout(mainScrollTimeout);
       mainScrollTimeout = setTimeout(() => {
-        const mainScroll = window.pageYOffset;
-        
-        // Calculate proportional scroll position (same speed as main)
-        const mainMaxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const sidebarMaxScroll = sidebar.scrollHeight - sidebar.clientHeight;
-        
-        if (mainMaxScroll > 0 && sidebarMaxScroll > 0) {
-          const scrollRatio = mainScroll / mainMaxScroll;
-          const sidebarScroll = scrollRatio * sidebarMaxScroll;
-          
-          // Apply scroll to sidebar
-          sidebar.scrollTop = sidebarScroll;
-        }
-      }, 10); // Small delay to prevent conflicts
+        syncSidebarWithMain();
+      }, 5); // Reduced delay for more responsive sync
     }
   });
   

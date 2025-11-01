@@ -132,16 +132,13 @@
 
 /* Main Layout Container */
 .main-layout {
-  display: -webkit-flex; /* Safari flexbox prefix */
   display: flex;
   min-height: 100vh;
-  /* Ensure container allows natural scrolling for simultaneous sidebar/main movement */
-  position: relative;
 }
 
 /* Sidebar */
 .sidebar {
-  position: fixed; /* Rolled back to fixed - will use JS for scroll sync */
+  position: fixed;
   top: 0;
   left: 0;
   width: 30%;
@@ -181,10 +178,6 @@
 
 /* Ensure main content respects sidebar max-width */
 @media (min-width: 1334px) {
-  .sidebar {
-    position: fixed; /* Rolled back to fixed */
-  }
-  
   .main-content {
     margin-left: 400px; /* Match sidebar max-width */
     max-width: calc(100% - 400px);
@@ -648,7 +641,6 @@
 @media (max-width: 1023px) {
   .sidebar {
     width: 280px;
-    position: fixed; /* Rolled back to fixed */
   }
   
   .main-content {

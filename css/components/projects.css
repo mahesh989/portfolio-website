@@ -107,31 +107,22 @@
   transition: opacity var(--transition-hover);
   display: -webkit-flex; /* Safari flexbox prefix */
   display: flex;
-  -webkit-align-items: flex-start; /* Changed from center to allow content to be positioned lower */
-  align-items: flex-start;
+  -webkit-align-items: center; /* Safari flexbox prefix */
+  align-items: center;
   -webkit-justify-content: center; /* Safari flexbox prefix */
   justify-content: center;
-  /* Move content down by 20% of card height */
-  /* Overlay spans 80% of card height. To move 20% of card down from center:
-     Center would be at 50% of card = 40% into overlay (since overlay starts at 10%).
-     Move 20% of card down = 20/80 = 25% more of overlay height.
-     Total: 40% + 25% = 65% from overlay top. Use padding-top with calc. */
-  padding-top: 30%; /* Percentage-based padding (width-relative) that approximates 20% card height movement */
   will-change: opacity; /* Performance optimization */
-}
-
-/* Project links container - already positioned by overlay padding */
-.project-links {
-  display: -webkit-flex; /* Safari flexbox prefix */
-  display: flex;
-  gap: var(--space-4);
 }
 
 .project-card:hover .project-overlay {
   opacity: 0.6; /* Reduced from 1 to 0.6 for better text readability */
 }
 
-/* .project-links moved above - see earlier definition */
+.project-links {
+  display: -webkit-flex; /* Safari flexbox prefix */
+  display: flex;
+  gap: var(--space-4);
+}
 
 .project-link {
   display: -webkit-flex; /* Safari flexbox prefix */
@@ -850,7 +841,7 @@
     top: -17.65px;
     left: calc(100% - 15.65px);
   }
-  50% {
+  50% { 
     top: calc(100% - 15.65px);
     left: calc(100% - 15.65px);
   }
@@ -886,7 +877,7 @@
     top: calc(100% - 15.65px - 40px);
     left: -17.65px;
   }
-  100% {
+  100% { 
     top: -17.65px;
     left: calc(-17.65px + 40px);
   }
@@ -924,7 +915,7 @@
     top: calc(-17.65px + 40px);
     left: calc(100% - 15.65px);
   }
-  50% {
+  50% { 
     top: calc(100% - 15.65px);
     left: calc(100% - 15.65px - 40px);
   }

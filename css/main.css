@@ -684,3 +684,109 @@ input, textarea, select {
   /* Contact method icons must stay white on iOS */
   .contact-section .method-icon svg { color: #ffffff !important; stroke: #ffffff !important; fill: none !important; }
 }
+
+/* ===== CRITICAL MOBILE FIXES FOR AUTO-OPENING SIDEBAR ===== */
+
+/* Mobile Safari viewport height fix */
+@supports (-webkit-touch-callout: none) {
+  .hero,
+  .sidebar,
+  .main-content {
+    height: -webkit-fill-available !important;
+  }
+}
+
+/* Emergency mobile overflow fixes - MOBILE ONLY */
+@media (max-width: 767px) {
+  /* Force remove any transforms that might break layout on mobile */
+  .sidebar,
+  .main-content,
+  .hero,
+  .section,
+  .container {
+    transform: none !important;
+  }
+  
+  /* Ensure sidebar scrolls properly on mobile */
+  .sidebar {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* When sidebar is open, prevent body scroll but allow sidebar scroll */
+  body.sidebar-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  body:not(.sidebar-open) {
+    overflow: auto !important;
+    position: relative !important;
+  }
+  
+  /* Main content should be hidden when sidebar is open */
+  body.sidebar-open .main-content {
+    overflow: hidden !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  
+  body:not(.sidebar-open) .main-content {
+    overflow: auto !important;
+    height: auto !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+  }
+}
+
+/* DESKTOP FIXES - Restore simultaneous scrolling on desktop */
+@media (min-width: 768px) {
+  /* Restore normal scrolling for desktop */
+  html, body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+    height: auto !important;
+  }
+  
+  /* Ensure sidebar and main content scroll independently on desktop */
+  .sidebar {
+    overflow-y: auto !important;
+    position: fixed !important;
+  }
+  
+  .main-content {
+    overflow-y: visible !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+    height: auto !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+  }
+  
+  /* Remove any mobile-specific body classes on desktop */
+  body.sidebar-open {
+    overflow: auto !important;
+    position: relative !important;
+  }
+}
+
+/* Prevent horizontal scrolling globally */
+* {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure body handles scrolling properly */
+body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+}
+
+/* Loading screen should not interfere with main content */
+.loading-screen.hidden {
+  display: none !important;
+}
