@@ -1,4 +1,4 @@
-// Smart Sidebar Scrolling
+// Smart Sidebar Scrolling - Simultaneous scroll by default, independent when hovering sidebar
 export function initSidebarScroll() {
   const sidebar = document.getElementById('sidebar');
   const mainContent = document.getElementById('main-content');
@@ -16,120 +16,98 @@ export function initSidebarScroll() {
   }
   
   let isHoveringSidebar = false;
-  let isHoveringMain = false;
-  let scrollTimeout = null;
-  let isScrolling = false;
-  let lastScrollTime = 0;
+  let isSidebarScrolling = false;
+  let mainScrollTimeout = null;
+  let hoverTimeout = null;
   
   console.log('Initializing smart scroll...');
   console.log('Sidebar scrollHeight:', sidebar.scrollHeight);
   console.log('Sidebar clientHeight:', sidebar.clientHeight);
   console.log('Can sidebar scroll:', sidebar.scrollHeight > sidebar.clientHeight);
   
-  // CRITICAL: Set initial state - assume user is in main content area
-  isHoveringMain = true;
-  isHoveringSidebar = false;
-  
-  // Track mouse position for sidebar
+  // Track mouse position for sidebar with debounce to prevent flickering
   sidebar.addEventListener('mouseenter', () => {
-    isHoveringSidebar = true;
-    isHoveringMain = false;
-    console.log('Mouse entered sidebar');
+    clearTimeout(hoverTimeout);
+    hoverTimeout = setTimeout(() => {
+      isHoveringSidebar = true;
+      sidebar.classList.add('sidebar-hover');
+      console.log('Mouse entered sidebar - independent scroll enabled');
+    }, 50); // Small delay to prevent flickering
   });
   
   sidebar.addEventListener('mouseleave', () => {
+    clearTimeout(hoverTimeout);
     isHoveringSidebar = false;
-    console.log('Mouse left sidebar');
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(() => {
-      sidebar.classList.remove('sidebar-scrolling');
-    }, 300);
+    sidebar.classList.remove('sidebar-hover');
+    sidebar.classList.remove('sidebar-scrolling');
+    isSidebarScrolling = false;
+    console.log('Mouse left sidebar - simultaneous scroll enabled');
   });
   
-  // Track mouse position for main content
-  mainContent.addEventListener('mouseenter', () => {
-    isHoveringMain = true;
-    isHoveringSidebar = false;
-    console.log('Mouse entered main content');
-  });
-  
-  mainContent.addEventListener('mouseleave', () => {
-    isHoveringMain = false;
-    console.log('Mouse left main content');
-  });
-  
-  // Handle sidebar scroll when hovering sidebar - IMPROVED THROTTLING
-  sidebar.addEventListener('wheel', (e) => {
-    if (isHoveringSidebar) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      // Set flag to prevent main content sync
-      isScrolling = true;
-      
-      // Throttle scroll events to prevent vibration
-      const now = Date.now();
-      if (now - lastScrollTime < 16) { // ~60fps throttling
-        return;
-      }
-      lastScrollTime = now;
-      
-      // Use same scroll speed as main content
-      const scrollAmount = e.deltaY;
-      const currentScroll = sidebar.scrollTop;
-      const maxScroll = sidebar.scrollHeight - sidebar.clientHeight;
-      
-      // Direct scroll - no animation delays that cause vibration
-      const newScroll = Math.max(0, Math.min(maxScroll, currentScroll + scrollAmount));
-      sidebar.scrollTop = newScroll;
-      
-      // Add visual feedback
-      sidebar.classList.add('sidebar-scrolling');
-      
-      // Clear flag after scroll completes
-      setTimeout(() => {
-        isScrolling = false;
-      }, 100);
-    }
-  }, { passive: false });
-  
-  // Prevent main content scroll when hovering sidebar - CRITICAL FIX
-  document.addEventListener('wheel', (e) => {
-    if (isHoveringSidebar) {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-    }
-  }, { passive: false });
-  
-  // CRITICAL: Also prevent window scroll events from syncing when hovering sidebar
+  // CRITICAL: Prevent window scroll when hovering sidebar
   window.addEventListener('wheel', (e) => {
     if (isHoveringSidebar) {
       e.preventDefault();
       e.stopPropagation();
-      return false;
     }
   }, { passive: false });
   
-  // Handle main content scroll - THROTTLED
-  // CRITICAL FIX: Always sync sidebar with main content scroll, not just when hovering
-  let mainScrollTimeout = null;
+  // Handle sidebar scroll when hovering sidebar - INDEPENDENT SCROLLING
+  sidebar.addEventListener('wheel', (e) => {
+    if (isHoveringSidebar) {
+      // Prevent event from bubbling
+      e.stopPropagation();
+      
+      // Set flag to prevent main content sync
+      isSidebarScrolling = true;
+      
+      // Add visual feedback
+      sidebar.classList.add('sidebar-scrolling');
+      
+      // Clear flag after a short delay
+      clearTimeout(mainScrollTimeout);
+      mainScrollTimeout = setTimeout(() => {
+        isSidebarScrolling = false;
+        sidebar.classList.remove('sidebar-scrolling');
+      }, 150);
+    }
+  }, { passive: true });
+  
+  // Track last scroll position to avoid unnecessary updates
+  let lastMainScroll = -1;
+  let syncInProgress = false;
   
   // Function to sync sidebar with main content
   function syncSidebarWithMain() {
+    if (isHoveringSidebar || isSidebarScrolling || syncInProgress) {
+      return; // Don't sync when hovering, scrolling sidebar, or sync in progress
+    }
+    
     const mainScroll = window.pageYOffset;
     
-    // Calculate proportional scroll position (same speed as main)
+    // Skip if scroll position hasn't changed significantly
+    if (Math.abs(mainScroll - lastMainScroll) < 1) {
+      return;
+    }
+    
+    lastMainScroll = mainScroll;
+    syncInProgress = true;
+    
+    // Calculate proportional scroll position
     const mainMaxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const sidebarMaxScroll = sidebar.scrollHeight - sidebar.clientHeight;
     
     if (mainMaxScroll > 0 && sidebarMaxScroll > 0) {
       const scrollRatio = mainScroll / mainMaxScroll;
-      const sidebarScroll = scrollRatio * sidebarMaxScroll;
+      const targetSidebarScroll = scrollRatio * sidebarMaxScroll;
       
-      // Apply scroll to sidebar
-      sidebar.scrollTop = sidebarScroll;
+      // Only update if the difference is significant
+      if (Math.abs(sidebar.scrollTop - targetSidebarScroll) > 0.5) {
+        sidebar.scrollTop = targetSidebarScroll;
+      }
     }
+    
+    syncInProgress = false;
   }
   
   // CRITICAL: Initialize sync immediately on load
@@ -144,46 +122,37 @@ export function initSidebarScroll() {
     console.log('Secondary sidebar sync completed');
   }, 500);
   
+  // Sync sidebar with main content scroll (SIMULTANEOUS SCROLLING)
+  let scrollRAF = null;
   window.addEventListener('scroll', () => {
-    // CRITICAL: Only sync when NOT hovering sidebar AND not actively scrolling sidebar
-    if (!isHoveringSidebar && !isScrolling) {
-      clearTimeout(mainScrollTimeout);
-      mainScrollTimeout = setTimeout(() => {
+    if (!isHoveringSidebar && !isSidebarScrolling) {
+      // Cancel previous animation frame to prevent stacking
+      if (scrollRAF) {
+        cancelAnimationFrame(scrollRAF);
+      }
+      // Use RAF for smooth sync
+      scrollRAF = requestAnimationFrame(() => {
         syncSidebarWithMain();
-      }, 5); // Reduced delay for more responsive sync
+        scrollRAF = null;
+      });
     }
-  });
+  }, { passive: true });
   
-  // Disable smooth scroll behavior to prevent vibration
+  // Disable smooth scroll behavior to prevent lag
   sidebar.style.scrollBehavior = 'auto';
   
-  // Add visual feedback for scroll state
-  sidebar.addEventListener('scroll', () => {
-    if (isHoveringSidebar) {
-      sidebar.classList.add('sidebar-scrolling');
+  // Handle resize events to re-check desktop mode
+  window.addEventListener('resize', () => {
+    const nowDesktop = window.innerWidth > 767;
+    if (!nowDesktop) {
+      // Clean up if switched to mobile
+      sidebar.classList.remove('sidebar-hover');
+      sidebar.classList.remove('sidebar-scrolling');
     }
   });
   
-  // Handle Skills navigation to Core Skills section
-  const skillsLink = document.querySelector('a[href="#core-skills"]');
-  if (skillsLink) {
-    skillsLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      const coreSkillsSection = document.getElementById('core-skills');
-      if (coreSkillsSection) {
-        // Scroll the sidebar to show the Core Skills section
-        const scrollTop = coreSkillsSection.offsetTop - sidebar.offsetTop - 50;
-        
-        // Smooth scroll to the Core Skills section
-        sidebar.scrollTo({
-          top: scrollTop,
-          behavior: 'smooth'
-        });
-        
-        console.log('Scrolling to Core Skills section');
-      }
-    });
-  }
+  // NOTE: Skills navigation is now handled by initEnhancedNavigation() in main.js
+  // This ensures consistent behavior across desktop and mobile, with proper touch event support
 }
 
 // Initialize on page load

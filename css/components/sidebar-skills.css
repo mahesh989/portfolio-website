@@ -4,9 +4,7 @@
 
 .sidebar-skills {
   margin: var(--space-6) 0;
-  padding: var(--space-4) 0;
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+  padding: 0;
 }
 
 /* Skills Section Titles */
@@ -15,6 +13,7 @@
   font-weight: var(--font-bold);
   color: var(--text-primary);
   margin-bottom: var(--space-3);
+  margin-top: 0;
   text-align: center;
 }
 
@@ -22,19 +21,20 @@
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
   color: var(--text-secondary);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
   text-align: center;
 }
 
 /* Tier 1: Core Skills */
 .skills-tier-core {
   margin-bottom: var(--space-4);
+  padding-top: 0;
 }
 
 .core-skills-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: 0;
 }
 
 .core-skill-item {
@@ -43,10 +43,27 @@
   gap: var(--space-3);
   padding: var(--space-3);
   background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   border-left: 4px solid var(--primary-color);
   cursor: default;
+  /* Ensure consistent rendering */
+  position: relative;
   /* Removed hover transitions - no hover effect for core skills */
+  /* Add visible divider between items */
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* First item gets top rounded corners */
+.core-skill-item:first-child {
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+}
+
+/* Last item gets bottom rounded corners and no border */
+.core-skill-item:last-child {
+  border-bottom: none;
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
 }
 
 /* Hide bullets for core skill items */
@@ -87,18 +104,32 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0; /* Fix for flex text overflow */
+  overflow: hidden;
+  text-align: center; /* Center align text in core skills cards */
+  align-items: center; /* Center align flex items */
 }
 
 .skill-name {
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
   color: var(--text-primary);
+  /* Prevent text overflow issues */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center; /* Center align skill name */
 }
 
 .skill-sub {
   font-size: var(--text-xs);
   color: var(--text-secondary);
   font-weight: var(--font-normal);
+  /* Prevent text overflow issues */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center; /* Center align skill subtitle */
 }
 
 .skill-level {

@@ -53,6 +53,7 @@
   --font-mono: 'Fira Code', 'Courier New', monospace;
   
   /* Font Sizes - Vallabha Mohta Style (Smaller, Refined) */
+  --text-xss: clamp(0.5rem, 0.45rem + 0.15vw, 0.625rem);   /* 8-10px - Extra Small */
   --text-xs: clamp(0.65rem, 0.6rem + 0.2vw, 0.75rem);      /* 10-12px */
   --text-sm: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);    /* 12-14px */
   --text-base: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);      /* 14-16px */
@@ -214,6 +215,7 @@ img {
 
 .section {
   padding: var(--space-20) 0;
+  padding-bottom: var(--space-20) !important; /* Consistent bottom padding for all sections */
 }
 
 .section-title {
@@ -242,6 +244,7 @@ img {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-6);
   font-size: var(--text-base);
@@ -565,6 +568,70 @@ img {
   box-shadow: var(--shadow-xl);
 }
 
+/* Mobile-Optimized Scroll Navigation Arrows */
+@media (max-width: 767px) {
+  .scroll-to-top,
+  .scroll-to-next {
+    /* Mobile: Smaller size, better positioning for touch */
+    width: 44px !important; /* Touch-friendly minimum size (44x44px recommended) */
+    height: 44px !important;
+    /* Position: Bottom-left corner (doesn't interfere with sidebar/hamburger on right) */
+    right: auto !important;
+    left: var(--space-4) !important;
+    /* Stack vertically in bottom-left */
+    bottom: auto !important;
+    /* Use z-index above mobile elements but below sidebar when open */
+    z-index: 9999 !important; /* Below sidebar (10004) but above most content */
+    /* Enhanced touch feedback */
+    -webkit-tap-highlight-color: rgba(136, 192, 208, 0.3);
+    touch-action: manipulation;
+    /* Mobile-optimized shadow for better visibility */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+    /* Larger border for better visibility */
+    border: 2px solid var(--bg-primary) !important;
+  }
+
+  /* Scroll to Top - Bottom-left, higher position */
+  .scroll-to-top {
+    bottom: calc(80px + env(safe-area-inset-bottom)) !important; /* Positioned above next button */
+  }
+
+  /* Scroll to Next - Bottom-left, lower position */
+  .scroll-to-next {
+    bottom: calc(20px + env(safe-area-inset-bottom)) !important; /* Near bottom, above safe area */
+  }
+
+  /* Mobile: Replace hover with active state for touch */
+  .scroll-to-top:active,
+  .scroll-to-next:active {
+    background-color: var(--primary-hover) !important;
+    transform: translateY(0) scale(0.95) !important; /* Press down effect */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* Mobile: Better visibility - slightly more opaque when visible */
+  .scroll-to-top.visible,
+  .scroll-to-next.visible {
+    opacity: 0.95 !important; /* More visible on mobile */
+    transform: translateY(0) !important;
+  }
+
+  /* Mobile: Hide hover effects (not applicable on touch devices) */
+  .scroll-to-top:hover,
+  .scroll-to-next:hover {
+    background-color: var(--primary-color) !important;
+    transform: translateY(0) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  /* Mobile: Larger SVG icons for better visibility */
+  .scroll-to-top svg,
+  .scroll-to-next svg {
+    width: 24px !important;
+    height: 24px !important;
+  }
+}
+
 /* Highlight Text */
 .highlight {
   color: var(--primary-color);
@@ -698,47 +765,173 @@ input, textarea, select {
 
 /* Emergency mobile overflow fixes - MOBILE ONLY */
 @media (max-width: 767px) {
-  /* Force remove any transforms that might break layout on mobile */
-  .sidebar,
+  /* CRITICAL: Lock everything to viewport width */
+  * {
+    max-width: 100vw !important;
+  }
+  
+  /* CRITICAL: Prevent horizontal scroll - NUCLEAR OPTION */
+  html {
+    overflow-x: hidden !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  body {
+    overflow-x: hidden !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 100vh !important;
+  }
+  
+  /* Prevent ANY transforms on mobile - CRITICAL for no shift */
   .main-content,
   .hero,
   .section,
-  .container {
+  .container,
+  footer,
+  .footer {
     transform: none !important;
+    transition: none !important;
+    overflow-x: visible !important; /* Allow horizontal overflow for puppy circle */
   }
   
-  /* Ensure sidebar scrolls properly on mobile */
+  /* Exception: Keep overflow-x hidden for sections other than hero */
+  .section:not(.hero),
+  .container,
+  footer,
+  .footer {
+    overflow-x: hidden !important;
+  }
+  
+  /* Allow sidebar to animate */
   .sidebar {
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
+    transition: left 0.3s ease-in-out, visibility 0.3s !important;
   }
   
-  /* When sidebar is open, prevent body scroll but allow sidebar scroll */
+  /* Main content visible but not scrollable when sidebar open */
   body.sidebar-open {
     overflow: hidden !important;
-    position: fixed !important;
-    width: 100% !important;
-    height: 100% !important;
+    height: 100vh !important;
+  }
+  
+  body.sidebar-open .main-content {
+    overflow: hidden !important;
+    touch-action: none !important;
+  }
+  
+  /* CRITICAL: When sidebar closes, ensure body is scrollable */
+  body:not(.sidebar-open) {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+  }
+  
+  /* Ensure navigation links are clickable on mobile */
+  @media (max-width: 767px) {
+    a[href^="#"] {
+      pointer-events: auto;
+      touch-action: manipulation;
+      cursor: pointer;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    }
   }
   
   body:not(.sidebar-open) {
-    overflow: auto !important;
-    position: relative !important;
-  }
-  
-  /* Main content should be hidden when sidebar is open */
-  body.sidebar-open .main-content {
-    overflow: hidden !important;
-    height: 0 !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: 100vh !important;
   }
   
   body:not(.sidebar-open) .main-content {
-    overflow: auto !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
     height: auto !important;
-    opacity: 1 !important;
-    pointer-events: all !important;
+  }
+  
+  /* ALIGNMENT FIX - Make all sections same width */
+  .main-content {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: var(--space-4) !important;
+    padding-right: var(--space-4) !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    overflow-x: visible !important; /* Allow horizontal overflow for puppy circle */
+  }
+  
+  .hero,
+  .section,
+  #about,
+  #skills,
+  #experience,
+  #projects,
+  #education,
+  #contact,
+  footer,
+  .footer {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: var(--space-4) !important;
+    padding-right: var(--space-4) !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Ensure containers inside sections also align */
+  .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Prevent all child elements from causing horizontal scroll */
+  .main-content *,
+  .section *,
+  footer * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Prevent specific wide elements */
+  img, video, iframe, svg, canvas {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  /* Prevent tables and pre from overflowing */
+  table, pre, code {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+  }
+  
+  /* Ensure no element can push beyond viewport */
+  .main-content {
+    overflow-x: visible !important; /* Allow horizontal overflow for puppy circle */
+  }
+  
+  .main-content > *:not(.hero),
+  .section,
+  .section > * {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Hero section needs visible overflow for puppy */
+  .hero {
+    overflow-x: hidden !important; /* Prevent horizontal scroll */
+    overflow-y: visible !important; /* Allow vertical overflow for puppy circle */
   }
 }
 
@@ -759,8 +952,8 @@ input, textarea, select {
   }
   
   .main-content {
-    overflow-y: visible !important;
-    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overflow-x: visible !important; /* Allow horizontal overflow for puppy circle */
     position: relative !important;
     height: auto !important;
     opacity: 1 !important;
@@ -783,7 +976,13 @@ input, textarea, select {
 /* Ensure body handles scrolling properly */
 body {
   overflow-x: hidden !important;
+  overflow-y: auto !important; /* Allow vertical scrolling */
   width: 100% !important;
+}
+
+html {
+  overflow-x: hidden !important;
+  overflow-y: auto !important; /* Allow vertical scrolling */
 }
 
 /* Loading screen should not interfere with main content */

@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   hideLoadingScreen();
   
   // Initialize all modules
-  initSmoothScroll();
+  // initSmoothScroll(); // Disabled - using initEnhancedNavigation() instead (mobile-aware)
   initNavHighlight();
   initAnimations();
   initContactForm();
@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initAnalytics();
   initSkillsWorkflow();
   initSidebarScroll();
+  
+  // Initialize navigation FIRST (before mobile menu)
+  initEnhancedNavigation();
   
   // Initialize additional functionality
   initMobileMenu();
@@ -33,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initTypingEffect();
   initProjectFilters();
   initCopyEmail();
-  initSkillsNavigation();
   initJourneyModal();
 });
 
@@ -51,102 +53,203 @@ function hideLoadingScreen() {
   }
 }
 
-// Auto-Opening Mobile Menu
+// Mobile Menu - Fixed: Immediate Scroll + No Content Shift
 function initMobileMenu() {
-  const hamburger = document.querySelector('.hamburger');
-  const navMenuButton = document.querySelector('.nav-menu-button');
   const sidebar = document.querySelector('.sidebar');
   const overlay = document.querySelector('.mobile-overlay');
   const sidebarClose = document.querySelector('.sidebar-close');
-  const mainContent = document.querySelector('.main-content');
+  // Use hamburger from top-nav (not mobile-header)
+  const hamburger = document.querySelector('.top-nav .hamburger');
   
-  if ((!hamburger && !navMenuButton) || !sidebar) {
-    console.warn('Mobile menu elements not found');
-    return;
-  }
+  if (!sidebar) return;
   
-  try {
-    const isMobile = window.innerWidth <= 767;
+  let scrollY = 0;
+  const isMobile = () => window.innerWidth <= 767;
+  
+  const openSidebar = () => {
+    scrollY = window.scrollY;
     
-    const toggleMenu = (open) => {
-      const isOpening = open !== undefined ? open : !sidebar.classList.contains('active');
+    // Calculate scrollbar width BEFORE any changes
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    
+    // Add classes
+    sidebar.classList.add('active');
+    document.body.classList.add('sidebar-open');
+    if (overlay) overlay.classList.add('active');
+    if (hamburger) hamburger.classList.add('active');
+    
+    // Lock body WITHOUT causing shift
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'relative'; // Keep in flow
+    document.body.style.width = '100%';
+    
+    // Compensate for scrollbar disappearance
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
       
-      if (isOpening) {
-        // Opening sidebar
-        sidebar.classList.add('active');
-        if (overlay) overlay.classList.add('active');
-        if (hamburger) hamburger.classList.add('active');
-        
-        // Add body class to indicate sidebar is open
-        document.body.classList.add('sidebar-open');
-        
-      } else {
-        // Closing sidebar
-        sidebar.classList.remove('active');
-        if (overlay) overlay.classList.remove('active');
-        if (hamburger) hamburger.classList.remove('active');
-        
-        // Remove body class to restore main content
-        document.body.classList.remove('sidebar-open');
-      }
-    };
-
-    // Event listeners
-    if (hamburger) hamburger.addEventListener('click', () => toggleMenu());
-    if (navMenuButton) navMenuButton.addEventListener('click', () => toggleMenu());
-    if (sidebarClose) sidebarClose.addEventListener('click', () => toggleMenu(false));
-
-    // Close on overlay click
-    if (overlay) {
-      overlay.addEventListener('click', () => toggleMenu(false));
+      // Also add padding to fixed elements
+      const mainContent = document.querySelector('.main-content');
+      const topNav = document.querySelector('.top-nav');
+      
+      if (mainContent) mainContent.style.paddingRight = `${scrollbarWidth}px`;
+      if (topNav) topNav.style.paddingRight = `${scrollbarWidth}px`;
     }
     
-    // Close on nav link click (only for hash links within sidebar)
-    const sidebarNavLinks = document.querySelectorAll('.sidebar a[href*="#"]');
-    sidebarNavLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        if (link.getAttribute('href').startsWith('#')) {
-          toggleMenu(false);
-        }
-      });
+    // Reset sidebar scroll and enable scrolling
+    sidebar.scrollTop = 0;
+    
+    // CRITICAL: Force enable sidebar scrolling after a brief moment
+    setTimeout(() => {
+      if (sidebar) {
+        sidebar.style.overflowY = 'auto';
+        sidebar.style.webkitOverflowScrolling = 'touch';
+        sidebar.style.touchAction = 'pan-y';
+      }
+    }, 50);
+  };
+  
+  const closeSidebar = () => {
+    sidebar.classList.remove('active');
+    document.body.classList.remove('sidebar-open');
+    if (overlay) overlay.classList.remove('active');
+    if (hamburger) hamburger.classList.remove('active');
+    
+    // Unlock everything
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+    document.body.style.paddingRight = '';
+    
+    const mainContent = document.querySelector('.main-content');
+    const topNav = document.querySelector('.top-nav');
+    
+    if (mainContent) mainContent.style.paddingRight = '';
+    if (topNav) topNav.style.paddingRight = '';
+    
+    // Restore scroll
+    window.scrollTo(0, scrollY);
+  };
+  
+  const toggleSidebar = () => {
+    sidebar.classList.contains('active') ? closeSidebar() : openSidebar();
+  };
+  
+  // Event listeners - use click with capture to ensure it fires
+  if (sidebarClose) {
+    sidebarClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeSidebar();
+    }, true); // Use capture phase
+  }
+  
+  if (hamburger) {
+    hamburger.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleSidebar();
+    });
+  }
+  
+  if (overlay) {
+    overlay.addEventListener('click', (e) => {
+      // CRITICAL: Don't close sidebar if click was on top-nav
+      const topNav = document.querySelector('.top-nav');
+      if (topNav && topNav.contains(e.target)) {
+        return; // Allow top-nav clicks to go through
+      }
+      e.preventDefault();
+      closeSidebar();
     });
     
-    // Close on escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-        toggleMenu(false);
+    // Also prevent overlay from blocking touch events on top-nav
+    overlay.addEventListener('touchstart', (e) => {
+      const topNav = document.querySelector('.top-nav');
+      if (topNav && topNav.contains(e.target)) {
+        e.stopPropagation(); // Don't let overlay handle this touch
       }
-    });
-
-    // CRITICAL: Auto-open sidebar on mobile
-    if (isMobile) {
-      // Delay to ensure CSS is loaded
-      setTimeout(() => {
-        toggleMenu(true); // Auto-open sidebar
-      }, 300);
-    }
-
-    // Handle window resize
-    let wasMobile = isMobile;
-    window.addEventListener('resize', () => {
-      const nowMobile = window.innerWidth <= 767;
-      
-      if (nowMobile && !wasMobile) {
-        // Just switched to mobile - auto-open sidebar
-        setTimeout(() => {
-          toggleMenu(true);
-        }, 100);
-      } else if (!nowMobile && wasMobile) {
-        // Just switched to desktop - ensure sidebar is closed
-        toggleMenu(false);
-      }
-      
-      wasMobile = nowMobile;
-    });
-
-  } catch (error) {
-    console.error('Error initializing mobile menu:', error);
+    }, { passive: true });
   }
+  
+  // ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+      closeSidebar();
+    }
+  });
+  
+  // Note: Navigation link clicks are now handled by initEnhancedNavigation()
+  // which properly closes the sidebar before navigating
+  
+  // CRITICAL: Prevent scroll ONLY on body/overlay, NOT sidebar or navigation links
+  let touchStartY = 0;
+  let isTouchingInSidebar = false;
+  let isTouchingNavLink = false;
+  
+  document.addEventListener('touchstart', (e) => {
+    touchStartY = e.touches[0].clientY;
+    const target = e.target;
+    // Check if touch started inside sidebar
+    isTouchingInSidebar = sidebar && sidebar.contains(target);
+    // Check if touch started on a navigation link (or parent is nav link)
+    const navLink = target.closest('a[href^="#"]');
+    isTouchingNavLink = !!(navLink || (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')));
+  }, { passive: true });
+  
+  document.addEventListener('touchmove', (e) => {
+    // Only if sidebar is open
+    if (!sidebar || !sidebar.classList.contains('active')) return;
+    
+    // CRITICAL: Always allow touches on navigation links (including top-nav)
+    const target = e.target;
+    const targetLink = target.closest('a[href^="#"]'); // Check if target or parent is a nav link
+    
+    // Don't prevent default for nav links (anywhere on page, including top-nav)
+    if (targetLink || (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#'))) {
+      return; // Don't prevent default for nav links
+    }
+    
+    // If touch started inside sidebar, always allow scroll
+    if (isTouchingInSidebar) return;
+    
+    // If touch started on nav link, allow it
+    if (isTouchingNavLink) return;
+    
+    // Also check if current target is inside sidebar or is a nav link
+    if (sidebar.contains(target)) return;
+    if (target.closest('a[href^="#"]')) return; // Check if parent is nav link
+    
+    // CRITICAL: Also check if touching top-nav (it should always work)
+    const topNav = document.querySelector('.top-nav');
+    if (topNav && topNav.contains(target)) {
+      return; // Don't prevent default for top-nav touches
+    }
+    
+    // Prevent scroll everywhere else (body, overlay, main content)
+    e.preventDefault();
+  }, { passive: false });
+  
+  document.addEventListener('touchend', (e) => {
+    isTouchingInSidebar = false;
+    isTouchingNavLink = false;
+  }, { passive: true });
+  
+  // Auto-open on mobile
+  if (isMobile()) {
+    setTimeout(() => openSidebar(), 500);
+  }
+  
+  // Handle resize
+  let wasMobile = isMobile();
+  window.addEventListener('resize', () => {
+    const nowMobile = isMobile();
+    if (nowMobile && !wasMobile) {
+      openSidebar();
+    } else if (!nowMobile && wasMobile) {
+      closeSidebar();
+    }
+    wasMobile = nowMobile;
+  });
 }
 
 // Scroll to Top
@@ -483,59 +586,251 @@ function preloadImages() {
   });
 }
 
-// Skills Navigation - Open sidebar and navigate to core-skills
-function initSkillsNavigation() {
+// Enhanced Navigation - Handle all sections (sidebar and main content)
+function initEnhancedNavigation() {
+  console.log('[Navigation] Initializing enhanced navigation system...');
+  
   const sidebar = document.querySelector('.sidebar');
   const overlay = document.querySelector('.mobile-overlay');
-  const hamburger = document.querySelector('.hamburger');
+  // Use hamburger from top-nav (not mobile-header)
+  const hamburger = document.querySelector('.top-nav .hamburger');
+  const isMobile = () => window.innerWidth <= 767; // Consistent with initMobileMenu
   
-  // Function to open sidebar and navigate to core-skills
-  function openSidebarAndNavigateToSkills() {
-    // Check if we're on mobile (sidebar is hidden by default)
-    const isMobile = window.innerWidth <= 768;
+  if (!sidebar) {
+    console.error('[Navigation] Sidebar not found!');
+    return;
+  }
+  
+  console.log('[Navigation] Sidebar found, setting up navigation...');
+  
+  // Sections in sidebar
+  const sidebarSections = ['core-skills'];
+  
+  // Shared close sidebar function
+  function closeSidebar() {
+    sidebar.classList.remove('active');
+    document.body.classList.remove('sidebar-open');
+    if (overlay) overlay.classList.remove('active');
+    if (hamburger) hamburger.classList.remove('active');
     
-    if (isMobile && sidebar) {
+    // CRITICAL: Unlock body scrolling completely
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+    document.body.style.paddingRight = '';
+    document.body.style.height = '';
+    document.documentElement.style.overflow = '';
+    
+    const mainContent = document.querySelector('.main-content');
+    const topNav = document.querySelector('.top-nav');
+    if (mainContent) {
+      mainContent.style.paddingRight = '';
+      mainContent.style.overflow = '';
+      mainContent.style.touchAction = '';
+    }
+    if (topNav) topNav.style.paddingRight = '';
+  }
+  
+  // Function to open sidebar and navigate to a section within it
+  function openSidebarAndNavigate(sectionId) {
+    console.log(`[Navigation] openSidebarAndNavigate called for: ${sectionId}`);
+    if (isMobile() && sidebar) {
+      // Calculate scrollbar width
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      
       // Open sidebar on mobile
       sidebar.classList.add('active');
       if (overlay) overlay.classList.add('active');
       if (hamburger) hamburger.classList.add('active');
-      document.body.classList.add('no-scroll');
+      document.body.classList.add('sidebar-open');
+      
+      // Lock body WITHOUT causing shift
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'relative';
+      document.body.style.width = '100%';
+      
+      // Compensate for scrollbar disappearance
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+        const mainContent = document.querySelector('.main-content');
+        const topNav = document.querySelector('.top-nav');
+        if (mainContent) mainContent.style.paddingRight = `${scrollbarWidth}px`;
+        if (topNav) topNav.style.paddingRight = `${scrollbarWidth}px`;
+      }
+      
+      // Reset sidebar scroll
+      sidebar.scrollTop = 0;
+      
+      // Enable sidebar scrolling
+      setTimeout(() => {
+        if (sidebar) {
+          sidebar.style.overflowY = 'auto';
+          sidebar.style.webkitOverflowScrolling = 'touch';
+          sidebar.style.touchAction = 'pan-y';
+        }
+      }, 50);
     }
     
-    // Navigate to core-skills section in sidebar
+    // Navigate to section in sidebar
     setTimeout(() => {
-      const coreSkillsSection = document.getElementById('core-skills');
-      if (coreSkillsSection && sidebar) {
-        const scrollTop = coreSkillsSection.offsetTop - sidebar.offsetTop - 50;
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection && sidebar) {
+        const scrollTop = targetSection.offsetTop - sidebar.offsetTop - 50;
         
-        // Smooth scroll to the Core Skills section
         sidebar.scrollTo({
           top: scrollTop,
           behavior: 'smooth'
         });
-        
-        console.log('Navigating to Core Skills section');
+        console.log(`[Navigation] Scrolled sidebar to ${sectionId}`);
+      } else {
+        console.error(`[Navigation] Target section ${sectionId} not found`);
       }
-    }, isMobile ? 300 : 100); // Delay for mobile to allow sidebar animation
+    }, isMobile() ? 300 : 100);
   }
   
-  // Add event listeners to all Skills links
-  const skillsLinks = document.querySelectorAll('a[href="#core-skills"]');
-  skillsLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      openSidebarAndNavigateToSkills();
+  // Scroll function using scrollIntoView (Method D - the one that works!)
+  function scrollToSectionWithScrollIntoView(sectionId, topOffset) {
+    const targetSection = document.getElementById(sectionId);
+    if (!targetSection) return;
+    
+    console.log(`[Navigation] Using scrollIntoView for: ${sectionId}`);
+    
+    // CRITICAL: Ensure no scroll blocking
+    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
+    
+    // Force layout calculation
+    void targetSection.offsetHeight;
+    
+    // Use the working method: scrollIntoView
+    targetSection.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'start' 
     });
+    
+    // Adjust for fixed header offset
+    setTimeout(() => {
+      const currentPos = window.scrollY;
+      const targetPos = Math.max(0, targetSection.offsetTop - topOffset);
+      
+      if (Math.abs(currentPos - targetPos) > 10) {
+        console.log(`[Navigation] Adjusting scroll position for header offset...`);
+        window.scrollBy(0, -topOffset);
+      }
+      
+      console.log(`[Navigation] ✅ Scroll to ${sectionId} completed!`);
+    }, 600);
+  }
+
+  // Function to navigate to main content section
+  function navigateToMainContent(sectionId) {
+    console.log(`[Navigation] navigateToMainContent called for: ${sectionId}`);
+    const targetSection = document.getElementById(sectionId);
+    
+    if (!targetSection) {
+      console.error(`[Navigation] Section ${sectionId} not found in DOM!`);
+      return;
+    }
+    
+    const sidebarWasOpen = sidebar && sidebar.classList.contains('active');
+    const topOffset = isMobile() ? 70 : 20;
+    
+    // Close sidebar first if needed
+    if (isMobile() && sidebarWasOpen) {
+      console.log('[Navigation] Closing sidebar...');
+      closeSidebar();
+      
+      // Wait for sidebar to fully close, then scroll
+      setTimeout(() => {
+        scrollToSectionWithScrollIntoView(sectionId, topOffset);
+      }, 400);
+    } else {
+      // Immediate scroll
+      scrollToSectionWithScrollIntoView(sectionId, topOffset);
+    }
+  }
+  
+  // Handle all navigation links (top nav, footer, anywhere)
+  function handleNavigationClick(e, href) {
+    // Prevent default anchor behavior
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const sectionId = href.replace('#', '');
+    console.log(`[Navigation] Link clicked/touched for section: ${sectionId}, Mobile: ${isMobile()}`);
+    
+    if (sidebarSections.includes(sectionId)) {
+      console.log(`[Navigation] Navigating to sidebar section: ${sectionId}`);
+      openSidebarAndNavigate(sectionId);
+    } else {
+      console.log(`[Navigation] Navigating to main content section: ${sectionId}`);
+      navigateToMainContent(sectionId);
+    }
+  }
+  
+  // Add event listeners to all navigation links
+  const allNavLinks = document.querySelectorAll('a[href^="#"]');
+  console.log(`[Navigation] Found ${allNavLinks.length} navigation links`);
+  
+  // Track touched links to prevent double-firing (touch + click)
+  const touchedLinks = new WeakSet();
+  
+  allNavLinks.forEach((link) => {
+    const href = link.getAttribute('href');
+    
+    if (href && href !== '#') {
+      // CRITICAL: Ensure links are always clickable on mobile
+      link.style.pointerEvents = 'auto';
+      link.style.touchAction = 'manipulation';
+      link.style.cursor = 'pointer';
+      link.style.webkitTapHighlightColor = 'rgba(0, 0, 0, 0.1)';
+      
+      // Handle click events (desktop and mobile fallback)
+      link.addEventListener('click', (e) => {
+        // On mobile, skip if touch was already handled for this link
+        if (isMobile() && touchedLinks.has(link)) {
+          touchedLinks.delete(link);
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
+        handleNavigationClick(e, href);
+      });
+      
+      // CRITICAL: Add touchstart handler for mobile devices (<= 767px)
+      // Touchstart fires immediately, more reliable than click on mobile
+      // We use touchstart to ensure it fires before any scroll prevention
+      link.addEventListener('touchstart', (e) => {
+        // Only handle if on mobile
+        if (isMobile()) {
+          console.log(`[Navigation] Touch start detected on mobile for: ${href}`);
+          // Mark that we're handling this touch
+          link.dataset.touchHandled = 'true';
+        }
+      }, { passive: true }); // passive for touchstart to avoid blocking
+      
+      // CRITICAL: Add touchend handler for mobile devices (<= 767px)
+      // touchend fires when tap completes, more reliable than click on mobile
+      link.addEventListener('touchend', (e) => {
+        // Only handle if on mobile and touch was started on this link
+        if (isMobile() && link.dataset.touchHandled === 'true') {
+          console.log(`[Navigation] Touch end detected on mobile for: ${href}`);
+          e.preventDefault(); // Prevent default anchor behavior
+          e.stopPropagation(); // Stop propagation to overlay
+          e.stopImmediatePropagation(); // Stop other handlers
+          touchedLinks.add(link);
+          handleNavigationClick(e, href);
+          // Clear flags after delay to allow normal clicks if needed
+          setTimeout(() => {
+            touchedLinks.delete(link);
+            link.dataset.touchHandled = 'false';
+          }, 500);
+        }
+      }, { passive: false }); // non-passive so we can preventDefault
+    }
   });
   
-  // Also handle any Skills links in footer
-  const footerSkillsLinks = document.querySelectorAll('footer a[href="#core-skills"], .footer a[href="#core-skills"]');
-  footerSkillsLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      openSidebarAndNavigateToSkills();
-    });
-  });
+  console.log(`[Navigation] Navigation system initialized - Mobile: ${isMobile()}, Links: ${allNavLinks.length}`);
 }
 
 // Initialize image preloading

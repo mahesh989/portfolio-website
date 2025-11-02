@@ -77,6 +77,7 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  position: relative; /* For flickering bullet */
   gap: 12px;
   transition: background-color var(--transition-hover), color var(--transition-hover), border-color var(--transition-hover), transform var(--transition-hover);
   width: 100%;
@@ -96,6 +97,24 @@
 
 .linkedin-cert-btn:hover .icon {
   color: white; /* White icon on hover */
+}
+
+/* Flickering bullet for View All Certifications button */
+.linkedin-cert-btn::after {
+  content: '';
+  position: absolute;
+  right: var(--space-6); /* Same gap as other buttons */
+  top: calc(50% - 5px); /* Moved up by 5px for proper alignment */
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  -webkit-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -moz-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -ms-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -o-animation: rapidFlicker 0.3s ease-in-out infinite;
+  animation: rapidFlicker 0.3s ease-in-out infinite;
 }
 
 /* Education section alignment fix */

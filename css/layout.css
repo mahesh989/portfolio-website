@@ -1,35 +1,7 @@
 /* Layout Structure - Split Screen Design */
 
-/* Mobile Header - Hidden by default, show only when needed */
-.mobile-header {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background-color: var(--bg-primary);
-  border-bottom: 1px solid var(--border-color);
-  z-index: 1002; /* Above fixed top-nav */
-  box-shadow: var(--shadow-sm);
-}
-
-.mobile-header-content {
-  display: -webkit-flex; /* Safari flexbox prefix */
-  display: flex;
-  -webkit-align-items: center; /* Safari align-items prefix */
-  align-items: center;
-  -webkit-justify-content: space-between; /* Safari justify-content prefix */
-  justify-content: space-between;
-  height: 100%;
-  padding: 0 var(--space-6);
-}
-
-.mobile-logo {
-  font-size: var(--text-xl);
-  font-weight: var(--font-bold);
-  color: var(--primary-color);
-}
+/* Mobile Header - REMOVED: Using top-nav exclusively for navigation */
+/* All mobile navigation now handled by .top-nav */
 
 .logo-text {
   width: 40px;
@@ -54,18 +26,20 @@
   flex-direction: column;
   -webkit-justify-content: space-around; /* Safari justify-content prefix */
   justify-content: space-around;
-  width: 30px;
-  height: 30px;
+  width: 21px; /* Reduced by 30% from 30px */
+  height: 21px; /* Reduced by 30% from 30px */
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 10001;
+  z-index: 10005; /* Above sidebar, top-nav, overlay */
+  margin-right: 4px; /* Fixed 4px from right edge for all screen sizes */
+  position: relative;
 }
 
 .hamburger span {
-  width: 6px; /* three vertical dots */
-  height: 6px;
+  width: 4px; /* Reduced by 30% from 6px - three vertical dots */
+  height: 4px; /* Reduced by 30% from 6px */
   background-color: var(--text-primary);
   border-radius: 50%;
   transition: transform var(--transition-hover), box-shadow var(--transition-hover), color var(--transition-hover), background-color var(--transition-hover), border-color var(--transition-hover);
@@ -112,6 +86,21 @@
   display: block;
 }
 
+/* Top-nav must be clickable even when overlay is active */
+@media (max-width: 767px) {
+  .top-nav {
+    pointer-events: auto !important;
+    z-index: 10001 !important; /* Above overlay (9998) */
+    display: flex !important;
+    visibility: visible !important;
+  }
+  
+  .top-nav-item {
+    pointer-events: auto;
+    touch-action: manipulation;
+  }
+}
+
 /* On desktop, overlay should never exist or block interactions */
 @media (min-width: 768px) {
   .mobile-overlay {
@@ -154,6 +143,12 @@
   /* Ensure sidebar scrolls independently and smoothly */
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain; /* Prevent scroll chaining to body */
+  /* Smooth scrolling for simultaneous scroll sync */
+  will-change: scroll-position;
+  /* Prevent layout shifts during scroll */
+  contain: layout style paint;
+  /* Ensure smooth pointer interactions */
+  pointer-events: auto;
 }
 
 .sidebar-inner {
@@ -161,6 +156,7 @@
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: stretch; /* Ensure children take full width */
 }
 
 /* Main Content */
@@ -174,6 +170,9 @@
   z-index: 1; /* Ensure content is above overlay when inactive */
   /* Ensure interactions work immediately - critical for hover effects */
   pointer-events: auto !important;
+  /* Fix: Allow visible overflow to show full puppy circle */
+  overflow-x: visible; /* Allow horizontal overflow for puppy circle */
+  overflow-y: auto; /* Allow vertical scrolling */
 }
 
 /* Ensure main content respects sidebar max-width */
@@ -197,6 +196,8 @@
 .profile-photo {
   text-align: center;
   margin-bottom: var(--space-6);
+  z-index: 10002; /* Always in front */
+  position: relative;
 }
 
 .profile-photo img {
@@ -207,6 +208,8 @@
   border: 4px solid var(--primary-color);
   transition: transform var(--transition-base);
   margin: 0 auto;
+  position: relative;
+  z-index: 10002; /* Always in front */
 }
 
 .profile-photo img:hover {
@@ -256,8 +259,10 @@
   border-bottom: none;
 }
 
+/* Removed hover effect - contact items stay static on hover */
 .contact-item:hover {
-  color: var(--primary-color);
+  color: var(--text-secondary) !important; /* Keep original color - no hover effect */
+  text-decoration: none !important; /* No underline or decoration change */
 }
 
 .contact-item .icon {
@@ -680,42 +685,89 @@
 }
 
 @media (max-width: 767px) {
-  /* Show mobile header */
-  .mobile-header {
-    display: block;
+  /* Mobile header removed - top-nav handles all navigation */
+  
+  /* Top nav z-index above overlay - keep minimal override */
+  .top-nav {
+    z-index: 10001 !important; /* Above overlay (9998) */
+    pointer-events: auto !important;
   }
   
-  /* Sidebar becomes drawer */
+  .top-nav-item {
+    pointer-events: auto;
+    touch-action: manipulation;
+  }
+  
+  /* Footer name/text - Mobile: BASE */
+  footer,
+  .footer {
+    font-size: var(--text-base) !important;
+  }
+  
+  /* Sidebar - Mobile drawer */
   .sidebar {
     position: fixed;
     top: 0;
-    left: -100%;
-    width: 280px;
+    left: -60vw !important; /* Force hide by default */
+    width: 60vw;
     height: 100vh;
-    z-index: 9999;
-    transition: left var(--transition-base);
+    height: 100dvh;
+    z-index: 10004 !important; /* Above top-nav (10001) when open */
+    transition: left 0.3s ease-in-out, visibility 0.1s ease-in-out;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    touch-action: pan-y; /* Allow vertical scroll */
+    visibility: hidden; /* Hide completely when closed */
+    pointer-events: none; /* Don't block clicks when hidden */
   }
   
   .sidebar.active {
-    left: 0;
+    left: 0 !important; /* Force show when active */
+    visibility: visible !important; /* Show when active */
+    top: 0 !important; /* Start from top */
+    z-index: 10004 !important; /* Above top-nav (10001) - ensure it's in front */
+    pointer-events: auto; /* Enable clicks when visible */
   }
   
-  /* Main content full width */
+  /* CRITICAL: When sidebar is NOT active, ensure it doesn't block anything */
+  .sidebar:not(.active) {
+    pointer-events: none !important;
+    visibility: hidden !important;
+    z-index: -1 !important; /* Push behind everything when closed */
+  }
+  
+  /* Main content - NO TRANSFORM, NO TRANSITION */
   .main-content {
     margin-left: 0;
     max-width: 100%;
-    padding-top: 60px; /* Account for fixed header */
+    padding-top: 66px !important; /* Increased by 10% from 60px - moves all content down */
     padding-left: var(--space-4);
     padding-right: var(--space-4);
-    /* Prevent main content from scrolling when sidebar is open */
-    overflow: hidden;
-    height: 100vh;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: none;
-    touch-action: none;
+    transition: none !important; /* Prevent any movement */
+    transform: none !important;
+    /* CRITICAL: Allow overflow for puppy circle on mobile */
+    overflow-x: visible !important; /* Allow horizontal overflow for puppy circle */
+    overflow-y: auto !important; /* Allow vertical scrolling */
   }
   
-  /* Mobile overlay */
+  /* Body lock - stays in place */
+  body.sidebar-open {
+    overflow: hidden;
+    position: relative; /* NOT fixed */
+  }
+  
+  /* Prevent ALL content from moving */
+  body.sidebar-open .main-content,
+  body.sidebar-open footer,
+  body.sidebar-open .hero,
+  body.sidebar-open .section {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  /* Show overlay when active */
   .mobile-overlay.active {
     opacity: 1;
     visibility: visible;
@@ -723,34 +775,30 @@
   
   /* Single column layouts */
   .two-column-layout {
-    -webkit-grid-template-columns: 1fr; /* Safari grid-template-columns prefix */
     grid-template-columns: 1fr;
-    gap: var(--space-8); /* Reduced gap to prevent congestion */
+    gap: var(--space-8);
   }
   
   .contact-grid {
-    -webkit-grid-template-columns: 1fr; /* Safari grid-template-columns prefix */
     grid-template-columns: 1fr;
-    gap: var(--space-8); /* Reduced gap to prevent congestion */
+    gap: var(--space-8);
   }
   
   .projects-grid {
-    -webkit-grid-template-columns: 1fr; /* Safari grid-template-columns prefix */
     grid-template-columns: 1fr;
   }
   
   .footer-content {
-    -webkit-grid-template-columns: 1fr; /* Safari grid-template-columns prefix */
     grid-template-columns: 1fr;
     text-align: center;
     gap: var(--space-6);
-    padding: 0 var(--space-2); /* Reduce padding on mobile */
+    padding: 0 var(--space-2);
   }
   
   .footer-left,
   .footer-right {
     padding-left: 0;
-    padding-right: 0; /* Remove individual padding on mobile */
+    padding-right: 0;
   }
   
   .footer-right {
@@ -767,7 +815,46 @@
     padding: var(--space-6) var(--space-4);
   }
   
-  .mobile-header-content {
-    padding: 0 var(--space-4);
+  /* Mobile header removed - top-nav handles all navigation */
+  
+  /* Small Mobile Font Sizes */
+  .top-nav-item {
+    font-size: var(--text-xs) !important; /* Small Mobile: XS */
+  }
+}
+
+/* Extra small screens - increase sidebar width */
+@media (max-width: 380px) {
+  .sidebar {
+    width: 75vw !important;
+    left: -75vw;
+  }
+}
+
+/* Ultra Small Screens (≤360px) - Extra Small Font Sizes (XSS) */
+@media (max-width: 360px) {
+  /* Top Nav Items - Fixed 8px */
+  .top-nav-item {
+    font-size: 8px !important; /* Fixed 8px for ultra small screens */
+  }
+  
+  /* Profile - Extra Small */
+  .profile-name {
+    font-size: var(--text-sm) !important; /* 12-14px */
+  }
+  
+  .profile-title {
+    font-size: var(--text-xss) !important; /* 8-10px */
+  }
+  
+  /* Contact Items */
+  .contact-item {
+    font-size: var(--text-xs) !important; /* 10-12px */
+  }
+  
+  /* Footer */
+  .footer,
+  footer {
+    font-size: var(--text-xs) !important; /* 10-12px */
   }
 }

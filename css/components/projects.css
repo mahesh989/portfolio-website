@@ -125,6 +125,7 @@
 }
 
 .project-link {
+  position: relative;
   display: -webkit-flex; /* Safari flexbox prefix */
   display: flex;
   -webkit-align-items: center; /* Safari align-items prefix */
@@ -141,10 +142,77 @@
   backdrop-filter: blur(10px);
 }
 
+.project-link::after {
+  content: '';
+  position: absolute;
+  right: var(--space-3);
+  top: calc(50% - 5px); /* Moved up by 5px for proper alignment */
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
 .project-link:hover {
   background-color: rgba(255, 255, 255, 0.3);
   -webkit-transform: translateY(-2px); /* Safari transform prefix */
   transform: translateY(-2px);
+}
+
+/* Flickering animation on hover - Project GitHub and Live Demo Links */
+.project-link:hover::after {
+  opacity: 1;
+  -webkit-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -moz-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -ms-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -o-animation: rapidFlicker 0.3s ease-in-out infinite;
+  animation: rapidFlicker 0.3s ease-in-out infinite;
+}
+
+/* Import rapidFlicker keyframes */
+@keyframes rapidFlicker {
+  0%, 100% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  25% {
+    opacity: 0.3;
+    transform: translateY(-50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.2);
+  }
+  75% {
+    opacity: 0.5;
+    transform: translateY(-50%) scale(0.9);
+  }
+}
+
+@-webkit-keyframes rapidFlicker {
+  0%, 100% {
+    opacity: 1;
+    -webkit-transform: translateY(-50%) scale(1);
+    transform: translateY(-50%) scale(1);
+  }
+  25% {
+    opacity: 0.3;
+    -webkit-transform: translateY(-50%) scale(0.8);
+    transform: translateY(-50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    -webkit-transform: translateY(-50%) scale(1.2);
+    transform: translateY(-50%) scale(1.2);
+  }
+  75% {
+    opacity: 0.5;
+    -webkit-transform: translateY(-50%) scale(0.9);
+    transform: translateY(-50%) scale(0.9);
+  }
 }
 
 .project-content {

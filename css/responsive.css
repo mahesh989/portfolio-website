@@ -45,7 +45,7 @@
   }
   
   .section {
-    padding: var(--space-16) 0;
+    padding: calc(var(--space-16) * 0.72) 0; /* Reduced by 28% total (20% + 10% of remaining) */
   }
   
   .container {
@@ -63,118 +63,57 @@
     position: relative !important;
   }
 
-  /* Show mobile header */
-  .mobile-header {
-    display: flex !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9990;
-    background: var(--bg-primary);
-    height: 60px;
-    border-bottom: 1px solid var(--border-color);
-  }
+  /* Mobile header removed - top-nav handles all mobile navigation */
 
-  /* Sidebar becomes drawer - AUTO-OPEN BY DEFAULT */
+  /* Sidebar - position and width controlled in layout.css */
   .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0; /* CHANGED: Start open instead of -100% */
-    width: 100%;
-    height: 100% !important;
-    z-index: 10000;
-    transition: left 0.3s ease;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
     background: var(--bg-primary);
   }
 
-  .sidebar:not(.active) {
-    left: -100%; /* CHANGED: Only hide when not active */
-  }
-
-  .sidebar.active {
-    left: 0;
-  }
-
-  /* FIXED: Close button positioning */
+  /* Close button */
   .sidebar-close {
     display: flex !important;
-    position: fixed !important;
-    top: 20px !important;
-    right: 20px !important;
-    left: auto !important;
-    z-index: 10001 !important;
-    background: var(--bg-primary);
-    border: 2px solid var(--border-color);
-    border-radius: 50%;
-    box-shadow: var(--shadow-lg);
-    width: 44px;
-    height: 44px;
-    pointer-events: auto;
-    cursor: pointer;
   }
 
-  /* MAIN CONTENT FIX - Hidden when sidebar is open */
+  /* Main content - layout controlled in layout.css */
   .main-content {
-    margin-left: 0 !important;
-    max-width: 100% !important;
     padding-top: 60px !important;
-    min-height: calc(100vh - 60px) !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    position: relative !important;
-    z-index: 1 !important;
+    /* CRITICAL: Allow overflow for puppy circle on mobile */
+    overflow-x: visible !important; /* Allow horizontal overflow for puppy circle */
+    overflow-y: auto !important; /* Allow vertical scrolling */
   }
 
-  /* When sidebar is active, hide main content scrolling */
-  body.sidebar-open .main-content {
-    overflow: hidden !important;
-    height: 100vh !important;
-    pointer-events: none !important;
-  }
-
-  /* Mobile overlay - fixed */
-  .mobile-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    opacity: 1; /* CHANGED: Start visible */
-    visibility: visible; /* CHANGED: Start visible */
-    transition: all 0.3s ease;
-    pointer-events: all;
-  }
-
-  .mobile-overlay:not(.active) {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  /* Hero section fixes */
+  /* Hero section fixes - CONSOLIDATED to prevent conflicts */
   .hero {
-    min-height: auto !important;
-    padding: var(--space-8) 0 !important;
+    min-height: 70vh !important;
+    padding: 168px 0 var(--space-6) 0 !important; /* Increased from 134px to 168px (lowered by another 34px) */
     position: relative !important;
-    overflow: visible !important;
+    margin-top: 0 !important; /* Remove conflicting margins */
+    /* CRITICAL: Allow overflow for full puppy circle visibility */
+    overflow-x: hidden !important; /* Prevent horizontal scroll */
+    overflow-y: visible !important; /* Allow vertical overflow for puppy circle */
+    overflow: visible !important; /* Override any conflicting settings */
   }
 
   .hero-content {
     padding: 0 var(--space-4) !important;
-    margin-top: 0 !important;
+    margin-top: -85px !important; /* Moved down by 15px from -100px (content further down) */
     position: relative !important;
-    z-index: 1 !important;
+    z-index: 10 !important; /* Higher z-index so text stays IN FRONT of puppy animation */
+  }
+
+  /* PERMANENT PUPPY CIRCLE FIX - Mobile */
+  .hero-puppy-container {
+    top: 112px !important; /* Moved down by 10%: 102px * 1.1 = 112.2px (rounded to 112px) */
+    margin-top: -66px !important;
+    position: absolute !important;
+    z-index: 1 !important; /* Lower z-index so puppy animation runs BEHIND text */
   }
 
   /* Ensure all sections are visible and scrollable */
   .section {
-    padding: var(--space-12) 0 !important;
+    padding: calc(var(--space-12) * 0.72) 0 !important; /* Reduced by 28% total (20% + 10% of remaining) */
+    padding-bottom: calc(var(--space-12) * 0.72) !important; /* Consistent bottom padding for all sections */
     position: relative !important;
     overflow: visible !important;
   }
@@ -186,12 +125,6 @@
     overflow: visible !important;
   }
   
-  /* Hero adjustments */
-  .hero {
-    min-height: 70vh;
-    padding: var(--space-6) 0; /* Reduced top padding by 50% to move text up */
-  }
-  
   .hero-content {
     padding: 0 var(--space-4);
     margin-top: var(--space-2); /* Reduced top margin by 50% to move text up */
@@ -199,7 +132,7 @@
   
   .hero-name {
     font-size: var(--text-3xl);
-    margin-bottom: 7rem; /* Extra large gap below Maheshwor Tiwari for puppy visibility */
+    margin-bottom: 7.7rem; /* Increased by 10% from 7rem */
   }
   
   .hero-title {
@@ -280,7 +213,7 @@
   
   /* Fix excessive padding on mobile - remove footer padding and adjust container */
   .footer {
-    padding: 0 0; /* Remove gap above divider on mobile */
+    padding: 0 0 calc(var(--space-6) * 1.05) 0; /* Bottom padding increased by 5% */
   }
   
   .footer .container {
@@ -341,6 +274,7 @@
   /* Typography adjustments */
   .section {
     padding: var(--space-12) 0;
+    padding-bottom: var(--space-12) !important; /* Consistent bottom padding for all sections */
   }
   
   .section-title {
@@ -464,7 +398,8 @@
   }
   
   .section {
-    padding: var(--space-10) 0;
+    padding: calc(var(--space-10) * 0.72) 0; /* Reduced by 28% total (20% + 10% of remaining) */
+    padding-bottom: calc(var(--space-10) * 0.72) !important; /* Consistent bottom padding for all sections */
   }
   
   .section-title {
@@ -536,7 +471,7 @@
   
   /* Additional mobile footer fixes for very small screens */
   .footer {
-    padding: 0 0; /* Remove gap above divider on very small screens */
+    padding: 0 0 calc(var(--space-6) * 1.05) 0; /* Bottom padding increased by 5% */
   }
   
   .footer .container {
@@ -618,6 +553,7 @@
   
   .section {
     padding: var(--space-8) 0;
+    padding-bottom: var(--space-8) !important; /* Consistent bottom padding for all sections */
   }
 }
 
@@ -658,7 +594,6 @@
 
 /* Print styles */
 @media print {
-  .mobile-header,
   .sidebar,
   .mobile-overlay,
   .hero-cta,
@@ -790,8 +725,5 @@
     background: var(--bg-primary);
   }
   
-  .mobile-header {
-    background-color: var(--bg-primary);
-    border-bottom-color: var(--border-color);
-  }
+  /* Mobile header removed - top-nav handles all mobile navigation */
 }

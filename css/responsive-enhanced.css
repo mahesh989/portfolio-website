@@ -300,8 +300,8 @@ img[loading="lazy"].loaded {
   }
   
   .hamburger {
-    width: 44px;
-    height: 44px;
+    width: 31px; /* Reduced by 30% from 44px */
+    height: 31px; /* Reduced by 30% from 44px */
   }
   
   /* Remove hover effects on touch devices */
@@ -594,22 +594,7 @@ img[loading="lazy"].loaded {
    ============================================ */
 
 @media (max-width: 767px) {
-  /* Prevent body scroll when sidebar is open */
-  body.sidebar-open {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-  }
-  
-  /* Better sidebar animation */
-  .sidebar {
-    transform: translateX(-100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .sidebar.active {
-    transform: translateX(0);
-  }
+  /* Sidebar and body behavior controlled in layout.css */
   
   /* Smooth overlay transition */
   .mobile-overlay {

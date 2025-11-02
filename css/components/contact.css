@@ -1,7 +1,7 @@
 /* Contact Section Styles */
 .contact-section {
   /* background-color: var(--bg-secondary); - Removed */
-  padding-bottom: var(--space-12); /* Reduce bottom gap below Send Message / Preview CV */
+  padding-bottom: var(--space-20) !important; /* Consistent with other sections */
 }
 
 .contact-grid {
@@ -162,18 +162,7 @@
   border-radius: var(--radius-base);
   text-decoration: none;
   color: inherit;
-  transition: background-color var(--transition-hover), color var(--transition-hover), transform var(--transition-hover);
-}
-
-.contact-method:hover {
-  background-color: var(--primary-color); /* primary accent */
-  transform: translateX(4px);
-}
-
-/* Improve contrast on hover */
-.contact-method:hover .method-label,
-.contact-method:hover .method-value {
-  color: white;
+  /* No hover effects - direct contact should remain static */
 }
 
 .method-icon {
@@ -213,6 +202,46 @@
   font-size: var(--text-base);
   font-weight: var(--font-semibold);
   color: var(--text-primary);
+  transition: none !important; /* No hover effects on text */
+}
+
+/* Remove all hover effects from contact method text - text stays static */
+.method-label {
+  transition: none !important; /* No transitions on label */
+}
+
+.contact-method:hover .method-value,
+.contact-method:hover .method-label {
+  color: inherit !important; /* Keep original color - no change on hover */
+  text-decoration: none !important; /* No underline on hover */
+  transform: none !important; /* No transforms */
+}
+
+/* Remove link hover effects for contact methods */
+a.contact-method:hover {
+  color: inherit !important; /* Keep original text color */
+  text-decoration: none !important; /* No underline */
+  transform: none !important; /* No transforms */
+}
+
+a.contact-method:hover .method-value,
+a.contact-method:hover .method-label {
+  color: inherit !important; /* No text color change */
+  transform: none !important; /* No transforms */
+}
+
+/* Ensure no global link styles affect contact method text */
+a.contact-method .method-value,
+a.contact-method .method-label {
+  text-decoration: none !important; /* Remove any link styling from text */
+  color: inherit !important; /* Prevent global link hover color change */
+}
+
+/* Override global link hover color from main.css */
+a.contact-method:hover .method-value,
+a.contact-method:hover .method-label,
+a.contact-method:hover {
+  color: inherit !important; /* Override global a:hover color change */
 }
 
 /* Social Connect */
@@ -239,31 +268,27 @@
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
-  background-color: var(--bg-secondary);
+  background-color: transparent; /* Match Preview CV - transparent before hover */
+  border: 2px solid var(--primary-color); /* Match Preview CV - primary color border */
   border-radius: var(--radius-base);
   text-decoration: none;
-  color: var(--text-primary);
+  color: var(--primary-color); /* Match Preview CV - primary color text */
   font-weight: var(--font-medium);
-  transition: background-color var(--transition-hover), color var(--transition-hover), transform var(--transition-hover);
+  transition: background-color var(--transition-hover), color var(--transition-hover), border-color var(--transition-hover), transform var(--transition-hover);
 }
 
+/* Consistent hover for all social buttons - matching Preview CV */
 .social-btn:hover {
-  background-color: var(--primary-light);
-  transform: translateX(4px);
+  background-color: var(--primary-color); /* Match Preview CV - primary color background on hover */
+  color: white; /* Match Preview CV - white text on hover */
+  transform: translateY(-2px); /* Match Preview CV - translateY instead of translateX */
 }
 
-.social-btn.linkedin:hover {
-  background-color: #0077b5;
-  color: white;
-}
-
-.social-btn.github:hover {
-  background-color: #333;
-  color: white;
-}
-
+/* Remove individual social button hover colors - all use primary color now */
+.social-btn.linkedin:hover,
+.social-btn.github:hover,
 .social-btn.medium:hover {
-  background-color: #00ab6c;
+  background-color: var(--primary-color); /* All use primary color like Preview CV */
   color: white;
 }
 
@@ -325,7 +350,7 @@
   }
   /* Tighter bottom space on mobile */
   .contact-section {
-    padding-bottom: var(--space-10);
+    padding-bottom: calc(var(--space-12) * 0.72) !important; /* Consistent with mobile section padding */
   }
 }
 
@@ -363,7 +388,7 @@
   }
   /* Even tighter bottom space on very small screens */
   .contact-section {
-    padding-bottom: var(--space-8);
+    padding-bottom: calc(var(--space-10) * 0.72) !important; /* Consistent with section padding at this breakpoint */
   }
 }
 
@@ -404,10 +429,7 @@
   animation-delay: 0.2s;
 }
 
-/* Hover effects */
-.contact-method:hover .method-icon {
-  transform: scale(1.1);
-}
+/* No hover effects for contact-method - direct contact stays static */
 
 .social-btn:hover svg {
   transform: scale(1.1);

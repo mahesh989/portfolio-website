@@ -4,39 +4,22 @@
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* FIX: Improve scrolling behavior */
-.sidebar {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-}
-
-/* Ensure sidebar content is scrollable */
-.sidebar-inner {
-  position: relative;
-  height: 100%;
-}
-
-/* Desktop: Allow normal transforms and scrolling */
+/* Sidebar scrolling - Desktop only */
 @media (min-width: 768px) {
   .sidebar {
-    transform: none;
-  }
-  
-  .sidebar-inner {
-    overflow-y: visible; /* Allow content to scroll with sidebar */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 }
 
-/* Mobile: Remove transforms and ensure scrolling */
-@media (max-width: 767px) {
-  .sidebar {
-    transform: none !important;
-  }
-  
-  .sidebar-inner {
-    overflow-y: auto;
-  }
+/* Sidebar inner container */
+.sidebar-inner {
+  position: relative;
+  min-height: 100vh;
+  padding: var(--space-8) var(--space-6);
+  padding-bottom: var(--space-6);
+  box-sizing: border-box;
 }
 
 /* Sidebar Close Button */
@@ -53,7 +36,8 @@
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
-  z-index: 10000; /* High z-index to ensure visibility */
+  z-index: 10003; /* Highest z-index - above profile photo (10002) */
+  pointer-events: auto; /* Ensure it's always clickable */
 }
 .sidebar-close:hover { 
   color: var(--text-primary); 
@@ -74,6 +58,7 @@
 /* Profile Section */
 .profile-photo {
   position: relative;
+  z-index: 10002; /* Always in front - above top-nav (10000) and sidebar (10001) */
 }
 
 .profile-photo::before {
@@ -223,6 +208,7 @@
   border-radius: var(--radius-lg);
   padding: var(--space-4);
   box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-4);
 }
 
 .social-links a {
@@ -230,6 +216,18 @@
   overflow: hidden;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+}
+
+/* Preview CV Button - Simple and Clean */
+.sidebar .btn.btn-outline.btn-block,
+.sidebar .btn.btn-block {
+  display: flex !important;
+  justify-content: flex-start !important; /* Changed to flex-start for proper icon/text alignment */
+  align-items: center !important;
+  gap: var(--space-4) !important; /* Increased gap for better spacing (16px) */
+  text-align: left !important; /* Align text to left */
+  padding-left: var(--space-6) !important; /* Add left padding for proper spacing */
+  width: 100%;
 }
 
 .social-links a::before {
@@ -298,26 +296,40 @@
   box-shadow: var(--shadow-lg);
 }
 
-/* FIX: Ensure close button is visible and accessible on mobile */
+/* Mobile sidebar adjustments */
 @media (max-width: 767px) {
   .sidebar {
     background: var(--bg-primary);
     box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
-    width: 100vw;
+    /* Width and position controlled in layout.css */
+  }
+
+  /* Close button hidden by default, shown via JS when sidebar opens */
+  .sidebar-close {
+    display: none !important;
+    width: 44px !important; /* Larger tap target on mobile */
+    height: 44px !important; /* Larger tap target on mobile */
+    top: var(--space-2) !important;
+    right: var(--space-2) !important;
   }
   
-  .sidebar-close { 
-    display: flex !important; 
+  .sidebar.active .sidebar-close {
+    display: flex !important;
+    pointer-events: auto !important;
+    z-index: 10006 !important; /* Above sidebar (10004), top-nav (10001), hamburger (10005) */
   }
-  
+
   .sidebar-inner {
     padding: var(--space-8) var(--space-6);
+    padding-top: 80px !important; /* Extra padding at top to clear the profile photo from top nav bar */
     width: 100%;
     min-height: 100%;
-    padding-bottom: 100px; /* Extra space for scrolling */
+    /* CRITICAL: Extra padding at bottom for scrolling to end - Reduced by 20% */
+    padding-bottom: 100px;
+    box-sizing: border-box;
   }
   
-  /* FIX: Ensure content doesn't overflow horizontally */
+  /* Prevent horizontal overflow */
   .sidebar-inner > * {
     max-width: 100%;
     overflow-x: hidden;
@@ -326,6 +338,12 @@
   .profile-photo img {
     width: 100px;
     height: 100px;
+    /* Prevent image movement/dragging on mobile */
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+    pointer-events: none;
+    transform: none !important;
   }
   
   .profile-name {
@@ -333,6 +351,11 @@
   }
   
   .profile-title {
+    font-size: var(--text-sm);
+  }
+  
+  /* Contact items - Mobile: SM */
+  .contact-item {
     font-size: var(--text-sm);
   }
   
@@ -354,6 +377,36 @@
   
   .skill-bar {
     margin-bottom: var(--space-3);
+  }
+}
+
+/* Small Mobile - Font size adjustments */
+@media (max-width: 479px) {
+  .profile-name {
+    font-size: var(--text-base) !important; /* Small Mobile: BASE */
+  }
+  
+  .profile-title {
+    font-size: var(--text-xs) !important; /* Small Mobile: XS */
+  }
+}
+
+/* Ultra Small Screens (≤360px) - Extra Small Font Sizes (XSS) */
+@media (max-width: 360px) {
+  .profile-name {
+    font-size: var(--text-sm) !important; /* Ultra Small: SM (12-14px) */
+  }
+  
+  .profile-title {
+    font-size: var(--text-xss) !important; /* Ultra Small: XSS (8-10px) */
+  }
+  
+  .contact-item {
+    font-size: var(--text-xs) !important; /* Ultra Small: XS (10-12px) */
+  }
+  
+  .skills-preview h3 {
+    font-size: var(--text-sm) !important; /* Ultra Small: SM (12-14px) */
   }
 }
 
@@ -435,6 +488,28 @@
   scroll-behavior: auto; /* Disable smooth scroll to prevent vibration */
   -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
   overscroll-behavior: contain; /* Prevent scroll chaining */
+}
+
+/* Visual feedback when hovering sidebar */
+.sidebar.sidebar-hover {
+  box-shadow: 2px 0 15px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease;
+  cursor: default;
+}
+
+/* Visual indicator when actively scrolling sidebar independently */
+.sidebar.sidebar-scrolling::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 101;
+  transition: opacity 0.3s ease;
 }
 
 /* Custom scrollbar for better control */

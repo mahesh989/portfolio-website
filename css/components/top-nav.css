@@ -9,6 +9,11 @@
   z-index: 1000;
   padding: var(--space-3) 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* TEMPORARY FIX - Ensure top-nav is always visible */
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .top-nav-container {
@@ -55,18 +60,19 @@
   display: flex;
   -webkit-align-items: center; /* Safari align-items prefix */
   align-items: center;
-  gap: var(--space-16);
+  gap: var(--space-6); /* Base spacing - will be overridden by desktop media query */
 }
 
 .top-nav-item {
   padding: var(--space-2) var(--space-4);
-  color: var(--text-secondary);
+  color: var(--text-secondary) !important;
   text-decoration: none;
   font-weight: var(--font-medium);
   font-size: var(--text-sm);
   border-radius: var(--radius-base);
   transition: all var(--transition-fast);
   position: relative;
+  display: inline-block;
 }
 
 .top-nav-item:hover {
@@ -80,102 +86,139 @@
   font-weight: var(--font-semibold);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Mobile Top Navigation (≤ 767px) */
+@media (max-width: 767px) {
   .top-nav {
-    display: flex; /* Show on mobile like desktop */
-    padding: var(--space-2) 0; /* Reduce top nav padding for mobile */
-    border-bottom: 0; /* Avoid 1px line artifacts on iOS Safari */
-    box-shadow: none; /* Remove divider to eliminate hairline */
-    overflow: hidden; /* Prevent logo or content from peeking below */
-    -webkit-transform: translateZ(0); /* Fix subpixel gap on iOS */
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    top: 0; /* Nav at top; mobile header hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex !important;
+    visibility: visible !important;
+    padding: 0;
   }
-  /* Show logo on mobile since header is hidden */
-  .top-nav-logo { display: -webkit-flex; display: flex; }
-  .top-nav-container { justify-content: space-between; }
-  
-  /* Adjust top nav for mobile */
+
   .top-nav-container {
-    padding: 0 var(--space-2); /* Minimal padding for mobile */
-    overflow: hidden; /* Clip any inner overflow on iOS */
-    flex-wrap: nowrap; /* Keep nav on a single line */
-    gap: var(--space-2); /* Gap between logo and menu */
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 0 var(--space-4);
+    gap: var(--space-3);
   }
-  
-  .top-nav-menu {
-    gap: var(--space-1); /* Minimal gap between nav items for mobile */
-    flex-wrap: nowrap; /* Single row */
-    justify-content: center; /* Center the nav items */
-    overflow-x: auto; /* Allow horizontal scroll if cramped */
-    -webkit-overflow-scrolling: touch;
-    flex: 1 1 auto; /* Take remaining space but allow button to show */
-    min-width: 0; /* Prevent overflow from pushing the button out */
+
+  /* Logo */
+  .top-nav-logo {
+    display: flex !important;
+    align-items: center;
+    flex-shrink: 0;
+    visibility: visible !important;
   }
-  
-  .top-nav-item {
-    font-size: var(--text-xs); /* Very small font for mobile */
-    padding: var(--space-1) var(--space-2); /* Minimal padding for mobile */
-    white-space: nowrap; /* Prevent text wrapping */
-    flex-shrink: 0; /* Prevent items from shrinking */
-  }
-  
-  /* Make logo smaller on mobile */
+
   .top-nav-logo .logo-text {
     width: 32px;
     height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: var(--text-sm);
-    line-height: 32px; /* Avoid descender artifacts */
-    margin-bottom: 0; /* reset */
-    -webkit-transform: translateY(-2px); /* Lift badge slightly on iOS */
-    transform: translateY(-2px);
-    border-bottom-left-radius: 0; /* Flatten bottom to avoid green arc */
-    border-bottom-right-radius: 0;
-    overflow: hidden; /* Ensure no subpixel bleed */
+    font-weight: var(--font-bold);
+    color: white;
+    background: var(--primary-color);
+    border-radius: var(--radius-base);
   }
 
-  /* Three-dots menu button */
-  .nav-menu-button {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: column;
+  /* Navigation Menu - Scrollable */
+  .top-nav-menu {
+    display: flex !important;
+    gap: var(--space-2);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex: 1;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0 var(--space-2);
+    visibility: visible !important;
+    min-width: 0;
+  }
+
+  .top-nav-menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .top-nav-item {
+    display: block !important;
+    visibility: visible !important;
+    white-space: nowrap;
+    font-size: var(--text-sm);
+    padding: var(--space-2) var(--space-3);
+    color: var(--text-secondary) !important;
+    text-decoration: none;
+    border-radius: var(--radius-base);
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+    pointer-events: auto;
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+
+  .top-nav-item:hover,
+  .top-nav-item.active {
+    color: var(--primary-color) !important;
+    background: var(--bg-secondary);
+  }
+
+  /* Hamburger Menu (3 dots) - positioned 4px from right edge */
+  .hamburger {
+    display: flex !important;
+    visibility: visible !important;
     flex-direction: column;
-    -webkit-justify-content: space-between;
     justify-content: space-between;
-    width: 22px;
-    height: 22px;
-    margin-left: var(--space-2);
+    align-items: center;
+    width: 21px;
+    height: 21px;
     background: transparent;
     border: none;
+    padding: 0;
+    flex-shrink: 0;
     cursor: pointer;
-    flex: 0 0 auto; /* Never shrink, always visible */
+    margin-right: 4px;
+    z-index: 10005; /* Above sidebar and overlay */
+    position: relative;
   }
-  .nav-menu-button span {
+
+  .hamburger span {
     width: 4px;
     height: 4px;
     background-color: var(--text-primary);
     border-radius: 50%;
+    display: block;
   }
 }
 
-/* Very small screens - ensure all nav items fit */
+/* Very small screens optimization */
 @media (max-width: 480px) {
   .top-nav-container {
-    padding: 0 var(--space-1); /* Even less padding for very small screens */
+    padding: 0 var(--space-2);
+    gap: var(--space-2);
   }
-  
+
   .top-nav-menu {
-    gap: 0.25rem; /* Minimal gap for very small screens */
+    gap: var(--space-1);
+    padding: 0 var(--space-1);
   }
-  
+
   .top-nav-item {
-    font-size: 0.7rem; /* Extra small font for very small screens */
-    padding: var(--space-1); /* Minimal padding */
+    font-size: var(--text-xs);
+    padding: var(--space-2) var(--space-2);
   }
-  
+
   .top-nav-logo .logo-text {
     width: 28px;
     height: 28px;
@@ -184,8 +227,24 @@
 }
 
 @media (min-width: 769px) {
-  .mobile-header {
-    display: none; /* Hide mobile header on desktop */
+  /* Mobile header removed - top-nav handles all navigation */
+  
+  /* Desktop: Hide hamburger (3 dots) - not needed on desktop */
+  .hamburger {
+    display: none !important;
+    visibility: hidden !important;
+  }
+  
+  /* Desktop: Properly spaced navigation menu - evenly distributed */
+  .top-nav-menu {
+    gap: var(--space-20) !important; /* Even more spacing for desktop (80px) */
+    -webkit-justify-content: flex-start !important;
+    justify-content: flex-start !important;
+  }
+  
+  .top-nav-item {
+    padding: var(--space-2) var(--space-10) !important; /* More horizontal padding (40px) */
+    margin: 0 !important;
   }
   
   /* Adjust main content to account for top nav */

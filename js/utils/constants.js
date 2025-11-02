@@ -58,8 +58,8 @@ export const SELECTORS = {
   // Navigation
   NAV: {
     SIDEBAR: '.sidebar',
-    MOBILE_HEADER: '.mobile-header',
-    HAMBURGER: '.hamburger',
+    TOP_NAV: '.top-nav',
+    HAMBURGER: '.top-nav .hamburger',
     OVERLAY: '.mobile-overlay',
     NAV_ITEMS: '.nav-item',
     SKIP_LINK: '.skip-link'

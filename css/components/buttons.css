@@ -360,6 +360,188 @@
   }
 }
 
+/* Flickering Animation for Navigation Buttons */
+/* Hero Section Buttons - All buttons same exact width (matching longest) */
+.hero-cta .btn.btn-outline {
+  width: 240px !important; /* Fixed width - same for all buttons, matching longest */
+  min-width: 240px !important;
+  max-width: 240px !important;
+  padding: var(--space-3) var(--space-8) !important; /* Increased horizontal padding (32px) */
+  gap: var(--space-4) !important; /* Increased gap between icon and text (16px) */
+  justify-content: flex-start !important; /* Icon and text aligned to left with proper spacing */
+  position: relative;
+}
+
+/* Ensure icon and text have proper spacing in hero buttons */
+.hero-cta .btn.btn-outline .icon,
+.hero-cta .btn.btn-outline svg {
+  flex-shrink: 0; /* Prevent icon from shrinking */
+  margin-right: 0; /* Gap handled by parent gap property */
+}
+
+.hero-cta .btn.btn-outline span.icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hero-cta .btn.btn-outline[href="#projects"],
+.hero-cta .btn.btn-outline[href="#contact"],
+.hero-cta .btn.btn-outline[href*="resume"] {
+  position: relative;
+}
+
+/* All hero buttons - bullets positioned at right edge of box (same for all) */
+.hero-cta .btn.btn-outline[href="#projects"]::after,
+.hero-cta .btn.btn-outline[href="#contact"]::after,
+.hero-cta .btn.btn-outline[href*="resume"]::after {
+  content: '';
+  position: absolute;
+  right: var(--space-6); /* Same position at right edge for all buttons */
+  top: calc(50% - 5px); /* Moved up by 5px for proper alignment */
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  -webkit-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -moz-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -ms-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -o-animation: rapidFlicker 0.3s ease-in-out infinite;
+  animation: rapidFlicker 0.3s ease-in-out infinite;
+  flex-shrink: 0; /* Prevent bullet from shrinking */
+}
+
+/* Preview CV Buttons (outside hero) - Always Flickering */
+/* Sidebar Preview CV - Add flicker but DON'T increase length */
+.sidebar .btn.btn-outline[href*="resume"],
+.sidebar .btn.btn-outline.btn-block[href*="resume"] {
+  position: relative;
+  /* NO min-width or padding changes - keep original size */
+  gap: var(--space-4) !important; /* Proper gap between icon and text */
+  justify-content: flex-start !important; /* Icon and text aligned to left */
+}
+
+.sidebar .btn.btn-outline[href*="resume"]::after,
+.sidebar .btn.btn-outline.btn-block[href*="resume"]::after {
+  content: '';
+  position: absolute;
+  right: var(--space-6); /* Proper gap from right edge */
+  top: calc(50% - 5px); /* Moved up by 5px for proper alignment */
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  -webkit-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -moz-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -ms-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -o-animation: rapidFlicker 0.3s ease-in-out infinite;
+  animation: rapidFlicker 0.3s ease-in-out infinite;
+}
+
+/* Preview CV in Contact Section - Add flicker with increased length */
+#contact .btn.btn-outline[href*="resume"],
+.contact-section .btn.btn-outline[href*="resume"],
+#contact a.btn.btn-outline[href*="resume"],
+.contact-section a.btn.btn-outline[href*="resume"] {
+  position: relative;
+  min-width: 200px !important; /* Increased minimum width for contact section */
+  padding: var(--space-3) var(--space-8) !important; /* Increased horizontal padding */
+  gap: var(--space-4) !important; /* Proper gap between icon and text */
+  justify-content: flex-start !important;
+}
+
+#contact .btn.btn-outline[href*="resume"]::after,
+.contact-section .btn.btn-outline[href*="resume"]::after,
+#contact a.btn.btn-outline[href*="resume"]::after,
+.contact-section a.btn.btn-outline[href*="resume"]::after {
+  content: '';
+  position: absolute;
+  right: var(--space-6);
+  top: calc(50% - 5px); /* Moved up by 5px for proper alignment */
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  -webkit-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -moz-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -ms-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -o-animation: rapidFlicker 0.3s ease-in-out infinite;
+  animation: rapidFlicker 0.3s ease-in-out infinite;
+}
+
+/* View All Projects on GitHub - Always Flickering with proper alignment */
+.projects-cta .btn.btn-outline[href*="github"] {
+  position: relative;
+  min-width: 350px; /* Increased minimum width for longer button */
+  padding: var(--space-3) var(--space-8) !important; /* Increased horizontal padding (32px) */
+  gap: var(--space-4) !important; /* Proper gap between icon and text (16px) */
+  justify-content: flex-start !important; /* Icon and text aligned to left */
+}
+
+.projects-cta .btn.btn-outline[href*="github"]::after {
+  content: '';
+  position: absolute;
+  right: var(--space-6); /* Same gap as "View My Work" and "Let's Connect" */
+  top: calc(50% - 5px); /* Moved up by 5px for proper alignment */
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  -webkit-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -moz-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -ms-animation: rapidFlicker 0.3s ease-in-out infinite;
+  -o-animation: rapidFlicker 0.3s ease-in-out infinite;
+  animation: rapidFlicker 0.3s ease-in-out infinite;
+}
+
+/* Import rapidFlicker keyframes - they're defined in sidebar-skills.css */
+/* If not imported, define here */
+@keyframes rapidFlicker {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  25% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  75% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+}
+
+@-webkit-keyframes rapidFlicker {
+  0%, 100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  25% {
+    opacity: 0.3;
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+  75% {
+    opacity: 0.5;
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   .btn {
@@ -376,5 +558,17 @@
   
   .btn:active {
     transform: none;
+  }
+  
+  /* Disable flicker animation for reduced motion */
+  .btn::after,
+  .hero-cta .btn::after,
+  a.btn[href*="resume"]::after,
+  .projects-cta .btn::after {
+    -webkit-animation: none !important;
+    -moz-animation: none !important;
+    -ms-animation: none !important;
+    -o-animation: none !important;
+    animation: none !important;
   }
 }
