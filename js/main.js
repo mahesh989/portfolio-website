@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectFilters();
   initCopyEmail();
   initJourneyModal();
+  
+  // Desktop-only iframe to img replacement for puppy GIF
+  replacePuppyIframeOnDesktop();
 });
 
 // Loading Screen Management
@@ -831,6 +834,60 @@ function initEnhancedNavigation() {
   });
   
   console.log(`[Navigation] Navigation system initialized - Mobile: ${isMobile()}, Links: ${allNavLinks.length}`);
+}
+
+// Desktop-only iframe to img replacement for puppy GIF
+function replacePuppyIframeOnDesktop() {
+  // Only run on desktop (width > 768px)
+  if (window.innerWidth <= 768) {
+    return; // Mobile keeps iframe
+  }
+  
+  const puppy = document.querySelector('.hero-puppy');
+  if (!puppy) return;
+  
+  const iframe = puppy.querySelector('iframe');
+  // Check if already replaced (img exists) or no iframe found
+  if (!iframe || puppy.querySelector('img')) {
+    return;
+  }
+  
+  // Extract Giphy ID from iframe src
+  // Format: https://giphy.com/embed/RrVJHB3KSTCznWubpd
+  const iframeSrc = iframe.src;
+  const giphyIdMatch = iframeSrc.match(/embed\/([a-zA-Z0-9]+)/);
+  
+  if (!giphyIdMatch) {
+    console.warn('[Puppy GIF] Could not extract Giphy ID from iframe src');
+    return;
+  }
+  
+  const giphyId = giphyIdMatch[1];
+  const gifUrl = `https://media.giphy.com/media/${giphyId}/giphy.gif`;
+  
+  // Create img element with desktop-specific styling
+  const img = document.createElement('img');
+  img.src = gifUrl;
+  img.alt = 'Animated puppy';
+  img.style.cssText = 'width:100%; height:100%; object-fit:cover; object-position:center 60%; border-radius:50%; display:block;';
+  
+  // Replace iframe with img
+  puppy.innerHTML = '';
+  puppy.appendChild(img);
+  
+  console.log('✅ Replaced iframe with img on desktop - 60% position should work now');
+  
+  // Handle window resize - revert to iframe if user resizes to mobile
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (window.innerWidth <= 768 && puppy.querySelector('img')) {
+        // User resized to mobile - restore iframe (reload page or recreate iframe)
+        location.reload(); // Simple solution - reload to restore original HTML
+      }
+    }, 250);
+  });
 }
 
 // Initialize image preloading

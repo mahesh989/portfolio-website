@@ -9,7 +9,7 @@
   overflow-x: hidden; /* Prevent horizontal overflow */
   overflow-y: visible; /* Allow vertical overflow for full puppy circle */
   z-index: 1;
-  padding-top: 4rem; /* Desktop: Original working value */
+  padding-top: 168px !important; /* Desktop: Match mobile padding to accommodate container positioning */
   padding-bottom: var(--space-6); /* Increased bottom padding to accommodate bubble */
   width: 100%;
   max-width: 100vw; /* Ensure it doesn't exceed viewport width */
@@ -22,14 +22,15 @@
   max-width: 800px;
   padding: 0 var(--space-6) var(--space-4) var(--space-6);
   position: relative;
-  z-index: 2;
-  margin-top: 0; /* Reset margin - no negative offset */
+  z-index: 10 !important; /* Higher z-index so text stays IN FRONT of puppy animation (match mobile) */
+  margin-top: -85px !important; /* Match mobile positioning for consistency */
 }
 
 /* PERMANENT PUPPY CIRCLE FIX */
 .hero-puppy-container {
   position: absolute;
-  top: var(--space-4); /* Desktop: Original working position */
+  top: 112px !important; /* Desktop: Use same positioning as mobile for consistency */
+  margin-top: -66px !important; /* Desktop: Negative margin to compensate (same as mobile) */
   left: var(--space-6);
   z-index: 1; /* Desktop: Lower z-index */
   -webkit-animation: puppy-glide-x 8s ease-in-out infinite alternate; /* Safari animation prefix */
@@ -37,7 +38,6 @@
   max-width: calc(100vw - 2 * var(--space-6) - 132px); /* Ensure it doesn't exceed viewport */
   -webkit-transform: translateZ(0); /* Force hardware acceleration */
   transform: translateZ(0);
-  /* Desktop: No negative margin needed */
 }
 
 /* PERMANENT PUPPY CIRCLE FIX */
@@ -56,6 +56,24 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* DESKTOP-ONLY FIX - 60% position for better GIF visibility */
+@media (min-width: 769px) {
+  .hero-puppy img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 60% !important; /* Position GIF at 60% from top for better bottom visibility */
+    border-radius: 50% !important;
+    display: block !important;
+  }
+  
+  /* Hide iframe on desktop - will be replaced with img via JavaScript */
+  .hero-puppy iframe,
+  .hero-puppy .giphy-embed {
+    display: none !important;
+  }
 }
 
 /* PERMANENT PUPPY CIRCLE FIX */
