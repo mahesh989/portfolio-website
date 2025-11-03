@@ -371,7 +371,7 @@ function initMobileMenu() {
         sessionStorage.setItem('sidebarShownOnce', '1');
         localStorage.setItem('sidebarShownEver', '1');
       }, 500);
-    }
+  }
   } catch {}
   
   // Handle resize
@@ -404,11 +404,11 @@ function initScrollToTop() {
         cancelAnimationFrame(scrollRAF);
       }
       scrollRAF = requestAnimationFrame(() => {
-        if (window.pageYOffset > 300) {
-          scrollBtn.classList.add('visible');
-        } else {
-          scrollBtn.classList.remove('visible');
-        }
+      if (window.pageYOffset > 300) {
+        scrollBtn.classList.add('visible');
+      } else {
+        scrollBtn.classList.remove('visible');
+      }
         scrollRAF = null;
       });
     }, 200);
@@ -926,13 +926,13 @@ function initEnhancedNavigation() {
     console.log(`[Navigation] Link clicked/touched for section: ${sectionId}, Mobile: ${isMobile()}`);
     // Define proceed navigation first so callbacks can reference it
     const proceed = () => {
-      if (sidebarSections.includes(sectionId)) {
-        console.log(`[Navigation] Navigating to sidebar section: ${sectionId}`);
-        openSidebarAndNavigate(sectionId);
-      } else {
-        console.log(`[Navigation] Navigating to main content section: ${sectionId}`);
-        navigateToMainContent(sectionId);
-      }
+    if (sidebarSections.includes(sectionId)) {
+      console.log(`[Navigation] Navigating to sidebar section: ${sectionId}`);
+      openSidebarAndNavigate(sectionId);
+    } else {
+      console.log(`[Navigation] Navigating to main content section: ${sectionId}`);
+      navigateToMainContent(sectionId);
+    }
     };
     
     // If mobile quick nav is open, close it FIRST, then navigate

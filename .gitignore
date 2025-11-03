@@ -118,3 +118,4 @@ lighthouse-report.html
 # Local development
 .local/
 .cache/
+*.md

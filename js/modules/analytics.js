@@ -113,27 +113,27 @@ function trackScrollDepth() {
       cancelAnimationFrame(scrollRAF);
     }
     scrollRAF = requestAnimationFrame(() => {
-      const scrollPercent = Math.round(
-        (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
-      );
+    const scrollPercent = Math.round(
+      (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
+    );
+    
+    if (scrollPercent > maxScroll) {
+      maxScroll = scrollPercent;
       
-      if (scrollPercent > maxScroll) {
-        maxScroll = scrollPercent;
-        
-        milestones.forEach(milestone => {
-          if (scrollPercent >= milestone && maxScroll < milestone + 5) {
-            if (window.gtag) {
-              gtag('event', 'scroll_depth', {
-                event_category: 'Engagement',
-                event_label: `${milestone}%`,
-                value: milestone
-              });
-            }
+      milestones.forEach(milestone => {
+        if (scrollPercent >= milestone && maxScroll < milestone + 5) {
+          if (window.gtag) {
+            gtag('event', 'scroll_depth', {
+              event_category: 'Engagement',
+              event_label: `${milestone}%`,
+              value: milestone
+            });
           }
-        });
-      }
+        }
+      });
+    }
       scrollRAF = null;
-    });
+  });
   };
   
   // Use passive listener for better scroll performance

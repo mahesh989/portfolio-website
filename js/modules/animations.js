@@ -10,8 +10,8 @@ export function initAnimations() {
       if (entry.isIntersecting) {
         // Use requestAnimationFrame for smoother animation start
         requestAnimationFrame(() => {
-          setTimeout(() => {
-            entry.target.classList.add('fade-in-up');
+        setTimeout(() => {
+          entry.target.classList.add('fade-in-up');
           }, Math.min(index * 50, 300)); // Reduced stagger delay (50ms max 300ms total)
         });
         observer.unobserve(entry.target);
@@ -47,16 +47,16 @@ function initParallaxEffect() {
       cancelAnimationFrame(parallaxRAF);
     }
     parallaxRAF = requestAnimationFrame(() => {
-      const scrolled = window.pageYOffset;
-      const parallax = scrolled * 0.1; // Much smaller effect
-      
-      // Only apply to background elements, not the main content
-      const heroBackground = hero.querySelector('.hero-background');
-      if (heroBackground) {
-        heroBackground.style.transform = `translateY(${parallax}px)`;
-      }
+    const scrolled = window.pageYOffset;
+    const parallax = scrolled * 0.1; // Much smaller effect
+    
+    // Only apply to background elements, not the main content
+    const heroBackground = hero.querySelector('.hero-background');
+    if (heroBackground) {
+      heroBackground.style.transform = `translateY(${parallax}px)`;
+    }
       parallaxRAF = null;
-    });
+  });
   };
   
   // Use passive listener for better scroll performance
