@@ -830,6 +830,16 @@ input, textarea, select {
     overflow-y: auto !important;
     overflow-x: hidden !important;
     height: auto !important;
+    min-height: 100vh !important; /* Allow content to expand beyond viewport */
+    position: relative !important;
+  }
+  
+  /* CRITICAL: Restore main-content scrolling when sidebar closes */
+  body:not(.sidebar-open) .main-content {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    touch-action: pan-y !important; /* Allow vertical scrolling on mobile */
+    -webkit-overflow-scrolling: touch !important;
   }
   
   /* Ensure navigation links are clickable on mobile */
@@ -842,17 +852,7 @@ input, textarea, select {
     }
   }
   
-  body:not(.sidebar-open) {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    height: 100vh !important;
-  }
-  
-  body:not(.sidebar-open) .main-content {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    height: auto !important;
-  }
+  /* Duplicate rule removed - already defined above */
   
   /* ALIGNMENT FIX - Make all sections same width */
   .main-content {

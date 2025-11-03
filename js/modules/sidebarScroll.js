@@ -123,8 +123,9 @@ export function initSidebarScroll() {
   }, 500);
   
   // Sync sidebar with main content scroll (SIMULTANEOUS SCROLLING)
+  // Optimized with requestAnimationFrame and passive listener for smooth performance
   let scrollRAF = null;
-  window.addEventListener('scroll', () => {
+  const handleScroll = () => {
     if (!isHoveringSidebar && !isSidebarScrolling) {
       // Cancel previous animation frame to prevent stacking
       if (scrollRAF) {
@@ -136,7 +137,10 @@ export function initSidebarScroll() {
         scrollRAF = null;
       });
     }
-  }, { passive: true });
+  };
+  
+  // Use passive listener for better scroll performance
+  window.addEventListener('scroll', handleScroll, { passive: true, capture: false });
   
   // Disable smooth scroll behavior to prevent lag
   sidebar.style.scrollBehavior = 'auto';

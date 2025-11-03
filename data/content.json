@@ -65,6 +65,20 @@
   
   "experience": [
     {
+      "id": "exp0",
+      "company": "Outlier.ai",
+      "location": "Remote",
+      "role": "AI Data Trainer & Evaluator",
+      "period": "Jul 2024 - Present",
+      "current": true,
+      "achievements": [
+        "Evaluated and improved AI model responses by assessing accuracy, quality, and alignment with user expectations",
+        "Developed and tested training prompts to identify AI performance gaps and enhance model capabilities",
+        "Provided detailed feedback and evaluation on AI training projects, contributing to the development of more reliable AI systems"
+      ],
+      "tags": ["AI Training", "Quality Assurance", "Model Evaluation"]
+    },
+    {
       "id": "exp1",
       "company": "The Bitrates",
       "location": "Sydney, NSW, Australia",
@@ -92,30 +106,55 @@
       "tags": ["Python", "Power BI", "Automation", "Analytics"]
     },
     {
-      "id": "exp3",
-      "company": "Property Console",
-      "location": "Sydney, Australia",
-      "role": "Software Engineer & Analyst",
-      "period": "Jun 2023 - Nov 2023",
+      "id": "exp3-teacher",
+      "company": "Rastriya Secondary School",
+      "location": "Nepal",
+      "role": "Physics and Math Teacher",
+      "period": "Jan 2015 - Aug 2016",
       "achievements": [
-        "Built Python scripts tracking KPIs with 99% accuracy, ensuring data integrity across 50,000+ records",
-        "Enhanced analytics capabilities by 25% through Python optimization, reducing query execution time",
-        "Created Tableau dashboards that improved decision-making processes, leading to 10% cost reduction"
+        "Managed and mentored 60+ students across class 11 and 12 Physics and Mathematics courses, developing strong classroom management skills and adapting teaching methods to diverse learning styles",
+        "Demonstrated leadership through curriculum development, student mentorship, and collaborative planning with faculty, enhancing communication skills and building rapport with students and colleagues"
       ],
-      "tags": ["Python", "SQL", "Tableau", "Analytics"]
+      "tags": ["Teaching", "Leadership", "Student Management", "Curriculum Development"]
     },
     {
       "id": "exp4",
       "company": "CY Cergy Paris University",
       "location": "Cergy-Pontoise, France",
-      "role": "Research Assistant (PhD)",
+      "role": "Research Assistant",
       "period": "Oct 2018 - Sep 2022",
       "achievements": [
-        "4 years of advanced Python programming for computational modeling and complex data analysis",
-        "Published peer-reviewed research on quantum spin systems, demonstrating deep analytical capabilities",
-        "Managed large datasets and presented findings at international conferences, honing communication skills"
+        "Utilized advanced Python programming for computational modeling and solving complex research problems",
+        "Developed Python-based workflows to manage and analyze large datasets across multiple research projects",
+        "Presented Python-enabled research findings at international conferences, demonstrating technical expertise and communication skills"
       ],
       "tags": ["Python", "Research", "Data Analysis", "Problem Solving"]
+    },
+    {
+      "id": "exp5",
+      "company": "CY Cergy Paris University",
+      "location": "Cergy-Pontoise, France",
+      "role": "Lecturer and Course Facilitator",
+      "period": "Sep 2019 - Jun 2022",
+      "achievements": [
+        "Led engaging physics tutorials for master's students, enhancing understanding and promoting teamwork",
+        "Designed course materials, assignments, and exams, strengthening the learning experience",
+        "Mentored students on projects, collaborated with faculty, and fostered student engagement"
+      ],
+      "tags": ["Teaching", "Course Design", "Student Mentoring", "Education"]
+    },
+    {
+      "id": "exp6",
+      "company": "CY Cergy Paris University",
+      "location": "Cergy-Pontoise, France",
+      "role": "Research Intern",
+      "period": "Feb 2018 - Jun 2018",
+      "achievements": [
+        "Developed proficiency in Python programming by researching the effect of magnetic fields on 2D materials",
+        "Managed and analysed complex data sets, improving their accuracy and reliability",
+        "Used dashboard using Power BI to present research findings and participated in weekly reviews, improving collaboration and research skills"
+      ],
+      "tags": ["Python", "Research", "Power BI", "Data Analysis"]
     }
   ],
   

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Charset & Viewport -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- Primary Meta Tags -->
+  <title>Blogs | Maheshwor Tiwari | Data Analyst & AI Engineer</title>
+  <meta name="title" content="Blogs | Maheshwor Tiwari | Data Analyst & AI Engineer">
+  <meta name="description" content="Blog articles on data science, AI, machine learning, and data analysis by Maheshwor Tiwari">
+  <meta name="keywords" content="Data Science Blog, AI Blog, Machine Learning, Data Analysis, Python, SQL, Data Engineering">
+  <meta name="author" content="Maheshwor Tiwari">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maheshwortiwari.com/blogs.html">
+  <meta property="og:title" content="Blogs | Maheshwor Tiwari">
+  <meta property="og:description" content="Blog articles on data science, AI, machine learning, and data analysis">
+  <meta property="og:image" content="https://maheshwortiwari.com/assets/images/og-image.jpg">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://maheshwortiwari.com/blogs.html">
+  <meta property="twitter:title" content="Blogs | Maheshwor Tiwari">
+  <meta property="twitter:description" content="Blog articles on data science, AI, machine learning, and data analysis">
+  <meta property="twitter:image" content="https://maheshwortiwari.com/assets/images/og-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://maheshwortiwari.com/blogs.html">
+  
+  <!-- Preconnect for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css?v=110">
+  <link rel="stylesheet" href="css/layout.css?v=110">
+  <link rel="stylesheet" href="css/components/top-nav.css?v=110">
+  <link rel="stylesheet" href="css/components/sidebar.css?v=110">
+  <link rel="stylesheet" href="css/components/sidebar-skills.css?v=110">
+  <link rel="stylesheet" href="css/components/blogs.css?v=110">
+  <link rel="stylesheet" href="css/components/buttons.css?v=110">
+  <link rel="stylesheet" href="css/responsive.css?v=110">
+  <link rel="stylesheet" href="css/performance.css?v=110">
+</head>
+<body>
+  <!-- Skip Navigation Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Top Navigation Bar -->
+  <nav class="top-nav">
+    <div class="top-nav-container">
+      <div class="top-nav-logo">
+        <a href="index.html" class="logo-link">
+          <span class="logo-text">MT</span>
+        </a>
+      </div>
+      <div class="top-nav-menu">
+        <a href="index.html#about" class="top-nav-item">About</a>
+        <a href="index.html#core-skills" class="top-nav-item">Skills</a>
+        <a href="index.html#experience" class="top-nav-item">Experience</a>
+        <a href="index.html#projects" class="top-nav-item">Projects</a>
+        <a href="index.html#education" class="top-nav-item">Education</a>
+        <a href="blogs.html" class="top-nav-item">Blogs</a>
+        <a href="index.html#contact" class="top-nav-item">Contact</a>
+      </div>
+      <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <!-- Mobile quick nav trigger (three horizontal lines) -->
+      <button class="nav-lines" aria-label="Open quick navigation" id="navLinesBtn" tabindex="0">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <!-- Mobile quick nav dropdown -->
+  <div class="mobile-quick-nav" id="mobileQuickNav">
+    <a href="index.html#about">About</a>
+    <a href="index.html#core-skills">Skills</a>
+    <a href="index.html#experience">Experience</a>
+    <a href="index.html#projects">Projects</a>
+    <a href="index.html#education">Education</a>
+    <a href="blogs.html">Blogs</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+
+  <!-- Mobile Overlay -->
+  <div class="mobile-overlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-inner">
+      <button class="sidebar-close" aria-label="Close sidebar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <!-- Profile Photo -->
+      <div class="profile-photo">
+        <img src="assets/images/profile/headshot.png" 
+             alt="Maheshwor Tiwari - Data Analyst"
+             loading="eager">
+      </div>
+      
+      <!-- Name & Title -->
+      <div class="profile-header">
+        <h2 class="profile-name">Maheshwor Tiwari</h2>
+        <p class="profile-title">Data Analyst | AI Engineer</p>
+      </div>
+      
+      <!-- Contact Info -->
+      <div class="contact-info">
+        <a href="mailto:maheshtwari99@gmail.com" class="contact-item">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <span>maheshtwari99@gmail.com</span>
+        </a>
+        <a href="tel:+61414032507" class="contact-item">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <span>0414 032 507</span>
+        </a>
+        <div class="contact-item">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span>Hurstville, NSW, 2220, Australia</span>
+        </div>
+        <div class="contact-item">
+          <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <span>Full Working Rights (Australia)</span>
+        </div>
+      </div>
+      
+      
+      <!-- Tech Stack -->
+      <div class="sidebar-skills">
+        <!-- Tier 1: Core Skills -->
+        <div class="skills-tier-core" id="core-skills">
+          <h3 class="skills-section-title">Core Skills</h3>
+          <div class="core-skills-list">
+            <div class="core-skill-item">
+              <div class="skill-icon-large">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
+                  <path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.01.2-.01.13-.03.07-.05.05-.07.03-.08.02-.08.01-.08-.01-.08-.02-.07-.03-.05-.05-.03-.07-.01-.13.01-.2.04-.26.1-.3.16-.33.25-.34.34-.34.45-.32.59-.3.73-.26.9-.2.13-.02.07-.01.04-.01.02-.01.01-.01v.01h-.01l-.01-.01-.02-.01-.04-.01-.07-.01-.13-.02zm-2.43 1.1l-.1.04-.19.08-.26.13-.32.17-.36.22-.38.26-.38.3-.36.34-.32.36-.26.38-.18.38-.1.36-.04.32.02.26.08.2.14.14.2.08.26.02.32-.04.36-.1.38-.18.38-.26.36-.32.34-.36.3-.38.26-.38.22-.36.17-.32.13-.26.08-.19.04-.1.01-.05.01-.02.01-.01h-.01l-.01.01-.01.01-.02.01-.05.01-.1.04z"/>
+                  <path d="M12 2.5c-5.25 0-9.5 4.25-9.5 9.5s4.25 9.5 9.5 9.5 9.5-4.25 9.5-9.5-4.25-9.5-9.5-9.5zm0 17c-4.14 0-7.5-3.36-7.5-7.5s3.36-7.5 7.5-7.5 7.5 3.36 7.5 7.5-3.36 7.5-7.5 7.5z"/>
+                  <path d="M12 6.5c-3.03 0-5.5 2.47-5.5 5.5s2.47 5.5 5.5 5.5 5.5-2.47 5.5-5.5-2.47-5.5-5.5-5.5zm0 9c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <span class="skill-name">Python</span>
+                <span class="skill-sub">Pandas • NumPy</span>
+              </div>
+              <div class="skill-level expert"></div>
+            </div>
+            
+            <div class="core-skill-item">
+              <div class="skill-icon-large">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  <path d="M4 6h16v2H4zm0 4h16v2H4zm0 4h16v2H4z"/>
+                  <path d="M8 6h8v2H8zm0 4h8v2H8zm0 4h8v2H8z"/>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <span class="skill-name">SQL</span>
+                <span class="skill-sub">PostgreSQL • MySQL</span>
+              </div>
+              <div class="skill-level expert"></div>
+            </div>
+            
+            <div class="core-skill-item">
+              <div class="skill-icon-large">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
+                  <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h10v2H7v-2zm0 4h6v2H7v-2z"/>
+                  <path d="M9 7h2v2H9V7zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V7zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V7zm0 4h2v2h-2v-2z"/>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <span class="skill-name">Tableau</span>
+                <span class="skill-sub">Power BI</span>
+              </div>
+              <div class="skill-level expert"></div>
+            </div>
+            
+            <div class="core-skill-item">
+              <div class="skill-icon-large">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  <path d="M12 6l1.5 3L17 9.5l-2.5 2.5L16 15l-3-1.5L10 15l1.5-3L9 9.5l2.5-2.5L12 6z"/>
+                  <circle cx="12" cy="12" r="2"/>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <span class="skill-name">Machine Learning</span>
+                <span class="skill-sub">scikit-learn • TensorFlow</span>
+              </div>
+              <div class="skill-level expert"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tier 2: Secondary Skills -->
+        <div class="skills-tier-secondary">
+        </div>
+        
+        <!-- Tier 3: View All -->
+        <div class="skills-tier-expand">
+          <button class="view-all-skills-btn" id="viewAllSkillsBtn">
+            <div class="skill-icon-large">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <path d="M9 9h6v6H9z"/>
+                <path d="M9 1v6"/>
+                <path d="M15 1v6"/>
+                <path d="M9 17v6"/>
+                <path d="M15 17v6"/>
+                <path d="M1 9h6"/>
+                <path d="M17 9h6"/>
+                <path d="M1 15h6"/>
+                <path d="M17 15h6"/>
+              </svg>
+            </div>
+            <div class="skill-info">
+              <span class="skill-name">View Full Tech Stack</span>
+            </div>
+            <div class="skill-level expert"></div>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Social Links -->
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/maheshwortiwari" target="_blank" rel="noopener" 
+           aria-label="LinkedIn Profile">
+          <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+        <a href="https://github.com/mahesh989" target="_blank" rel="noopener" 
+           aria-label="GitHub Profile">
+          <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </a>
+        <a href="https://medium.com/@maheshtwari99" target="_blank" rel="noopener" 
+           aria-label="Medium Blog">
+          <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75S24 8.83 24 12z"/>
+          </svg>
+        </a>
+        <a href="https://public.tableau.com/app/profile/maheshwor.tiwari4503" target="_blank" rel="noopener" 
+           aria-label="Tableau Portfolio">
+          <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/>
+            <path d="M8 8h8v8H8z"/>
+          </svg>
+        </a>
+      </div>
+      
+      <!-- Preview CV -->
+      <a href="assets/resume/maheshwor_tiwari.pdf" 
+         class="btn btn-outline btn-block" target="_blank" rel="noopener noreferrer">
+        <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7,10 12,15 17,10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Preview CV
+      </a>
+      
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main id="main-content" class="main-content">
+    <!-- Blogs Section -->
+    <section class="section blogs-section" style="padding-top: 120px;">
+      <div class="container">
+            <h1 class="section-title">Blogs</h1>
+        <div class="section-divider"></div>
+        
+        <p class="section-subtitle">
+          Articles on data science, AI, machine learning, and data analysis
+        </p>
+
+            <!-- View Toggle -->
+            <div class="blogs-view-toggle" role="group" aria-label="Blogs view toggle">
+              <button id="viewTimelineBtn" class="view-btn active" aria-pressed="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="2" x2="12" y2="22"/>
+                  <circle cx="12" cy="6" r="3"/>
+                  <circle cx="12" cy="18" r="3"/>
+                </svg>
+                <span>Timeline</span>
+              </button>
+              <button id="viewListBtn" class="view-btn" aria-pressed="false">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="8" y1="6" x2="20" y2="6"/>
+                  <line x1="8" y1="12" x2="20" y2="12"/>
+                  <line x1="8" y1="18" x2="20" y2="18"/>
+                  <circle cx="4" cy="6" r="2"/>
+                  <circle cx="4" cy="12" r="2"/>
+                  <circle cx="4" cy="18" r="2"/>
+                </svg>
+                <span>List</span>
+              </button>
+            </div>
+        
+            <div class="blogs-view-container">
+              <div class="blogs-timeline" id="blogsTimeline" data-view="timeline">
+          <!-- Timeline Line -->
+          <div class="timeline-line"></div>
+          
+          <!-- RSS Feed Content Will Be Loaded Here -->
+          <div class="rss-loading">
+            <div class="loading-spinner">
+              <div class="spinner"></div>
+              <p>Loading articles from Medium...</p>
+            </div>
+          </div>
+              </div>
+
+              <!-- List/Table View (hidden by default) -->
+              <div class="blogs-table-wrapper" id="blogsTableWrapper" hidden>
+                <div class="table-responsive">
+                  <table class="blogs-table" aria-describedby="blogs table of posts">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="col-title">Title</th>
+                        <th scope="col" class="col-desc">Description</th>
+                        <th scope="col" class="col-key">Keywords</th>
+                        <th scope="col" class="col-date">Date Published</th>
+                      </tr>
+                    </thead>
+                    <tbody id="blogsTableBody">
+                      <!-- Rows injected by JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <!-- Availability & Preferred Roles Section -->
+      <div class="footer-availability">
+        <div class="availability-info">
+          <h3>Availability</h3>
+          <p class="availability-text">
+            <strong>Immediately Available</strong><br>
+            Open to relocation<br>
+            Full Working Rights (Australia)
+          </p>
+        </div>
+        
+        <div class="preferred-roles">
+          <h3>Preferred Roles</h3>
+          <div class="role-tags">
+            <span class="role-tag">AI Engineer</span>
+            <span class="role-tag">Data Analyst</span>
+            <span class="role-tag">Business Analyst</span>
+            <span class="role-tag">Data Engineer</span>
+            <span class="role-tag">Data Scientist</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-content">
+        <div class="footer-left">
+          <p class="footer-name">Maheshwor Tiwari</p>
+          <p class="footer-tagline">Data Analyst | AI Engineer</p>
+          <p class="footer-copyright">
+            © 2025 Maheshwor Tiwari. Built with passion for data.
+          </p>
+        </div>
+        
+        <div class="footer-center">
+          <nav class="footer-nav">
+            <a href="index.html#about">About</a>
+            <a href="index.html#core-skills">Skills</a>
+            <a href="index.html#experience">Experience</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#education">Education</a>
+            <a href="blogs.html">Blogs</a>
+            <a href="index.html#contact">Contact</a>
+          </nav>
+        </div>
+        
+        <div class="footer-right">
+          <div class="footer-social">
+            <a href="https://www.linkedin.com/in/maheshwortiwari" target="_blank" aria-label="LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+            </a>
+            <a href="https://github.com/mahesh989" target="_blank" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
+            <a href="https://medium.com/@maheshtwari99" target="_blank" aria-label="Medium">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75S24 8.83 24 12z"/>
+              </svg>
+            </a>
+            <a href="https://public.tableau.com/app/profile/maheshwor.tiwari4503" target="_blank" aria-label="Tableau">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/>
+                <path d="M8 8h8v8H8z"/>
+              </svg>
+            </a>
+          </div>
+          <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Scroll to top">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="18,15 12,9 6,15"/>
+            </svg>
+          </button>
+          <button id="scrollToNextBtn" class="scroll-to-next" aria-label="Scroll down one page">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6,9 12,15 18,9"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script type="module" src="js/main.js?v=110"></script>
+  <script>
+    // Medium RSS Feed Integration
+    document.addEventListener('DOMContentLoaded', function() {
+      const timeline = document.getElementById('blogsTimeline');
+      const viewTimelineBtn = document.getElementById('viewTimelineBtn');
+      const viewListBtn = document.getElementById('viewListBtn');
+      const tableWrapper = document.getElementById('blogsTableWrapper');
+      const tableBody = document.getElementById('blogsTableBody');
+      const loadingDiv = timeline.querySelector('.rss-loading');
+      const rssFeedUrl = 'https://medium.com/feed/@maheshtwari99';
+      
+      // Use CORS proxy to fetch RSS feed
+      const proxyUrl = 'https://api.rss2json.com/v1/api.json?rss_url=';
+      
+      fetch(proxyUrl + encodeURIComponent(rssFeedUrl))
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'ok' && data.items && data.items.length > 0) {
+            loadingDiv.style.display = 'none';
+            displayArticles(data.items);
+          } else {
+            showError('Unable to load articles from RSS feed.');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching RSS feed:', error);
+          showError('Failed to load articles. Please try again later.');
+        });
+      
+      function displayArticles(articles) {
+        // All specific articles from your Medium profile and publications
+        // Duplicates are automatically removed by URL matching
+        const specificArticles = [
+          {
+            title: 'Complete Exploratory Data Analysis (EDA) of Loan Data and Visualization: Understanding Loan Characteristics and Default Patterns',
+            link: 'https://medium.com/nerd-for-tech/complete-exploratory-data-analysis-eda-of-loan-data-and-visualization-understanding-loan-120651cfefc8',
+            pubDate: '2023-05-13',
+            description: 'A comprehensive guide to EDA using a loan dataset with 500K+ records. Learn data preprocessing, visualization techniques, outlier handling, and Tableau dashboard creation.',
+            categories: ['Exploratory Data Analysis', 'Python', 'Tableau', 'Data Visualization'],
+            publication: 'Nerd For Tech'
+          },
+          {
+            title: 'Case Study: BSI Teradata — The Case of the Credit Card Breach and The Case of the Misconnecting',
+            link: 'https://medium.com/@maheshtwari99/case-study-bsi-teradata-the-case-of-the-credit-card-breach-and-the-case-of-the-misconnecting-3cec3894351e',
+            pubDate: '2023-05-20',
+            readTime: '4',
+            description: 'Summary of two BSI investigations—credit card breach and airline misconnects—covering context, problems and concise solution approaches.',
+            categories: ['Case Study', 'Teradata', 'Data Security']
+          },
+          {
+            title: 'Unlocking Insights into Grocery Prices: A Comprehensive Data Cleaning and Data Analysis',
+            link: 'https://medium.com/@maheshtwari99/unlocking-insights-into-grocery-prices-a-comprehensive-data-cleaning-and-data-analysis-caca93058bb4',
+            pubDate: '2023-06-01',
+            description: 'Comprehensive analysis of grocery pricing data including data cleaning processes and insights into market trends.',
+            categories: ['Data Cleaning', 'Data Analysis', 'Python', 'Market Analysis']
+          },
+          {
+            title: 'From Raw Data to Customer Insights: A Step-by-Step Approach to Data Preprocessing and Market',
+            link: 'https://medium.com/@maheshtwari99/from-raw-data-to-customer-insights-a-step-by-step-approach-to-data-preprocessing-and-market-646a26b87ba3',
+            pubDate: '2023-07-01',
+            description: 'A detailed guide on transforming raw data into actionable customer insights through systematic data preprocessing.',
+            categories: ['Data Preprocessing', 'Customer Analytics', 'Python', 'Market Research']
+          },
+          {
+            title: 'Unveiling Australia\'s Rainfall Secrets: A Fascinating Journey into Weather Data Analysis (Part I)',
+            link: 'https://pub.aimind.so/unveiling-australias-rainfall-secrets-a-fascinating-journey-into-weather-data-analysis-part-i-1fb0e2c8506f',
+            pubDate: '2023-08-01',
+            description: 'Exploring weather patterns and rainfall data in Australia through comprehensive data analysis techniques.',
+            categories: ['Weather Analysis', 'Data Science', 'Python', 'Geospatial Analysis'],
+            publication: 'AI Mind'
+          },
+          {
+            title: 'How to Extract Data from Twitter for Sentiment Analysis',
+            link: 'https://pub.aimind.so/how-to-extract-data-from-twitter-for-sentiment-analysis-9fcd7f5f6333',
+            pubDate: '2023-09-01',
+            description: 'A practical guide on extracting Twitter data and preparing it for sentiment analysis projects.',
+            categories: ['Web Scraping', 'Twitter API', 'Sentiment Analysis', 'Python'],
+            publication: 'AI Mind'
+          },
+          {
+            title: 'A Comprehensive Guide to Text Preprocessing for Twitter Data: Getting Ready for Sentiment Analysis',
+            link: 'https://pub.aimind.so/a-comprehensive-guide-to-text-preprocessing-for-twitter-data-getting-ready-for-sentiment-analysis-e7f91cd03671',
+            pubDate: '2023-06-28',
+            readTime: '9',
+            description: 'Tokenisation, lowercasing, stopwords, URLs, emojis/mentions and other normalisation steps to prep tweets for modelling.',
+            categories: ['NLP', 'Text Preprocessing', 'Sentiment Analysis', 'Python'],
+            publication: 'AI Mind'
+          },
+          {
+            title: 'Sentiment Analysis in Python Using TextBlob',
+            link: 'https://pub.aimind.so/sentiment-analysis-in-python-using-textblob-95f99e5f9c48',
+            pubDate: '2023-07-03',
+            readTime: '3',
+            description: 'Beginner-friendly walk-through of TextBlob sentiment analysis with movie tweet data and links to related parts.',
+            categories: ['Sentiment Analysis', 'TextBlob', 'NLP', 'Python'],
+            publication: 'AI Mind'
+          },
+          {
+            title: 'Sentiment Analysis in Python Using VADER',
+            link: 'https://pub.towardsai.net/sentiment-analysis-in-python-using-vader-c5bdcb233993',
+            pubDate: '2023-07-04',
+            readTime: '4',
+            description: 'Quick tutorial applying VADER to Twitter data; integrates with the series on extraction and preprocessing.',
+            categories: ['Sentiment Analysis', 'VADER', 'NLP', 'Python'],
+            publication: 'Towards AI'
+          },
+          {
+            title: 'Sentiment Analysis in Python Using Flair',
+            link: 'https://pub.towardsai.net/sentiment-analysis-in-python-using-flair-2911bd627bbe',
+            pubDate: '2023-07-07',
+            readTime: '4',
+            description: 'Hands-on guide to running sentiment analysis with Flair; example on movie tweets and links to the full series.',
+            categories: ['Sentiment Analysis', 'Flair', 'NLP'],
+            publication: 'Towards AI'
+          },
+          {
+            title: 'Web Scrapping Process for Beginners',
+            link: 'https://medium.com/nerd-for-tech/web-scrapping-process-for-beginners-6c21c027423b',
+            pubDate: '2023-09-08',
+            readTime: '13',
+            description: 'Foundations of web data extraction: when to use it, methods, and ethical considerations for responsible scraping.',
+            categories: ['Web Scraping', 'Python', 'Data Extraction'],
+            publication: 'Nerd For Tech'
+          },
+          {
+            title: 'Diagnosing Parkinson’s Disease Using Voice Sample Data Analysis: Features Selection',
+            link: 'https://pub.towardsai.net/diagnosing-parkinsons-disease-using-voice-sample-data-analysis-features-selection-5871eb4c671c',
+            pubDate: '2023-09-24',
+            readTime: '6',
+            description: 'Non‑invasive PD screening using acoustic features from voice samples; dataset, feature extraction (Praat), and selection pipeline.',
+            categories: ['Healthcare', 'Feature Selection', 'Audio', 'Python'],
+            publication: 'Towards AI'
+          },
+          {
+            title: 'Data Cleaning Process for Beginners',
+            link: 'https://medium.com/nerd-for-tech/data-cleaning-process-for-beginners-903aef7f6049',
+            pubDate: '2023-05-01',
+            readTime: '7',
+            description: 'Practical checklist: deduplicate, handle missing values, standardise formats and validate ranges before analysis.',
+            categories: ['Data Cleaning', 'Python'],
+            publication: 'Nerd For Tech'
+          },
+          {
+            title: 'End-to-End Air Quality Data Workflow: ETL, EDA, Visualisation, and Modeling',
+            link: 'https://pub.aimind.so/end-to-end-air-quality-data-workflow-etl-eda-visualization-and-modeling-d4fc4b7341f3',
+            pubDate: '2024-06-29',
+            readTime: '3',
+            description: 'Part 1: collect Australian air quality data via OpenAQ and load into PostgreSQL to enable decade-long analysis.',
+            categories: ['ETL', 'OpenAQ', 'PostgreSQL', 'Air Quality'],
+            publication: 'AI Mind'
+          },
+          {
+            title: 'Analyzing Income Data: A Data Cleaning and Visualization Project',
+            link: 'https://pub.aimind.so/analyzing-income-data-a-data-cleaning-and-visualization-project-e0618556687b',
+            pubDate: '2023-05-07',
+            readTime: '6',
+            description: 'Data cleaning and visualization on a global income dataset: standardise fields, fix currencies, convert to USD and present insights (US‑focused) with dashboards.',
+            categories: ['Data Cleaning', 'Data Visualization', 'Python', 'Tableau'],
+            publication: 'AI Mind'
+          }
+        ];
+        
+        // Merge RSS articles with specific articles, removing duplicates by normalized URL
+        const normalizeLink = (url) => {
+          try {
+            const u = new URL(url);
+            return `${u.protocol}//${u.host}${u.pathname}`.replace(/\/$/, '').toLowerCase();
+          } catch (e) {
+            return (url || '').split('?')[0].replace(/\/$/, '').toLowerCase();
+          }
+        };
+        const seenLinks = new Set();
+        const allArticles = [];
+        
+        // Add specific articles first
+        specificArticles.forEach(article => {
+          const key = normalizeLink(article.link);
+          if (!seenLinks.has(key)) {
+            seenLinks.add(key);
+            allArticles.push(article);
+          }
+        });
+        
+        // Add RSS articles if not already in list
+        articles.forEach(rssArticle => {
+          const key = normalizeLink(rssArticle.link);
+          if (!seenLinks.has(key)) {
+            seenLinks.add(key);
+            allArticles.push(rssArticle);
+          }
+        });
+        
+        // Sort by date (newest first)
+        allArticles.sort((a, b) => {
+          const dateA = new Date(a.pubDate || a.pubDate || 0);
+          const dateB = new Date(b.pubDate || b.pubDate || 0);
+          return dateB - dateA;
+        });
+        
+        // Display all articles in timeline (alternating left/right) and build table
+        if (tableBody) tableBody.innerHTML = '';
+        allArticles.forEach((article, index) => {
+          const isLeft = index % 2 === 0;
+          const timelineItem = createTimelineItem(article, isLeft, index + 1);
+          timeline.appendChild(timelineItem);
+          if (tableBody) tableBody.appendChild(createTableRow(article));
+        });
+        setupViewToggle();
+      }
+      
+      function createTimelineItem(article, isLeft, index) {
+        const item = document.createElement('div');
+        item.className = `timeline-item ${isLeft ? 'timeline-item-left' : 'timeline-item-right'}`;
+        
+        // Parse date (handle both RSS format and manual format)
+        let pubDate;
+        if (article.pubDate) {
+          pubDate = new Date(article.pubDate);
+        } else if (article.date) {
+          pubDate = new Date(article.date);
+        } else {
+          pubDate = new Date();
+        }
+        const formattedDate = pubDate.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric' 
+        });
+        
+        // Use provided read time when available; otherwise estimate from content length
+        const contentLength = (article.content || article.description || '').length;
+        const estimatedReadTime = (article.readTime && String(article.readTime)) || Math.ceil(contentLength / 1000) || '6';
+        
+        // Extract tags/categories if available
+        const categories = article.categories || [];
+        
+        // Clean HTML from description
+        const rawDescription = article.description || article.content || article.excerpt || '';
+        const textContent = rawDescription.replace(/<[^>]*>/g, '').substring(0, 200);
+        const displayText = textContent.length > 0 ? (textContent.length < 200 ? textContent : textContent + '...') : 'Read the full article on Medium to learn more about this project.';
+        
+        item.innerHTML = `
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="blog-card">
+              <div class="blog-header">
+                <span class="blog-date">${formattedDate}</span>
+                <span class="blog-read-time">${estimatedReadTime} min read</span>
+              </div>
+              <h2 class="blog-title">${article.title}</h2>
+              ${article.publication ? `
+                <div class="blog-publication-badge">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                  </svg>
+                  <span>Published in ${article.publication}</span>
+                </div>
+              ` : ''}
+              <p class="blog-excerpt">${displayText}</p>
+              ${categories.length > 0 ? `
+                <div class="blog-tags">
+                  ${categories.slice(0, 4).map(cat => `<span class="blog-tag">${cat}</span>`).join('')}
+                </div>
+              ` : ''}
+              <div class="blog-links">
+                <a href="${article.link}" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="btn btn-outline blog-read-btn">
+                  <span>Read on Medium</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15,3 21,3 21,9"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        return item;
+      }
+      
+      function showError(message) {
+        loadingDiv.innerHTML = `
+          <div class="rss-error">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <p style="color: var(--text-secondary);">${message}</p>
+            <a href="https://medium.com/@maheshtwari99" target="_blank" class="btn btn-outline" style="margin-top: var(--space-4);">
+              Visit My Medium Profile
+            </a>
+          </div>
+        `;
+      }
+
+      // View Toggle Logic
+      function setupViewToggle() {
+        if (!viewTimelineBtn || !viewListBtn || !timeline) return;
+        const setActive = (activeBtn, inactiveBtn) => {
+          activeBtn.classList.add('active');
+          activeBtn.setAttribute('aria-pressed', 'true');
+          inactiveBtn.classList.remove('active');
+          inactiveBtn.setAttribute('aria-pressed', 'false');
+        };
+        viewTimelineBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          setActive(viewTimelineBtn, viewListBtn);
+          timeline.classList.remove('blogs-list');
+          if (!timeline.classList.contains('blogs-timeline')) timeline.classList.add('blogs-timeline');
+          timeline.setAttribute('data-view', 'timeline');
+          const line = timeline.querySelector('.timeline-line');
+          if (line) line.style.display = '';
+          timeline.querySelectorAll('.timeline-marker').forEach(m => m.style.display = '');
+          if (tableWrapper) tableWrapper.hidden = true;
+          timeline.style.display = '';
+        });
+        viewListBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          setActive(viewListBtn, viewTimelineBtn);
+          timeline.classList.add('blogs-list');
+          timeline.classList.remove('blogs-timeline');
+          timeline.setAttribute('data-view', 'list');
+          const line = timeline.querySelector('.timeline-line');
+          if (line) line.style.display = 'none';
+          timeline.querySelectorAll('.timeline-marker').forEach(m => m.style.display = 'none');
+          if (tableWrapper) tableWrapper.hidden = false;
+          // Keep timeline items in DOM but visually secondary
+          timeline.style.display = 'none';
+        });
+      }
+      
+      // Create a table row for List view
+      function createTableRow(article) {
+        const tr = document.createElement('tr');
+        const pubDate = new Date(article.pubDate || article.date || Date.now());
+        const formattedDate = pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        const rawDescription = article.description || article.content || article.excerpt || '';
+        const textContent = rawDescription.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ');
+        const excerpt = textContent.substring(0, 220) + (textContent.length > 220 ? '…' : '');
+        const categories = article.categories || [];
+        const keywords = categories.slice(0, 6).join(', ');
+        tr.innerHTML = `
+          <td class="col-title"><a href="${article.link}" target="_blank" rel="noopener noreferrer">${article.title}</a>${article.publication ? `<div class='tbl-pub'>${article.publication}</div>` : ''}</td>
+          <td class="col-desc">${excerpt}</td>
+          <td class="col-key">${keywords || '-'}</td>
+          <td class="col-date">${formattedDate}</td>
+        `;
+        return tr;
+      }
+    });
+  </script>
+</body>
+</html>
+

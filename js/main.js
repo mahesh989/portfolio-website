@@ -37,9 +37,23 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectFilters();
   initCopyEmail();
   initJourneyModal();
+  initMobileQuickNav();
+  initExperienceCollapsible();
   
   // Desktop-only iframe to img replacement for puppy GIF
   replacePuppyIframeOnDesktop();
+
+  // Mobile: ensure Blogs link opens in same tab
+  try {
+    if (window.innerWidth <= 767) {
+      document.querySelectorAll('a[href$="blogs.html"]').forEach(a => {
+        if (a.target === '_blank') a.removeAttribute('target');
+      });
+    }
+  } catch {}
+
+  // Mark first visit (for sidebar behavior)
+  try { if (!localStorage.getItem('visited')) localStorage.setItem('visited', '1'); } catch {}
 });
 
 // Loading Screen Management
@@ -54,6 +68,103 @@ function hideLoadingScreen() {
       }, 500);
     }, 1000);
   }
+}
+
+// Mobile Quick Nav (three horizontal lines)
+function initMobileQuickNav() {
+  const trigger = document.getElementById('navLinesBtn');
+  const panel = document.getElementById('mobileQuickNav');
+  if (!trigger || !panel) return;
+  let isAnimating = false;
+  const closePanel = (after) => {
+    if (!panel.classList.contains('open') || isAnimating) return;
+    isAnimating = true;
+    panel.classList.remove('open');
+    panel.classList.add('closing');
+    const onEnd = () => {
+      panel.classList.remove('closing');
+      isAnimating = false;
+      if (typeof after === 'function') {
+        // Defer to allow paint
+        setTimeout(after, 10);
+      }
+      panel.removeEventListener('transitionend', onEnd);
+    };
+    panel.addEventListener('transitionend', onEnd, { once: true });
+    // Fallback in case transitionend doesn't fire (Safari quirks)
+    setTimeout(() => {
+      if (isAnimating) {
+        onEnd();
+      }
+    }, 260);
+  };
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (isAnimating) return;
+    if (panel.classList.contains('open')) {
+      closePanel();
+    } else {
+      panel.classList.remove('closing');
+      panel.classList.add('open');
+    }
+  });
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!panel.contains(e.target) && e.target !== trigger) {
+      closePanel();
+    }
+  });
+  // Close on ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePanel();
+  });
+  // Close with animation THEN navigate
+  panel.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = a.getAttribute('href') || '';
+      const navigate = () => {
+        if (href.startsWith('#')) {
+          const id = href.slice(1);
+          const el = document.getElementById(id);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            history.replaceState(null, '', href);
+          }
+        } else {
+          window.location.href = href;
+        }
+      };
+      // Trigger animated close, then navigate
+      closePanel(navigate);
+    });
+  });
+  // Close on scroll
+  window.addEventListener('scroll', closePanel, { passive: true });
+}
+
+// Collapsible Experience Sections
+function initExperienceCollapsible() {
+  const categories = document.querySelectorAll('.experience-category');
+  if (!categories || categories.length === 0) return;
+  categories.forEach((cat) => {
+    const toggle = cat.querySelector('.exp-toggle');
+    const panelId = toggle?.getAttribute('aria-controls');
+    const panel = panelId ? document.getElementById(panelId) : cat.querySelector('.experience-timeline');
+    if (!toggle || !panel) return;
+    // Ensure initial collapsed state per markup
+    const isCollapsed = cat.classList.contains('is-collapsed');
+    toggle.setAttribute('aria-expanded', String(!isCollapsed));
+    const label = toggle.querySelector('.exp-toggle-label');
+    if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+    // Click handler
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      const nowCollapsed = cat.classList.toggle('is-collapsed');
+      toggle.setAttribute('aria-expanded', String(!nowCollapsed));
+      if (label) label.textContent = nowCollapsed ? 'Expand' : 'Collapse';
+    });
+  });
 }
 
 // Mobile Menu - Fixed: Immediate Scroll + No Content Shift
@@ -117,20 +228,33 @@ function initMobileMenu() {
     if (overlay) overlay.classList.remove('active');
     if (hamburger) hamburger.classList.remove('active');
     
-    // Unlock everything
+    // CRITICAL: Explicitly restore scrolling on mobile
     document.body.style.overflow = '';
+    document.body.style.overflowY = 'auto';
+    document.body.style.overflowX = 'hidden';
     document.body.style.position = '';
     document.body.style.width = '';
+    document.body.style.height = ''; // Remove height restriction
     document.body.style.paddingRight = '';
     
     const mainContent = document.querySelector('.main-content');
     const topNav = document.querySelector('.top-nav');
     
-    if (mainContent) mainContent.style.paddingRight = '';
+    if (mainContent) {
+      mainContent.style.paddingRight = '';
+      // CRITICAL: Restore touch-action for mobile scrolling
+      mainContent.style.touchAction = '';
+      mainContent.style.overflow = '';
+      mainContent.style.overflowY = 'auto';
+      mainContent.style.overflowX = 'hidden';
+    }
     if (topNav) topNav.style.paddingRight = '';
     
-    // Restore scroll
+    // Restore scroll position
     window.scrollTo(0, scrollY);
+    
+    // Force a reflow to ensure styles are applied
+    void document.body.offsetHeight;
   };
   
   const toggleSidebar = () => {
@@ -237,10 +361,18 @@ function initMobileMenu() {
     isTouchingNavLink = false;
   }, { passive: true });
   
-  // Auto-open on mobile
-  if (isMobile()) {
-    setTimeout(() => openSidebar(), 500);
-  }
+  // Auto-open only on FIRST visit on index page (not blogs) and only on mobile
+  try {
+    const isFirstVisit = !sessionStorage.getItem('sidebarShownOnce') && !localStorage.getItem('sidebarShownEver');
+    const isBlogsPage = /(^|\/)blogs\.html$/.test(window.location.pathname);
+    if (isMobile() && isFirstVisit && !isBlogsPage) {
+      setTimeout(() => {
+        openSidebar();
+        sessionStorage.setItem('sidebarShownOnce', '1');
+        localStorage.setItem('sidebarShownEver', '1');
+      }, 500);
+    }
+  } catch {}
   
   // Handle resize
   let wasMobile = isMobile();
@@ -265,13 +397,23 @@ function initScrollToTop() {
   }
   
   try {
-    window.addEventListener('scroll', throttle(() => {
-      if (window.pageYOffset > 300) {
-        scrollBtn.classList.add('visible');
-      } else {
-        scrollBtn.classList.remove('visible');
+    // Optimized scroll handler with RAF and passive listener
+    let scrollRAF = null;
+    const handleScroll = throttle(() => {
+      if (scrollRAF) {
+        cancelAnimationFrame(scrollRAF);
       }
-    }, 200));
+      scrollRAF = requestAnimationFrame(() => {
+        if (window.pageYOffset > 300) {
+          scrollBtn.classList.add('visible');
+        } else {
+          scrollBtn.classList.remove('visible');
+        }
+        scrollRAF = null;
+      });
+    }, 200);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     scrollBtn.addEventListener('click', () => {
       window.scrollTo({
@@ -303,8 +445,20 @@ function initScrollToNext() {
       }
     };
 
-    window.addEventListener('scroll', throttle(updateVisibility, 200));
-    window.addEventListener('resize', throttle(updateVisibility, 200));
+    // Optimized scroll handler with RAF and passive listener
+    let scrollRAF = null;
+    const handleScroll = throttle(() => {
+      if (scrollRAF) {
+        cancelAnimationFrame(scrollRAF);
+      }
+      scrollRAF = requestAnimationFrame(() => {
+        updateVisibility();
+        scrollRAF = null;
+      });
+    }, 200);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', throttle(updateVisibility, 200), { passive: true });
     updateVisibility();
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -616,22 +770,31 @@ function initEnhancedNavigation() {
     if (overlay) overlay.classList.remove('active');
     if (hamburger) hamburger.classList.remove('active');
     
-    // CRITICAL: Unlock body scrolling completely
+    // CRITICAL: Explicitly restore scrolling on mobile
     document.body.style.overflow = '';
+    document.body.style.overflowY = 'auto';
+    document.body.style.overflowX = 'hidden';
     document.body.style.position = '';
     document.body.style.width = '';
+    document.body.style.height = ''; // Remove height restriction
     document.body.style.paddingRight = '';
-    document.body.style.height = '';
     document.documentElement.style.overflow = '';
+    document.documentElement.style.overflowY = 'auto';
+    document.documentElement.style.overflowX = 'hidden';
     
     const mainContent = document.querySelector('.main-content');
     const topNav = document.querySelector('.top-nav');
     if (mainContent) {
       mainContent.style.paddingRight = '';
       mainContent.style.overflow = '';
-      mainContent.style.touchAction = '';
+      mainContent.style.overflowY = 'auto';
+      mainContent.style.overflowX = 'hidden';
+      mainContent.style.touchAction = ''; // Restore touch-action
     }
     if (topNav) topNav.style.paddingRight = '';
+    
+    // Force a reflow to ensure styles are applied
+    void document.body.offsetHeight;
   }
   
   // Function to open sidebar and navigate to a section within it
@@ -761,14 +924,32 @@ function initEnhancedNavigation() {
     
     const sectionId = href.replace('#', '');
     console.log(`[Navigation] Link clicked/touched for section: ${sectionId}, Mobile: ${isMobile()}`);
+    // Define proceed navigation first so callbacks can reference it
+    const proceed = () => {
+      if (sidebarSections.includes(sectionId)) {
+        console.log(`[Navigation] Navigating to sidebar section: ${sectionId}`);
+        openSidebarAndNavigate(sectionId);
+      } else {
+        console.log(`[Navigation] Navigating to main content section: ${sectionId}`);
+        navigateToMainContent(sectionId);
+      }
+    };
     
-    if (sidebarSections.includes(sectionId)) {
-      console.log(`[Navigation] Navigating to sidebar section: ${sectionId}`);
-      openSidebarAndNavigate(sectionId);
-    } else {
-      console.log(`[Navigation] Navigating to main content section: ${sectionId}`);
-      navigateToMainContent(sectionId);
+    // If mobile quick nav is open, close it FIRST, then navigate
+    const quickNavPanel = document.getElementById('mobileQuickNav');
+    if (quickNavPanel && quickNavPanel.classList.contains('open')) {
+      quickNavPanel.classList.remove('open');
+      quickNavPanel.classList.add('closing');
+      const onEnd = () => {
+        quickNavPanel.classList.remove('closing');
+        proceed();
+      };
+      quickNavPanel.addEventListener('transitionend', onEnd, { once: true });
+      setTimeout(() => { try { onEnd(); } catch {} }, 260);
+      return;
     }
+
+    proceed();
   }
   
   // Add event listeners to all navigation links
@@ -834,6 +1015,31 @@ function initEnhancedNavigation() {
   });
   
   console.log(`[Navigation] Navigation system initialized - Mobile: ${isMobile()}, Links: ${allNavLinks.length}`);
+  
+  // Ensure external links (like blogs.html) work properly on all devices and browsers
+  // These links are NOT selected by the navigation handler above (only # links are)
+  // So they will use default browser behavior (target="_blank" will open in new tab)
+  // Handle both top nav and footer nav external links
+  const externalNavLinks = document.querySelectorAll(
+    'a.top-nav-item[href$=".html"], ' +
+    'a.footer-nav a[href$=".html"], ' +
+    'nav.footer-nav > a[href$=".html"]'
+  );
+  
+  externalNavLinks.forEach((link) => {
+    // Ensure these links are always clickable on all devices
+    link.style.pointerEvents = 'auto';
+    link.style.touchAction = 'manipulation';
+    link.style.cursor = 'pointer';
+    link.style.webkitTapHighlightColor = 'rgba(0, 0, 0, 0.1)';
+    
+    // Explicitly ensure target="_blank" works across all browsers and devices
+    // Modern browsers handle this natively, but we ensure no interference
+    if (link.hasAttribute('target') && link.getAttribute('target') === '_blank') {
+      // The link will naturally open in a new tab - no preventDefault needed
+      // The navigation handler above only handles href^="#" links, so this is safe
+    }
+  });
 }
 
 // Desktop-only iframe to img replacement for puppy GIF

@@ -106,28 +106,38 @@ function trackFormInteractions() {
 function trackScrollDepth() {
   let maxScroll = 0;
   const milestones = [25, 50, 75, 90, 100];
+  let scrollRAF = null;
   
-  window.addEventListener('scroll', () => {
-    const scrollPercent = Math.round(
-      (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
-    );
-    
-    if (scrollPercent > maxScroll) {
-      maxScroll = scrollPercent;
-      
-      milestones.forEach(milestone => {
-        if (scrollPercent >= milestone && maxScroll < milestone + 5) {
-          if (window.gtag) {
-            gtag('event', 'scroll_depth', {
-              event_category: 'Engagement',
-              event_label: `${milestone}%`,
-              value: milestone
-            });
-          }
-        }
-      });
+  const handleScroll = () => {
+    if (scrollRAF) {
+      cancelAnimationFrame(scrollRAF);
     }
-  });
+    scrollRAF = requestAnimationFrame(() => {
+      const scrollPercent = Math.round(
+        (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
+      );
+      
+      if (scrollPercent > maxScroll) {
+        maxScroll = scrollPercent;
+        
+        milestones.forEach(milestone => {
+          if (scrollPercent >= milestone && maxScroll < milestone + 5) {
+            if (window.gtag) {
+              gtag('event', 'scroll_depth', {
+                event_category: 'Engagement',
+                event_label: `${milestone}%`,
+                value: milestone
+              });
+            }
+          }
+        });
+      }
+      scrollRAF = null;
+    });
+  };
+  
+  // Use passive listener for better scroll performance
+  window.addEventListener('scroll', handleScroll, { passive: true });
 }
 
 // Track time on page

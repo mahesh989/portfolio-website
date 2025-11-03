@@ -3,6 +3,62 @@
   background-color: var(--bg-primary);
 }
 
+.experience-category {
+  margin-bottom: var(--space-12);
+}
+
+.experience-category:last-child {
+  margin-bottom: 0;
+}
+
+.experience-category-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0;
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.experience-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.exp-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  transition: background var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
+}
+
+.exp-toggle .chevron {
+  transition: transform var(--transition-base);
+}
+
+.exp-toggle:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+}
+
+/* Collapsed state */
+.experience-category.is-collapsed .experience-timeline {
+  display: none;
+}
+
+.experience-category:not(.is-collapsed) .exp-toggle .chevron {
+  transform: rotate(180deg);
+}
+
 .experience-timeline {
   position: relative;
 }
@@ -101,6 +157,17 @@
   font-weight: var(--font-semibold);
   color: var(--primary-color);
   margin-bottom: var(--space-3);
+}
+
+.company-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color var(--transition-base), text-decoration var(--transition-base);
+}
+
+.company-link:hover {
+  color: var(--accent-color);
+  text-decoration: underline;
 }
 
 .location-period {
@@ -323,4 +390,85 @@
 .achievements-list li:focus-within {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
+}
+
+/* Research Publication Styles */
+.research-publication {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-color);
+  margin-left: calc(var(--space-8) * -1); /* Negative margin to align with card's left edge */
+  margin-right: calc(var(--space-8) * -1); /* Negative margin for right side too */
+  padding-left: var(--space-8); /* Restore padding inside */
+  padding-right: var(--space-8); /* Restore padding inside */
+}
+
+.publication-title {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.publication-link {
+  text-decoration: none;
+  display: block;
+}
+
+.publication-box {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--accent-color); /* Match the orange accent color */
+  border-radius: var(--radius-base);
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.publication-box:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.publication-icon {
+  flex-shrink: 0;
+  color: var(--primary-color);
+  margin-top: var(--space-1);
+}
+
+.publication-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.publication-name {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: var(--space-2);
+}
+
+.publication-keywords {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.external-link-icon {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  margin-top: var(--space-1);
+  transition: color var(--transition-base), transform var(--transition-base);
+}
+
+.publication-box:hover .external-link-icon {
+  color: var(--primary-color);
+  transform: translate(2px, -2px);
 }

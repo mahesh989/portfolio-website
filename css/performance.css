@@ -1,0 +1,371 @@
+/* Performance Optimizations for Smooth Scrolling, No Flickering, and Smooth Hover Effects */
+
+/* ============================================
+   SMOOTH SCROLLING OPTIMIZATIONS
+   ============================================ */
+
+/* Enable smooth scrolling globally */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* iOS smooth scrolling */
+  scroll-padding-top: 60px; /* Account for fixed header */
+}
+
+/* Prevent scroll jank */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Optimize scroll performance */
+body {
+  overflow-x: hidden;
+  overflow-y: auto; /* Explicitly allow vertical scrolling */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain; /* Prevent scroll chaining */
+}
+
+/* Mobile-specific scroll optimizations */
+@media (max-width: 767px) {
+  body {
+    overflow-y: auto !important; /* Force enable scrolling on mobile */
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y; /* Allow vertical panning/scrolling */
+  }
+  
+  /* Ensure main content is scrollable on mobile */
+  .main-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+  }
+}
+
+/* ============================================
+   FLICKERING PREVENTION
+   ============================================ */
+
+/* Hardware acceleration for all animated elements */
+.project-card,
+.experience-card,
+.education-item,
+.contact-method,
+.button,
+.btn,
+.top-nav-item,
+.sidebar-nav .nav-item,
+.social-links a,
+.filter-btn,
+.tech-tag,
+.skill-bar,
+.scroll-to-top,
+.scroll-to-next,
+.mobile-quick-nav,
+.project-link,
+.experience-card::before,
+.project-image img,
+.project-overlay,
+.hero-content > *,
+.fade-in-up,
+.featured-project,
+.mobile-quick-nav a,
+.nav-lines,
+.hamburger {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Contain layout shifts for cards */
+.project-card,
+.experience-card,
+.education-item {
+  contain: layout style paint;
+}
+
+/* Prevent repaints during animations */
+.project-card:hover,
+.experience-card:hover,
+.education-item:hover {
+  will-change: transform, box-shadow;
+}
+
+/* Remove will-change after animation to prevent memory leaks */
+.project-card:not(:hover),
+.experience-card:not(:hover),
+.education-item:not(:hover) {
+  will-change: auto;
+}
+
+/* ============================================
+   SMOOTH HOVER EFFECTS
+   ============================================ */
+
+/* Optimize all hover transitions - use transform and opacity only */
+.project-card,
+.experience-card,
+.education-item,
+.contact-method,
+.button,
+.btn {
+  transition: transform 100ms ease, opacity 100ms ease, box-shadow 100ms ease;
+  -webkit-transition: transform 100ms ease, opacity 100ms ease, box-shadow 100ms ease;
+}
+
+/* Instant hover response - no delay */
+.project-card:hover,
+.experience-card:hover,
+.education-item:hover {
+  transform: translateY(-4px) translateZ(0);
+  -webkit-transform: translateY(-4px) translateZ(0);
+  transition: transform 100ms ease, box-shadow 100ms ease;
+  -webkit-transition: transform 100ms ease, box-shadow 100ms ease;
+}
+
+/* Touch-friendly hover states */
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover,
+  .experience-card:hover,
+  .education-item:hover {
+    transform: translateY(-4px) translateZ(0);
+    -webkit-transform: translateY(-4px) translateZ(0);
+  }
+}
+
+/* Prevent hover on touch devices */
+@media (hover: none) {
+  .project-card:hover,
+  .experience-card:hover,
+  .education-item:hover {
+    transform: none;
+    -webkit-transform: none;
+  }
+}
+
+/* ============================================
+   ANIMATION OPTIMIZATIONS
+   ============================================ */
+
+/* Optimize fade-in animations */
+.fade-in-up {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Featured project animations - hardware accelerated */
+.project-card.featured-project {
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* ============================================
+   MOBILE PERFORMANCE
+   ============================================ */
+
+/* Optimize touch interactions */
+@media (max-width: 767px) {
+  /* Enable touch optimizations */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  /* Prevent layout shifts on mobile */
+  .project-card,
+  .experience-card,
+  .education-item {
+    contain: layout style paint;
+  }
+  
+  /* Optimize scrolling on mobile */
+  .main-content,
+  .sidebar {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+}
+
+/* ============================================
+   CROSS-BROWSER COMPATIBILITY
+   ============================================ */
+
+/* Safari-specific optimizations */
+@supports (-webkit-appearance: none) {
+  .project-card,
+  .experience-card,
+  .education-item {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Firefox-specific optimizations */
+@-moz-document url-prefix() {
+  .project-card,
+  .experience-card,
+  .education-item {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}
+
+/* ============================================
+   REDUCE MOTION PREFERENCE
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  html {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   LAYOUT STABILITY
+   ============================================ */
+
+/* Prevent layout shifts */
+img,
+video,
+iframe {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent font loading shifts */
+body {
+  font-display: swap;
+}
+
+/* ============================================
+   SCROLL PERFORMANCE
+   ============================================ */
+
+/* Optimize scroll containers */
+.sidebar,
+.main-content,
+.table-responsive {
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Remove will-change when not scrolling */
+.sidebar:not(:hover),
+.main-content:not(:hover) {
+  will-change: auto;
+}
+
+/* ============================================
+   NAVIGATION OPTIMIZATIONS
+   ============================================ */
+
+/* Smooth navigation transitions */
+.top-nav-item,
+.sidebar-nav .nav-item,
+.mobile-quick-nav a {
+  transition: color 100ms ease, background-color 100ms ease, transform 100ms ease;
+  -webkit-transition: color 100ms ease, background-color 100ms ease, transform 100ms ease;
+  will-change: transform, color, background-color;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Remove will-change after hover */
+.top-nav-item:not(:hover),
+.sidebar-nav .nav-item:not(:hover),
+.mobile-quick-nav a:not(:hover) {
+  will-change: auto;
+}
+
+/* ============================================
+   MOBILE QUICK NAV OPTIMIZATIONS
+   ============================================ */
+
+.mobile-quick-nav {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.mobile-quick-nav:not(.open):not(.closing) {
+  will-change: auto;
+}
+
+/* ============================================
+   BUTTON OPTIMIZATIONS
+   ============================================ */
+
+.button,
+.btn,
+.filter-btn {
+  will-change: transform, background-color, color;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  touch-action: manipulation; /* Prevent double-tap zoom */
+}
+
+.button:not(:hover):not(:active),
+.btn:not(:hover):not(:active),
+.filter-btn:not(:hover):not(:active) {
+  will-change: auto;
+}
+
+/* ============================================
+   IMAGE OPTIMIZATIONS
+   ============================================ */
+
+.project-image img,
+.profile-photo img {
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.project-image img:not(:hover),
+.profile-photo img:not(:hover) {
+  will-change: auto;
+}
+
+/* ============================================
+   SIDEBAR OPTIMIZATIONS
+   ============================================ */
+
+.sidebar {
+  will-change: transform, scroll-position;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.sidebar:not(.active):not(.sidebar-scrolling) {
+  will-change: auto;
+}
+

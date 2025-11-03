@@ -65,6 +65,7 @@
   <link rel="stylesheet" href="css/components/buttons.css?v=110">
   <link rel="stylesheet" href="css/components/custom-buttons.css?v=110">
   <link rel="stylesheet" href="css/responsive.css?v=110">
+  <link rel="stylesheet" href="css/performance.css?v=110">
   
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -131,6 +132,7 @@
         <a href="#experience" class="top-nav-item">Experience</a>
         <a href="#projects" class="top-nav-item">Projects</a>
         <a href="#education" class="top-nav-item">Education</a>
+        <a href="blogs.html" class="top-nav-item" target="_blank" rel="noopener noreferrer">Blogs</a>
         <a href="#contact" class="top-nav-item">Contact</a>
       </div>
       <button class="hamburger" aria-label="Toggle menu">
@@ -138,8 +140,22 @@
         <span></span>
         <span></span>
       </button>
+      <!-- Mobile quick nav trigger (three horizontal lines) -->
+      <button class="nav-lines" aria-label="Open quick navigation" id="navLinesBtn" tabindex="0">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
+  <!-- Mobile quick nav dropdown -->
+  <div class="mobile-quick-nav" id="mobileQuickNav">
+    <a href="#about">About</a>
+    <a href="#core-skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="blogs.html">Blogs</a>
+    <a href="#contact">Contact</a>
+  </div>
 
   <!-- Mobile Overlay -->
   <div class="mobile-overlay"></div>
@@ -465,93 +481,39 @@
     <!-- Experience Section -->
     <section id="experience" class="section experience-section">
       <div class="container">
-        <h2 class="section-title">Professional Experience</h2>
+        <h2 class="section-title">Experience</h2>
         <div class="section-divider"></div>
         
-        <div class="experience-timeline">
-          <!-- Experience Card 1 -->
-          <div class="experience-card">
-            <div class="card-header">
-              <div class="company-info">
-                <div class="company-logo">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 21h18"/>
-                    <path d="M5 21V7l8-4v18"/>
-                    <path d="M19 21V11l-6-4"/>
-                  </svg>
-                </div>
-                <div class="company-details">
-                  <h3 class="role-title">Data Analyst</h3>
-                  <p class="company-name">The Bitrates</p>
-                  <p class="location-period">
-                    <span class="location">
-                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
-                      </svg>
-                      Hurstville, NSW, 2220, Australia
-                    </span>
-                    <span class="period">
-                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                        <line x1="16" y1="2" x2="16" y2="6"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/>
-                        <line x1="3" y1="10" x2="21" y2="10"/>
-                      </svg>
-                      Jul 2024 - Present
-                    </span>
-                    <span class="badge badge-success">Current</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="card-body">
-              <ul class="achievements-list">
-                <li>
-                  <span class="achievement-icon">✓</span>
-                  Designed Python ML models for predictive analytics, enabling 
-                  data-driven decisions that improved forecasting accuracy by 25%
-                </li>
-                <li>
-                  <span class="achievement-icon">✓</span>
-                  Developed comprehensive data pipelines using Python, SQL, and 
-                  cloud technologies, reducing data processing time by 40%
-                </li>
-                <li>
-                  <span class="achievement-icon">✓</span>
-                  Created interactive dashboards and visualizations using 
-                  Tableau and Power BI, providing stakeholders with real-time insights
-                </li>
-                <li>
-                  <span class="achievement-icon">✓</span>
-                  Collaborated with cross-functional teams to identify business 
-                  opportunities through advanced statistical analysis
-                </li>
-              </ul>
-            </div>
+        <!-- Academic Experience -->
+        <div class="experience-category is-collapsed" data-collapsible="academic">
+          <div class="experience-category-header">
+            <h3 class="experience-category-title">Academic Experience</h3>
+            <button class="exp-toggle" aria-expanded="false" aria-controls="academicTimeline">
+              <span class="exp-toggle-label">Expand</span>
+              <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
           </div>
-          
-          <!-- Experience Card 2 -->
+        <div class="experience-timeline" id="academicTimeline">
+            <!-- Experience Card - Research Assistant -->
           <div class="experience-card">
             <div class="card-header">
               <div class="company-info">
                 <div class="company-logo">
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                    <path d="M9 9h6v6H9z"/>
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
                   </svg>
                 </div>
                 <div class="company-details">
-                  <h3 class="role-title">Software Engineer & Analyst</h3>
-                  <p class="company-name">Property Console</p>
+                    <h3 class="role-title">Research Assistant</h3>
+                    <p class="company-name">CY Cergy Paris University</p>
                   <p class="location-period">
                     <span class="location">
                       <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                         <circle cx="12" cy="10" r="3"/>
                       </svg>
-                      Sydney, Australia
+                        Cergy-Pontoise, France
                     </span>
                     <span class="period">
                       <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -560,7 +522,7 @@
                         <line x1="8" y1="2" x2="8" y2="6"/>
                         <line x1="3" y1="10" x2="21" y2="10"/>
                       </svg>
-                      Jun 2023 - Nov 2023
+                        Oct 2018 - Sep 2022
                     </span>
                   </p>
                 </div>
@@ -571,48 +533,232 @@
               <ul class="achievements-list">
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Built and maintained data analysis tools using Python and SQL, 
-                  improving operational efficiency by 30%
+                    Utilized advanced Python programming for computational modeling and solving complex research problems
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Developed automated reporting systems that reduced manual data 
-                  processing time by 50%
+                    Developed Python-based workflows to manage and analyze large datasets across multiple research projects
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Performed statistical analysis on property market data to 
-                  identify trends and patterns
+                    Presented Python-enabled research findings at international conferences, demonstrating technical expertise and communication skills
+                </li>
+              </ul>
+                
+                <!-- Research Publication -->
+                <div class="research-publication">
+                  <h4 class="publication-title">Featured Publication</h4>
+                  <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9572235/" target="_blank" rel="noopener noreferrer" class="publication-link">
+                    <div class="publication-box">
+                      <svg class="publication-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10,9 9,9 8,9"/>
+                      </svg>
+                      <div class="publication-content">
+                        <p class="publication-name">Numerical Interchain Mean-Field Theory for the Specific Heat of the Bimetallic Ferromagnetically Coupled Chain Compound MnNi(NO2)4(en)2 (en = Ethylenediamine)</p>
+                        <p class="publication-keywords">Keywords: quantum spin chains, specific heat, quantum Monte Carlo simulations, exact diagonalization, mean-field theory</p>
+                      </div>
+                      <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15,3 21,3 21,9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                      </svg>
+                    </div>
+                  </a>
+                </div>
+            </div>
+          </div>
+          
+            <!-- Experience Card - Lecturer and Course Facilitator -->
+          <div class="experience-card">
+            <div class="card-header">
+              <div class="company-info">
+                <div class="company-logo">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                  </svg>
+                </div>
+                <div class="company-details">
+                    <h3 class="role-title">Lecturer and Course Facilitator</h3>
+                    <p class="company-name">CY Cergy Paris University</p>
+                  <p class="location-period">
+                    <span class="location">
+                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                      </svg>
+                        Cergy-Pontoise, France
+                    </span>
+                    <span class="period">
+                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                      </svg>
+                        Sep 2019 - Jun 2022
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <ul class="achievements-list">
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Led engaging physics tutorials for master's students, enhancing understanding and promoting teamwork
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Collaborated with development team to integrate data analytics 
-                  into web applications
+                    Designed course materials, assignments, and exams, strengthening the learning experience
+                </li>
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Mentored students on projects, collaborated with faculty, and fostered student engagement
                 </li>
               </ul>
             </div>
           </div>
           
-          <!-- Experience Card 3 -->
+            <!-- Experience Card - Research Intern -->
+          <div class="experience-card">
+            <div class="card-header">
+              <div class="company-info">
+                <div class="company-logo">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                  </svg>
+                </div>
+                <div class="company-details">
+                    <h3 class="role-title">Research Intern</h3>
+                    <p class="company-name">CY Cergy Paris University</p>
+                  <p class="location-period">
+                    <span class="location">
+                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                      </svg>
+                        Cergy-Pontoise, France
+                    </span>
+                    <span class="period">
+                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                      </svg>
+                        Feb 2018 - Jun 2018
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <ul class="achievements-list">
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Developed proficiency in Python programming by researching the effect of magnetic fields on 2D materials
+                </li>
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Managed and analysed complex data sets, improving their accuracy and reliability
+                </li>
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Used dashboard using Power BI to present research findings and participated in weekly reviews, improving collaboration and research skills
+                </li>
+              </ul>
+              </div>
+            </div>
+            
+            <!-- Experience Card - Physics and Math Teacher -->
+            <div class="experience-card">
+              <div class="card-header">
+                <div class="company-info">
+                  <div class="company-logo">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
+                  </div>
+                  <div class="company-details">
+                    <h3 class="role-title">Physics and Math Teacher</h3>
+                    <p class="company-name">Rastriya Secondary School</p>
+                    <p class="location-period">
+                      <span class="location">
+                        <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                          <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Nepal
+                      </span>
+                      <span class="period">
+                        <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                          <line x1="16" y1="2" x2="16" y2="6"/>
+                          <line x1="8" y1="2" x2="8" y2="6"/>
+                          <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        Jan 2015 - Aug 2016
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-body">
+                <ul class="achievements-list">
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Managed and mentored 60+ students across class 11 and 12 Physics and Mathematics courses, developing strong classroom management skills and adapting teaching methods to diverse learning styles
+                  </li>
+                  <li>
+                    <span class="achievement-icon">✓</span>
+                    Demonstrated leadership through curriculum development, student mentorship, and collaborative planning with faculty, enhancing communication skills and building rapport with students and colleagues
+                </li>
+              </ul>
+              </div>
+            </div>
+            </div>
+          </div>
+          
+        <!-- Professional Experience -->
+        <div class="experience-category is-collapsed" data-collapsible="professional">
+          <div class="experience-category-header">
+            <h3 class="experience-category-title">Professional Experience</h3>
+            <button class="exp-toggle" aria-expanded="false" aria-controls="professionalTimeline">
+              <span class="exp-toggle-label">Expand</span>
+              <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+          <div class="experience-timeline" id="professionalTimeline">
+            <!-- Experience Card - Outlier.ai -->
           <div class="experience-card">
             <div class="card-header">
               <div class="company-info">
                 <div class="company-logo">
                   <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"/>
-                    <path d="M12 6v6l4 2"/>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
                   </svg>
                 </div>
                 <div class="company-details">
-                  <h3 class="role-title">Data Science Intern</h3>
-                  <p class="company-name">TechCorp Solutions</p>
+                    <h3 class="role-title">AI Data Trainer & Evaluator</h3>
+                    <p class="company-name"><a href="https://outlier.ai" target="_blank" rel="noopener noreferrer" class="company-link">Outlier.ai</a> <span style="font-size: 0.9em; opacity: 0.8;">(Freelancer)</span></p>
                   <p class="location-period">
                     <span class="location">
                       <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                         <circle cx="12" cy="10" r="3"/>
                       </svg>
-                      Melbourne, Australia
+                        Remote
                     </span>
                     <span class="period">
                       <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -621,8 +767,9 @@
                         <line x1="8" y1="2" x2="8" y2="6"/>
                         <line x1="3" y1="10" x2="21" y2="10"/>
                       </svg>
-                      Jan 2023 - May 2023
+                        Jul 2024 - Present
                     </span>
+                      <span class="badge badge-success">Current</span>
                   </p>
                 </div>
               </div>
@@ -632,29 +779,21 @@
               <ul class="achievements-list">
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Assisted in developing machine learning models for customer 
-                  segmentation and churn prediction
+                    Evaluated and improved AI model responses by assessing accuracy, quality, and alignment with user expectations
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Cleaned and preprocessed large datasets using Python and pandas, 
-                  ensuring data quality and accuracy
+                    Developed and tested training prompts to identify AI performance gaps and enhance model capabilities
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Created data visualizations and reports using matplotlib, 
-                  seaborn, and Tableau
-                </li>
-                <li>
-                  <span class="achievement-icon">✓</span>
-                  Participated in team meetings and contributed to project 
-                  planning and execution
+                    Provided detailed feedback and evaluation on AI training projects, contributing to the development of more reliable AI systems
                 </li>
               </ul>
             </div>
           </div>
-        </div>
-          <!-- Experience Card 2 -->
+            
+            <!-- Experience Card - The Bitrates -->
           <div class="experience-card">
             <div class="card-header">
               <div class="company-info">
@@ -667,14 +806,14 @@
                 </div>
                 <div class="company-details">
                   <h3 class="role-title">Data Analyst</h3>
-                  <p class="company-name">iBuild Building Solutions</p>
+                    <p class="company-name"><a href="https://thebitrates.com" target="_blank" rel="noopener noreferrer" class="company-link">The Bitrates</a></p>
                   <p class="location-period">
                     <span class="location">
                       <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                         <circle cx="12" cy="10" r="3"/>
                       </svg>
-                      Victoria, Australia
+                        Hurstville, NSW, 2220, Australia
                     </span>
                     <span class="period">
                       <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -683,8 +822,9 @@
                         <line x1="8" y1="2" x2="8" y2="6"/>
                         <line x1="3" y1="10" x2="21" y2="10"/>
                       </svg>
-                      Mar 2024 - Jun 2024
+                        Jul 2024 - Present
                     </span>
+                      <span class="badge badge-success">Current</span>
                   </p>
                 </div>
               </div>
@@ -694,23 +834,29 @@
               <ul class="achievements-list">
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Automated data extraction for population datasets using Python, 
-                  improving accuracy by 20% and team collaboration
+                    Designed Python ML models for predictive analytics, enabling 
+                    data-driven decisions that improved forecasting accuracy by 25%
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Built Power BI dashboards that reduced client reporting time by 30%, from 10 hours to 7 hours per week
+                    Developed comprehensive data pipelines using Python, SQL, and 
+                    cloud technologies, reducing data processing time by 40%
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Optimized customer support response times through data analysis, 
-                  improving operational efficiency by 15%
+                    Created interactive dashboards and visualizations using 
+                    Tableau and Power BI, providing stakeholders with real-time insights
+                  </li>
+                  <li>
+                    <span class="achievement-icon">✓</span>
+                    Collaborated with cross-functional teams to identify business 
+                    opportunities through advanced statistical analysis
                 </li>
               </ul>
             </div>
           </div>
           
-          <!-- Experience Card 3 -->
+            <!-- Experience Card - iBuild Building Solutions -->
           <div class="experience-card">
             <div class="card-header">
               <div class="company-info">
@@ -722,15 +868,15 @@
                   </svg>
                 </div>
                 <div class="company-details">
-                  <h3 class="role-title">Software Engineer & Analyst</h3>
-                  <p class="company-name">Property Console</p>
+                    <h3 class="role-title">Data Analyst</h3>
+                    <p class="company-name"><a href="https://i-build.com.au" target="_blank" rel="noopener noreferrer" class="company-link">iBuild Building Solutions</a></p>
                   <p class="location-period">
                     <span class="location">
                       <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                         <circle cx="12" cy="10" r="3"/>
                       </svg>
-                      Sydney, Australia
+                        Victoria, Australia
                     </span>
                     <span class="period">
                       <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -739,7 +885,7 @@
                         <line x1="8" y1="2" x2="8" y2="6"/>
                         <line x1="3" y1="10" x2="21" y2="10"/>
                       </svg>
-                      Jun 2023 - Nov 2023
+                        Mar 2024 - Jun 2024
                     </span>
                   </p>
                 </div>
@@ -750,25 +896,24 @@
               <ul class="achievements-list">
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Built Python scripts tracking KPIs with 99% accuracy, 
-                  ensuring data integrity across 50,000+ records
+                    Automated data extraction for population datasets using Python, 
+                    improving accuracy by 20% and team collaboration
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Enhanced analytics capabilities by 25% through Python 
-                  optimization, reducing query execution time
+                    Built Power BI dashboards that reduced client reporting time by 30%, from 10 hours to 7 hours per week
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                  Created Tableau dashboards that improved decision-making processes, 
-                  leading to 10% cost reduction
+                    Optimized customer support response times through data analysis, 
+                    improving operational efficiency by 15%
                 </li>
               </ul>
             </div>
           </div>
-          
-          
         </div>
+        </div>
+        
       </div>
     </section>
 
@@ -1065,8 +1210,7 @@
                     <span class="period">2018 - 2022</span>
                   </p>
                   <p class="thesis-title">
-                    <em>Thesis: Mean-field theory for quantum spin systems 
-                    and the magnetocaloric effect</em>
+                    <em>Thesis: <a href="https://theses.fr/2022CYUN1119" target="_blank" rel="noopener noreferrer">Mean-field theory for quantum spin systems and the magnetocaloric effect</a></em>
                   </p>
                 </div>
               </div>
@@ -1083,7 +1227,8 @@
                   <h3 class="degree">Master in Theoretical Physics</h3>
                   <p class="institution">CY Cergy Paris University</p>
                   <p class="location-period">
-                    <span class="period">2016 - 2018</span>
+                  <span class="location">Cergy-Pontoise, France</span>
+                  <span class="period">2016 - 2018</span>
                   </p>
                 </div>
               </div>
@@ -1397,6 +1542,7 @@
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
             <a href="#education">Education</a>
+            <a href="blogs.html" target="_blank" rel="noopener noreferrer">Blogs</a>
             <a href="#contact">Contact</a>
           </nav>
         </div>

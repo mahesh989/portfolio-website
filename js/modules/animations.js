@@ -8,15 +8,18 @@ export function initAnimations() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
-        setTimeout(() => {
-          entry.target.classList.add('fade-in-up');
-        }, index * 100); // Stagger animation
+        // Use requestAnimationFrame for smoother animation start
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            entry.target.classList.add('fade-in-up');
+          }, Math.min(index * 50, 300)); // Reduced stagger delay (50ms max 300ms total)
+        });
         observer.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.05, // Reduced threshold for earlier trigger
+    rootMargin: '0px 0px -100px 0px' // Increased margin for earlier trigger
   });
   
   animatedElements.forEach(el => observer.observe(el));
@@ -37,58 +40,33 @@ function initParallaxEffect() {
   // during scroll, making content appear to hide
   
   // Alternative: Subtle parallax only for background elements
-  window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const parallax = scrolled * 0.1; // Much smaller effect
-    
-    // Only apply to background elements, not the main content
-    const heroBackground = hero.querySelector('.hero-background');
-    if (heroBackground) {
-      heroBackground.style.transform = `translateY(${parallax}px)`;
+  // Optimized with requestAnimationFrame and passive listener
+  let parallaxRAF = null;
+  const handleParallax = () => {
+    if (parallaxRAF) {
+      cancelAnimationFrame(parallaxRAF);
     }
-  });
+    parallaxRAF = requestAnimationFrame(() => {
+      const scrolled = window.pageYOffset;
+      const parallax = scrolled * 0.1; // Much smaller effect
+      
+      // Only apply to background elements, not the main content
+      const heroBackground = hero.querySelector('.hero-background');
+      if (heroBackground) {
+        heroBackground.style.transform = `translateY(${parallax}px)`;
+      }
+      parallaxRAF = null;
+    });
+  };
+  
+  // Use passive listener for better scroll performance
+  window.addEventListener('scroll', handleParallax, { passive: true });
 }
 
 function initHoverAnimations() {
-  // Project card hover effects
-  const projectCards = document.querySelectorAll('.project-card');
-  projectCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      card.style.transform = 'translateY(-8px) scale(1.02)';
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'translateY(0) scale(1)';
-    });
-  });
-  
-  // Experience card hover effects
-  const experienceCards = document.querySelectorAll('.experience-card');
-  experienceCards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      card.style.transform = 'translateY(-4px)';
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'translateY(0)';
-    });
-  });
-  
-  // Button hover effects
-  const buttons = document.querySelectorAll('.btn');
-  buttons.forEach(btn => {
-    btn.addEventListener('mouseenter', () => {
-      if (!btn.disabled) {
-        btn.style.transform = 'translateY(-2px)';
-      }
-    });
-    
-    btn.addEventListener('mouseleave', () => {
-      if (!btn.disabled) {
-        btn.style.transform = 'translateY(0)';
-      }
-    });
-  });
+  // REMOVED: JavaScript hover handlers cause flickering and conflict with CSS transitions
+  // All hover effects are now handled by CSS for better performance and smoothness
+  // See css/performance.css and component CSS files for hover styles
 }
 
 // Reveal animations for sections
