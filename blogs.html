@@ -44,15 +44,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/main.css?v=110">
-  <link rel="stylesheet" href="css/layout.css?v=110">
-  <link rel="stylesheet" href="css/components/top-nav.css?v=110">
-  <link rel="stylesheet" href="css/components/sidebar.css?v=110">
-  <link rel="stylesheet" href="css/components/sidebar-skills.css?v=110">
-  <link rel="stylesheet" href="css/components/blogs.css?v=110">
-  <link rel="stylesheet" href="css/components/buttons.css?v=110">
-  <link rel="stylesheet" href="css/responsive.css?v=110">
-  <link rel="stylesheet" href="css/performance.css?v=110">
+  <link rel="stylesheet" href="css/main.css?v=115">
+  <link rel="stylesheet" href="css/layout.css?v=115">
+  <link rel="stylesheet" href="css/components/top-nav.css?v=115">
+  <link rel="stylesheet" href="css/components/sidebar.css?v=115">
+  <link rel="stylesheet" href="css/components/sidebar-skills.css?v=115">
+  <link rel="stylesheet" href="css/components/blogs.css?v=115">
+  <link rel="stylesheet" href="css/components/buttons.css?v=115">
+  <link rel="stylesheet" href="css/responsive.css?v=115">
+  <link rel="stylesheet" href="css/performance.css?v=115">
 </head>
 <body>
   <!-- Skip Navigation Link -->
@@ -103,7 +103,7 @@
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-inner">
-      <button class="sidebar-close" aria-label="Close sidebar">
+      <button class="sidebar-close" aria-label="Close sidebar" data-is-close-button="true" type="button">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -135,7 +135,7 @@
           <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
           </svg>
-          <span>0414 032 507</span>
+          <span>+61414032507</span>
         </a>
         <div class="contact-item">
           <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -155,6 +155,16 @@
         </div>
       </div>
       
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <a href="index.html#about" class="nav-item">About</a>
+        <a href="index.html#core-skills-mobile" class="nav-item" data-mobile-section="core-skills-mobile">Skills</a>
+        <a href="index.html#experience" class="nav-item">Experience</a>
+        <a href="index.html#projects" class="nav-item">Projects</a>
+        <a href="index.html#education" class="nav-item">Education</a>
+        <a href="blogs.html" class="nav-item" target="_blank" rel="noopener noreferrer">Blogs</a>
+        <a href="index.html#contact" class="nav-item">Contact</a>
+      </nav>
       
       <!-- Tech Stack -->
       <div class="sidebar-skills">
@@ -453,8 +463,166 @@
     </div>
   </footer>
 
+  <!-- Tech Stack Modal -->
+  <div id="techStackModal" class="modal" hidden>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">My Complete Tech Stack</h2>
+        <button class="modal-close" id="closeTechStackModal">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="tech-stack-workflow">
+          <!-- Data Collection & Storage -->
+          <div class="tech-category">
+            <h3 class="category-title">
+              <span class="category-number">1</span>
+              Data Collection & Storage
+            </h3>
+            <div class="tech-skills">
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/sql.svg" alt="SQL">
+                <span>SQL</span>
+              </div>
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/postgresql.svg" alt="PostgreSQL">
+                <span>PostgreSQL</span>
+              </div>
+              <div class="tech-skill advanced">
+                <img src="assets/images/icons/mongodb.svg" alt="MongoDB">
+                <span>MongoDB</span>
+              </div>
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/mysql.svg" alt="MySQL">
+                <span>MySQL</span>
+              </div>
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/excel.svg" alt="Excel">
+                <span>Excel</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Data Processing & Analysis -->
+          <div class="tech-category">
+            <h3 class="category-title">
+              <span class="category-number">2</span>
+              Data Processing & Analysis
+            </h3>
+            <div class="tech-skills">
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/python.svg" alt="Python">
+                <span>Python</span>
+                <span class="skill-sub">Pandas, NumPy</span>
+              </div>
+              <div class="tech-skill advanced">
+                <img src="assets/images/icons/r.svg" alt="R">
+                <span>R</span>
+              </div>
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/jupyter.svg" alt="Jupyter">
+                <span>Jupyter</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Machine Learning & AI -->
+          <div class="tech-category">
+            <h3 class="category-title">
+              <span class="category-number">3</span>
+              Machine Learning & AI
+            </h3>
+            <div class="tech-skills">
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/scikit-learn.svg" alt="scikit-learn">
+                <span>scikit-learn</span>
+              </div>
+              <div class="tech-skill advanced">
+                <img src="assets/images/icons/tensorflow.svg" alt="TensorFlow">
+                <span>TensorFlow</span>
+              </div>
+              <div class="tech-skill intermediate">
+                <img src="assets/images/icons/pytorch.svg" alt="PyTorch">
+                <span>PyTorch</span>
+              </div>
+              <div class="tech-skill advanced">
+                <img src="assets/images/icons/ml.svg" alt="Deep Learning">
+                <span>Deep Learning</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Visualization & Reporting -->
+          <div class="tech-category">
+            <h3 class="category-title">
+              <span class="category-number">4</span>
+              Visualization & Reporting
+            </h3>
+            <div class="tech-skills">
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/tableau.svg" alt="Tableau">
+                <span>Tableau</span>
+              </div>
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/powerbi.svg" alt="Power BI">
+                <span>Power BI</span>
+              </div>
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/matplotlib.svg" alt="Matplotlib">
+                <span>Matplotlib</span>
+              </div>
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/seaborn.svg" alt="Seaborn">
+                <span>Seaborn</span>
+              </div>
+              <div class="tech-skill advanced">
+                <img src="assets/images/icons/plotly.svg" alt="Plotly">
+                <span>Plotly</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Deployment & Collaboration -->
+          <div class="tech-category">
+            <h3 class="category-title">
+              <span class="category-number">5</span>
+              Deployment & Collaboration
+            </h3>
+            <div class="tech-skills">
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/git.svg" alt="Git">
+                <span>Git/GitHub</span>
+              </div>
+              <div class="tech-skill intermediate">
+                <img src="assets/images/icons/docker.svg" alt="Docker">
+                <span>Docker</span>
+              </div>
+              <div class="tech-skill intermediate">
+                <img src="assets/images/icons/aws.svg" alt="AWS">
+                <span>AWS</span>
+              </div>
+              <div class="tech-skill advanced">
+                <img src="assets/images/icons/snowflake.svg" alt="Snowflake">
+                <span>Snowflake</span>
+              </div>
+              <div class="tech-skill expert">
+                <img src="assets/images/icons/vscode.svg" alt="VS Code">
+                <span>VS Code</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- JavaScript -->
-  <script type="module" src="js/main.js?v=110"></script>
+  <script type="module" src="js/main.js?v=115"></script>
   <script>
     // Medium RSS Feed Integration
     document.addEventListener('DOMContentLoaded', function() {
@@ -758,15 +926,42 @@
 
       // View Toggle Logic
       function setupViewToggle() {
-        if (!viewTimelineBtn || !viewListBtn || !timeline) return;
+        if (!viewTimelineBtn || !viewListBtn || !timeline) {
+          console.warn('View toggle buttons or timeline not found');
+          return;
+        }
+        
+        // Ensure buttons are clickable, especially on mobile
+        viewTimelineBtn.style.pointerEvents = 'auto';
+        viewListBtn.style.pointerEvents = 'auto';
+        viewTimelineBtn.style.cursor = 'pointer';
+        viewListBtn.style.cursor = 'pointer';
+        viewTimelineBtn.style.touchAction = 'manipulation';
+        viewListBtn.style.touchAction = 'manipulation';
+        viewTimelineBtn.style.zIndex = '1000';
+        viewListBtn.style.zIndex = '1000';
+        
+        // Ensure child elements are also touchable
+        viewTimelineBtn.querySelectorAll('*').forEach(child => {
+          child.style.pointerEvents = 'auto';
+          child.style.touchAction = 'manipulation';
+        });
+        viewListBtn.querySelectorAll('*').forEach(child => {
+          child.style.pointerEvents = 'auto';
+          child.style.touchAction = 'manipulation';
+        });
+        
         const setActive = (activeBtn, inactiveBtn) => {
           activeBtn.classList.add('active');
           activeBtn.setAttribute('aria-pressed', 'true');
           inactiveBtn.classList.remove('active');
           inactiveBtn.setAttribute('aria-pressed', 'false');
         };
-        viewTimelineBtn.addEventListener('click', (e) => {
+        
+        const handleTimelineClick = (e) => {
           e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation(); // CRITICAL: Prevent other handlers
           setActive(viewTimelineBtn, viewListBtn);
           timeline.classList.remove('blogs-list');
           if (!timeline.classList.contains('blogs-timeline')) timeline.classList.add('blogs-timeline');
@@ -776,9 +971,13 @@
           timeline.querySelectorAll('.timeline-marker').forEach(m => m.style.display = '');
           if (tableWrapper) tableWrapper.hidden = true;
           timeline.style.display = '';
-        });
-        viewListBtn.addEventListener('click', (e) => {
+          return false; // Additional safeguard
+        };
+        
+        const handleListClick = (e) => {
           e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation(); // CRITICAL: Prevent other handlers
           setActive(viewListBtn, viewTimelineBtn);
           timeline.classList.add('blogs-list');
           timeline.classList.remove('blogs-timeline');
@@ -789,6 +988,71 @@
           if (tableWrapper) tableWrapper.hidden = false;
           // Keep timeline items in DOM but visually secondary
           timeline.style.display = 'none';
+          return false; // Additional safeguard
+        };
+        
+        // Mark buttons to prevent navigation handlers from intercepting
+        viewTimelineBtn.dataset.isToggleButton = 'true';
+        viewListBtn.dataset.isToggleButton = 'true';
+        
+        // Add click handlers (works on desktop and mobile) - use capture phase to run first
+        viewTimelineBtn.addEventListener('click', handleTimelineClick, { passive: false, capture: true });
+        viewListBtn.addEventListener('click', handleListClick, { passive: false, capture: true });
+        
+        // Add touch handlers for mobile - simplified approach
+        let touchStartTimeList = 0;
+        let touchStartTime = 0;
+        
+        // Timeline button touch handlers
+        viewTimelineBtn.addEventListener('touchstart', (e) => {
+          touchStartTime = Date.now();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+        }, { passive: true, capture: true });
+        
+        viewTimelineBtn.addEventListener('touchend', (e) => {
+          const deltaTime = Date.now() - touchStartTime;
+          // Simple time-based check - if tap was quick enough, trigger
+          if (deltaTime < 600) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            handleTimelineClick(e);
+          }
+        }, { passive: false, capture: true });
+        
+        // List button touch handlers - CRITICAL: Make this work reliably
+        // Handle touches on button and all child elements
+        const handleListTouchStart = (e) => {
+          touchStartTimeList = Date.now();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          console.log('[Blogs] List button touchstart detected');
+        };
+        
+        const handleListTouchEnd = (e) => {
+          const deltaTime = Date.now() - touchStartTimeList;
+          console.log('[Blogs] List button touchend detected, deltaTime:', deltaTime);
+          // Simple time-based check - if tap was quick enough, trigger
+          if (deltaTime < 600) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            console.log('[Blogs] Calling handleListClick');
+            handleListClick(e);
+          } else {
+            console.log('[Blogs] Touch too slow, deltaTime:', deltaTime);
+          }
+        };
+        
+        // Add to button and all child elements
+        viewListBtn.addEventListener('touchstart', handleListTouchStart, { passive: true, capture: true });
+        viewListBtn.addEventListener('touchend', handleListTouchEnd, { passive: false, capture: true });
+        
+        // Also add to child elements to catch touches on SVG/span
+        viewListBtn.querySelectorAll('*').forEach(child => {
+          child.addEventListener('touchstart', handleListTouchStart, { passive: true, capture: true });
+          child.addEventListener('touchend', handleListTouchEnd, { passive: false, capture: true });
         });
       }
       

@@ -50,22 +50,23 @@
   <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/main.css?v=110">
-  <link rel="stylesheet" href="css/layout.css?v=110">
-  <link rel="stylesheet" href="css/components/hero.css?v=110">
-  <link rel="stylesheet" href="css/components/top-nav.css?v=110">
-  <link rel="stylesheet" href="css/components/sidebar.css?v=110">
-  <link rel="stylesheet" href="css/components/sidebar-skills.css?v=110">
-  <link rel="stylesheet" href="css/components/about.css?v=110">
-  <link rel="stylesheet" href="css/components/skills-workflow.css?v=110">
-  <link rel="stylesheet" href="css/components/experience.css?v=110">
-  <link rel="stylesheet" href="css/components/projects.css?v=110">
-  <link rel="stylesheet" href="css/components/education.css?v=110">
-  <link rel="stylesheet" href="css/components/contact.css?v=110">
-  <link rel="stylesheet" href="css/components/buttons.css?v=110">
-  <link rel="stylesheet" href="css/components/custom-buttons.css?v=110">
-  <link rel="stylesheet" href="css/responsive.css?v=110">
-  <link rel="stylesheet" href="css/performance.css?v=110">
+  <link rel="stylesheet" href="css/main.css?v=115">
+  <link rel="stylesheet" href="css/layout.css?v=115">
+  <link rel="stylesheet" href="css/components/hero.css?v=115">
+  <link rel="stylesheet" href="css/components/top-nav.css?v=115">
+  <link rel="stylesheet" href="css/components/sidebar.css?v=115">
+  <link rel="stylesheet" href="css/components/sidebar-skills.css?v=115">
+  <link rel="stylesheet" href="css/components/about.css?v=115">
+  <link rel="stylesheet" href="css/components/skills-workflow.css?v=115">
+  <link rel="stylesheet" href="css/components/experience.css?v=115">
+  <link rel="stylesheet" href="css/components/projects.css?v=115">
+  <link rel="stylesheet" href="css/components/education.css?v=115">
+  <link rel="stylesheet" href="css/components/contact.css?v=115">
+  <link rel="stylesheet" href="css/components/buttons.css?v=115">
+  <link rel="stylesheet" href="css/components/custom-buttons.css?v=115">
+  <link rel="stylesheet" href="css/components/chat-widget.css?v=115">
+  <link rel="stylesheet" href="css/responsive.css?v=115">
+  <link rel="stylesheet" href="css/performance.css?v=115">
   
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -163,7 +164,7 @@
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-inner">
-      <button class="sidebar-close" aria-label="Close sidebar">
+      <button class="sidebar-close" aria-label="Close sidebar" data-is-close-button="true" type="button">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -195,7 +196,7 @@
           <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
           </svg>
-          <span>0414 032 507</span>
+          <span>+61414032507</span>
         </a>
         <div class="contact-item">
           <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -215,6 +216,16 @@
         </div>
       </div>
       
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <a href="#about" class="nav-item">About</a>
+        <a href="#core-skills-mobile" class="nav-item" data-mobile-section="core-skills-mobile">Skills</a>
+        <a href="#experience" class="nav-item">Experience</a>
+        <a href="#projects" class="nav-item">Projects</a>
+        <a href="#education" class="nav-item">Education</a>
+        <a href="blogs.html" class="nav-item" target="_blank" rel="noopener noreferrer">Blogs</a>
+        <a href="#contact" class="nav-item">Contact</a>
+      </nav>
       
       <!-- Tech Stack -->
       <div class="sidebar-skills">
@@ -360,13 +371,13 @@
   <main id="main-content" class="main-content">
     <!-- Hero Section -->
     <section id="hero" class="hero">
-         <div class="hero-puppy-container" aria-hidden="true">
-           <div class="hero-puppy">
+         <div class="hero-puppy-container" aria-hidden="true" style="pointer-events: none;">
+           <div class="hero-puppy" style="pointer-events: none;">
              <iframe
                src="https://giphy.com/embed/RrVJHB3KSTCznWubpd"
                width="100%"
                height="100%"
-               style="position:relative;border:0"
+               style="position:relative;border:0;pointer-events:none;"
                frameborder="0"
                class="giphy-embed"
                allowfullscreen
@@ -397,8 +408,7 @@
         </p>
         
         <p class="hero-tagline">
-          From Quantum Physics to Data Science: Turning Complex Data into 
-          <span class="highlight">Actionable Business Insights</span>
+          Crafting AI Agents & Data Solutions: Turning Complex Analysis into Intelligent Action
         </p>
         
         <div class="hero-cta">
@@ -445,31 +455,12 @@
         
         <div class="about-content">
           <p class="about-intro">
-            PhD-trained Data Analyst with <strong>2+ years</strong> transforming 
-            complex data into strategic business insights. Specializing in Python 
-            automation, SQL optimization, and interactive dashboards across 
-            <span class="highlight">property, healthcare, and construction</span> sectors.
+            AI Engineer and Data Analyst with a Master's in Data Science and experience building intelligent systems and transforming data into actionable insights. I specialize in Python programming, machine learning, SQL, and data visualization with Tableau and Power BI.
           </p>
           
-          <div class="about-highlights">
-            <ul class="about-list">
-              <li class="about-item">
-                <strong>2+ years</strong> building data pipelines, dashboards, 
-                and ML models that reduce costs 30% 
-                and improve accuracy to 99%
-              </li>
-              
-              <li class="about-item">
-                <strong>PhD-level analytical rigor</strong> applied to practical 
-                business challenges: From quantum mechanics to business intelligence
-              </li>
-              
-              <li class="about-item">
-                <strong>Full-stack data professional:</strong> Python/SQL → ETL 
-                pipelines → Tableau/Power BI → Stakeholder presentations
-              </li>
-            </ul>
-          </div>
+          <p class="about-intro">
+            My expertise includes developing AI applications and data solutions—from building AI-powered tools like the CV Agent to creating interactive dashboards and reports. My background in advanced research and data analysis enables me to solve complex challenges and communicate findings through clear visualizations that support business decision-making.
+          </p>
           
           
         </div>
@@ -484,251 +475,6 @@
         <h2 class="section-title">Experience</h2>
         <div class="section-divider"></div>
         
-        <!-- Academic Experience -->
-        <div class="experience-category is-collapsed" data-collapsible="academic">
-          <div class="experience-category-header">
-            <h3 class="experience-category-title">Academic Experience</h3>
-            <button class="exp-toggle" aria-expanded="false" aria-controls="academicTimeline">
-              <span class="exp-toggle-label">Expand</span>
-              <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-          </div>
-        <div class="experience-timeline" id="academicTimeline">
-            <!-- Experience Card - Research Assistant -->
-          <div class="experience-card">
-            <div class="card-header">
-              <div class="company-info">
-                <div class="company-logo">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                  </svg>
-                </div>
-                <div class="company-details">
-                    <h3 class="role-title">Research Assistant</h3>
-                    <p class="company-name">CY Cergy Paris University</p>
-                  <p class="location-period">
-                    <span class="location">
-                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
-                      </svg>
-                        Cergy-Pontoise, France
-                    </span>
-                    <span class="period">
-                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                        <line x1="16" y1="2" x2="16" y2="6"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/>
-                        <line x1="3" y1="10" x2="21" y2="10"/>
-                      </svg>
-                        Oct 2018 - Sep 2022
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="card-body">
-              <ul class="achievements-list">
-                <li>
-                  <span class="achievement-icon">✓</span>
-                    Utilized advanced Python programming for computational modeling and solving complex research problems
-                </li>
-                <li>
-                  <span class="achievement-icon">✓</span>
-                    Developed Python-based workflows to manage and analyze large datasets across multiple research projects
-                </li>
-                <li>
-                  <span class="achievement-icon">✓</span>
-                    Presented Python-enabled research findings at international conferences, demonstrating technical expertise and communication skills
-                </li>
-              </ul>
-                
-                <!-- Research Publication -->
-                <div class="research-publication">
-                  <h4 class="publication-title">Featured Publication</h4>
-                  <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9572235/" target="_blank" rel="noopener noreferrer" class="publication-link">
-                    <div class="publication-box">
-                      <svg class="publication-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14,2 14,8 20,8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
-                        <polyline points="10,9 9,9 8,9"/>
-                      </svg>
-                      <div class="publication-content">
-                        <p class="publication-name">Numerical Interchain Mean-Field Theory for the Specific Heat of the Bimetallic Ferromagnetically Coupled Chain Compound MnNi(NO2)4(en)2 (en = Ethylenediamine)</p>
-                        <p class="publication-keywords">Keywords: quantum spin chains, specific heat, quantum Monte Carlo simulations, exact diagonalization, mean-field theory</p>
-                      </div>
-                      <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                        <polyline points="15,3 21,3 21,9"/>
-                        <line x1="10" y1="14" x2="21" y2="3"/>
-                      </svg>
-                    </div>
-                  </a>
-                </div>
-            </div>
-          </div>
-          
-            <!-- Experience Card - Lecturer and Course Facilitator -->
-          <div class="experience-card">
-            <div class="card-header">
-              <div class="company-info">
-                <div class="company-logo">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                  </svg>
-                </div>
-                <div class="company-details">
-                    <h3 class="role-title">Lecturer and Course Facilitator</h3>
-                    <p class="company-name">CY Cergy Paris University</p>
-                  <p class="location-period">
-                    <span class="location">
-                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
-                      </svg>
-                        Cergy-Pontoise, France
-                    </span>
-                    <span class="period">
-                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                        <line x1="16" y1="2" x2="16" y2="6"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/>
-                        <line x1="3" y1="10" x2="21" y2="10"/>
-                      </svg>
-                        Sep 2019 - Jun 2022
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="card-body">
-              <ul class="achievements-list">
-                <li>
-                  <span class="achievement-icon">✓</span>
-                    Led engaging physics tutorials for master's students, enhancing understanding and promoting teamwork
-                </li>
-                <li>
-                  <span class="achievement-icon">✓</span>
-                    Designed course materials, assignments, and exams, strengthening the learning experience
-                </li>
-                <li>
-                  <span class="achievement-icon">✓</span>
-                    Mentored students on projects, collaborated with faculty, and fostered student engagement
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-            <!-- Experience Card - Research Intern -->
-          <div class="experience-card">
-            <div class="card-header">
-              <div class="company-info">
-                <div class="company-logo">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                  </svg>
-                </div>
-                <div class="company-details">
-                    <h3 class="role-title">Research Intern</h3>
-                    <p class="company-name">CY Cergy Paris University</p>
-                  <p class="location-period">
-                    <span class="location">
-                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
-                      </svg>
-                        Cergy-Pontoise, France
-                    </span>
-                    <span class="period">
-                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                        <line x1="16" y1="2" x2="16" y2="6"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/>
-                        <line x1="3" y1="10" x2="21" y2="10"/>
-                      </svg>
-                        Feb 2018 - Jun 2018
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="card-body">
-              <ul class="achievements-list">
-                <li>
-                  <span class="achievement-icon">✓</span>
-                    Developed proficiency in Python programming by researching the effect of magnetic fields on 2D materials
-                </li>
-                <li>
-                  <span class="achievement-icon">✓</span>
-                    Managed and analysed complex data sets, improving their accuracy and reliability
-                </li>
-                <li>
-                  <span class="achievement-icon">✓</span>
-                    Used dashboard using Power BI to present research findings and participated in weekly reviews, improving collaboration and research skills
-                </li>
-              </ul>
-              </div>
-            </div>
-            
-            <!-- Experience Card - Physics and Math Teacher -->
-            <div class="experience-card">
-              <div class="card-header">
-                <div class="company-info">
-                  <div class="company-logo">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                    </svg>
-                  </div>
-                  <div class="company-details">
-                    <h3 class="role-title">Physics and Math Teacher</h3>
-                    <p class="company-name">Rastriya Secondary School</p>
-                    <p class="location-period">
-                      <span class="location">
-                        <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                          <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                        Nepal
-                      </span>
-                      <span class="period">
-                        <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                          <line x1="16" y1="2" x2="16" y2="6"/>
-                          <line x1="8" y1="2" x2="8" y2="6"/>
-                          <line x1="3" y1="10" x2="21" y2="10"/>
-                        </svg>
-                        Jan 2015 - Aug 2016
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="card-body">
-                <ul class="achievements-list">
-                <li>
-                  <span class="achievement-icon">✓</span>
-                    Managed and mentored 60+ students across class 11 and 12 Physics and Mathematics courses, developing strong classroom management skills and adapting teaching methods to diverse learning styles
-                  </li>
-                  <li>
-                    <span class="achievement-icon">✓</span>
-                    Demonstrated leadership through curriculum development, student mentorship, and collaborative planning with faculty, enhancing communication skills and building rapport with students and colleagues
-                </li>
-              </ul>
-              </div>
-            </div>
-            </div>
-          </div>
-          
         <!-- Professional Experience -->
         <div class="experience-category is-collapsed" data-collapsible="professional">
           <div class="experience-category-header">
@@ -792,6 +538,8 @@
               </ul>
             </div>
           </div>
+          
+          
             
             <!-- Experience Card - The Bitrates -->
           <div class="experience-card">
@@ -805,15 +553,15 @@
                   </svg>
                 </div>
                 <div class="company-details">
-                  <h3 class="role-title">Data Analyst</h3>
-                    <p class="company-name"><a href="https://thebitrates.com" target="_blank" rel="noopener noreferrer" class="company-link">The Bitrates</a></p>
+                  <h3 class="role-title">Data Analyst & AI Engineer</h3>
+                    <p class="company-name"><a href="https://thebitrates.com" target="_blank" rel="noopener noreferrer" class="company-link">The Bitrates</a> <span style="font-size: 0.9em; opacity: 0.8;">(Contractual)</span></p>
                   <p class="location-period">
                     <span class="location">
                       <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                         <circle cx="12" cy="10" r="3"/>
                       </svg>
-                        Hurstville, NSW, 2220, Australia
+                        Hurstville, NSW, Australia
                     </span>
                     <span class="period">
                       <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -822,9 +570,8 @@
                         <line x1="8" y1="2" x2="8" y2="6"/>
                         <line x1="3" y1="10" x2="21" y2="10"/>
                       </svg>
-                        Jul 2024 - Present
+                        Jul 2024 - Present (Current)
                     </span>
-                      <span class="badge badge-success">Current</span>
                   </p>
                 </div>
               </div>
@@ -834,23 +581,15 @@
               <ul class="achievements-list">
                 <li>
                   <span class="achievement-icon">✓</span>
-                    Designed Python ML models for predictive analytics, enabling 
-                    data-driven decisions that improved forecasting accuracy by 25%
+                    Analyzed client website databases using PostgreSQL and Power BI, delivering actionable insights that improved forecasting accuracy by 25% and enabled data-driven business decisions
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                    Developed comprehensive data pipelines using Python, SQL, and 
-                    cloud technologies, reducing data processing time by 40%
+                    Developed CV Agent, an AI-powered resume builder using Flutter/Dart frontend, Python backend, and multiple LLM providers, serving 500+ users with real-time ATS optimization
                 </li>
                 <li>
                   <span class="achievement-icon">✓</span>
-                    Created interactive dashboards and visualizations using 
-                    Tableau and Power BI, providing stakeholders with real-time insights
-                  </li>
-                  <li>
-                    <span class="achievement-icon">✓</span>
-                    Collaborated with cross-functional teams to identify business 
-                    opportunities through advanced statistical analysis
+                    Collaborated with cross-functional teams to identify business opportunities through advanced statistical analysis
                 </li>
               </ul>
             </div>
@@ -911,6 +650,257 @@
               </ul>
             </div>
           </div>
+          
+            <!-- Experience Card - Property Console -->
+          <div class="experience-card">
+            <div class="card-header">
+              <div class="company-info">
+                <div class="company-logo">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 21h18"/>
+                    <path d="M5 21V7l8-4v18"/>
+                    <path d="M19 21V11l-6-4"/>
+                  </svg>
+                </div>
+                <div class="company-details">
+                    <h3 class="role-title">Software Engineer and Analyst</h3>
+                    <p class="company-name">Property Console</p>
+                  <p class="location-period">
+                    <span class="location">
+                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                      </svg>
+                        Sydney, Australia
+                    </span>
+                    <span class="period">
+                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                      </svg>
+                        Jun 2023 - Nov 2023
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <ul class="achievements-list">
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Built Python scripts to track key metrics, ensuring 99% data accuracy and improving data integrity and operational efficiency
+                </li>
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Collaborated with the development team to enhance analytics capabilities, using Python to improve data processing speed by 25%
+                </li>
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Leveraged Python for data preprocessing and analysis, producing Tableau dashboards that improved decision-making
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        </div>
+        
+        <!-- Academic Experience -->
+        <div class="experience-category is-collapsed" data-collapsible="academic">
+          <div class="experience-category-header">
+            <h3 class="experience-category-title">Academic Experience</h3>
+            <button class="exp-toggle" aria-expanded="false" aria-controls="academicTimeline">
+              <span class="exp-toggle-label">Expand</span>
+              <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+          <div class="experience-timeline" id="academicTimeline">
+            <!-- Experience Card - Lecturer and Course Facilitator -->
+          <div class="experience-card">
+            <div class="card-header">
+              <div class="company-info">
+                <div class="company-logo">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                  </svg>
+                </div>
+                <div class="company-details">
+                    <h3 class="role-title">Lecturer and Course Facilitator</h3>
+                    <p class="company-name">CY Cergy Paris University</p>
+                  <p class="location-period">
+                    <span class="location">
+                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                      </svg>
+                        Cergy-Pontoise, France
+                    </span>
+                    <span class="period">
+                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                      </svg>
+                        Sep 2019 - Jun 2022
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <ul class="achievements-list">
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Assisted professor by leading physics tutorials for Master's students (8 hours/week per semester) in Condensed Matter Physics, Hamiltonian Systems, and Many-Body Problems
+                </li>
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Designed course materials, assignments, and assessment rubrics, while mentoring students on research projects and fostering critical thinking through problem-solving sessions
+                </li>
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Collaborated with faculty on curriculum development, creating engaging tutorials that enhanced student understanding and promoted teamwork
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+            <!-- Experience Card - Research Intern -->
+          <div class="experience-card">
+            <div class="card-header">
+              <div class="company-info">
+                <div class="company-logo">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                  </svg>
+                </div>
+                <div class="company-details">
+                    <h3 class="role-title">Research Intern</h3>
+                    <p class="company-name">CY Cergy Paris University</p>
+                  <p class="location-period">
+                    <span class="location">
+                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                      </svg>
+                        Cergy-Pontoise, France
+                    </span>
+                    <span class="period">
+                      <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                      </svg>
+                        Feb 2018 - Jun 2018
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="card-body">
+              <ul class="achievements-list">
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Developed Python programming proficiency through computational research on magnetic field effects in 2D materials
+                </li>
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Managed and analyzed complex datasets using statistical analysis and data modeling techniques, improving data accuracy and reliability
+                </li>
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Created Power BI dashboards to visualize research findings and participated in weekly reviews, enhancing technical communication and collaboration skills
+                </li>
+              </ul>
+              
+              <!-- Research Publication -->
+              <div class="research-publication">
+                <h4 class="publication-title">Featured Publication</h4>
+                <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9572235/" target="_blank" rel="noopener noreferrer" class="publication-link">
+                  <div class="publication-box">
+                    <svg class="publication-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                      <polyline points="14,2 14,8 20,8"/>
+                      <line x1="16" y1="13" x2="8" y2="13"/>
+                      <line x1="16" y1="17" x2="8" y2="17"/>
+                      <polyline points="10,9 9,9 8,9"/>
+                    </svg>
+                    <div class="publication-content">
+                      <p class="publication-name">Numerical Interchain Mean-Field Theory for the Specific Heat of the Bimetallic Ferromagnetically Coupled Chain Compound MnNi(NO2)4(en)2 (en = Ethylenediamine)</p>
+                      <p class="publication-keywords">Keywords: quantum spin chains, specific heat, quantum Monte Carlo simulations, exact diagonalization, mean-field theory</p>
+                    </div>
+                    <svg class="external-link-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                      <polyline points="15,3 21,3 21,9"/>
+                      <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                  </div>
+                </a>
+              </div>
+              </div>
+            </div>
+            
+            <!-- Experience Card - Physics and Math Teacher -->
+            <div class="experience-card">
+              <div class="card-header">
+                <div class="company-info">
+                  <div class="company-logo">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
+                  </div>
+                  <div class="company-details">
+                    <h3 class="role-title">Physics and Mathematics Teacher</h3>
+                    <p class="company-name">Rastriya Secondary School</p>
+                    <p class="location-period">
+                      <span class="location">
+                        <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                          <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Nepal
+                      </span>
+                      <span class="period">
+                        <svg class="icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                          <line x1="16" y1="2" x2="16" y2="6"/>
+                          <line x1="8" y1="2" x2="8" y2="6"/>
+                          <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        Jan 2015 - Aug 2016
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="card-body">
+                <ul class="achievements-list">
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Managed and mentored 60+ students across Class 11 and 12 Physics and Mathematics, developing strong classroom management and communication skills
+                  </li>
+                  <li>
+                    <span class="achievement-icon">✓</span>
+                    Developed curriculum integrating real-world data applications, analytical thinking, and problem-solving techniques adapted to diverse learning styles
+                </li>
+                <li>
+                  <span class="achievement-icon">✓</span>
+                    Created hands-on experiments and projects connecting theoretical concepts with practical applications, building strong student rapport through individualized mentorship
+                </li>
+              </ul>
+            </div>
+            </div>
+          </div>
         </div>
         </div>
         
@@ -932,7 +922,6 @@
           <button class="filter-btn active" data-filter="all">All</button>
           <button class="filter-btn" data-filter="ml">Machine Learning</button>
           <button class="filter-btn" data-filter="analytics">Data Analytics</button>
-          <button class="filter-btn" data-filter="engineering">Data Engineering</button>
         </div>
         
         <div class="projects-grid">
@@ -945,162 +934,128 @@
               </span>
             </div>
             
-            <div class="project-image">
-              <img src="assets/images/projects/project3-thumbnail.jpg" 
-                   alt="CV Agent Project"
-                   loading="lazy">
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a href="https://mahesh989.github.io/cv-new/" target="_blank" class="project-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                      <polyline points="15,3 21,3 21,9"/>
-                      <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                    Live Demo
-                  </a>
-                  <a href="https://github.com/mahesh989/cv-new" target="_blank" class="project-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M9 19c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9z"/>
-                      <path d="M9 12l2 2 4-4"/>
-                    </svg>
-                    Code
-                  </a>
-                </div>
-              </div>
-            </div>
-            
             <div class="project-content">
               <h3 class="project-title">CV Agent - AI-Powered Resume Builder</h3>
               
               <p class="project-description">
-                Intelligent CV creation tool using AI to optimize resumes for ATS 
-                systems and specific job requirements
+                AI-powered resume builder with real-time ATS optimization, role-aware tailoring,
+                and skills gap highlighting. Integrates multiple LLM providers with prompt
+                orchestration, supports PDF/Doc parsing, and exports recruiter-ready resumes
+                and cover letters
               </p>
               
               <div class="project-impact">
                 <h4>Impact:</h4>
                 <ul class="impact-list">
                   <li>
-                    500+ users served
+                    500+ users served; consistent engagement on role-specific templates
                   </li>
                   <li>
-                    AI-driven content suggestions
+                    AI-driven content suggestions with quantifiable achievement phrasing
                   </li>
                   <li>
-                    Real-time ATS compatibility scoring
+                    Real-time ATS scoring (keywords, section structure, readability)
+                  </li>
+                  <li>
+                    Multi-model fallback for reliability; export to PDF/Doc with templating
                   </li>
                 </ul>
               </div>
               
+              <div class="project-links">
+                <a href="https://mahesh989.github.io/cv-new/" target="_blank" class="project-link">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    <polyline points="15,3 21,3 21,9"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                  </svg>
+                  Live Demo
+                </a>
+                <a href="https://github.com/mahesh989/cv-new" target="_blank" class="project-link">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                  </svg>
+                  Code
+                </a>
+              </div>
             </div>
           </div>
           
           <!-- Project Card 1 -->
           <div class="project-card" data-category="ml">
-            <div class="project-image">
-              <img src="assets/images/projects/project1-thumbnail.jpg" 
-                   alt="Corrosion Detection Project"
-                   loading="lazy">
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a href="https://github.com/mahesh989/corrosion-detection" target="_blank" class="project-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M9 19c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9z"/>
-                      <path d="M9 12l2 2 4-4"/>
-                    </svg>
-                    Code
-                  </a>
-                  <a href="#" class="project-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                      <polyline points="14,2 14,8 20,8"/>
-                      <line x1="16" y1="13" x2="8" y2="13"/>
-                      <line x1="16" y1="17" x2="8" y2="17"/>
-                      <polyline points="10,9 9,9 8,9"/>
-                    </svg>
-                    Report
-                  </a>
-                </div>
-              </div>
-            </div>
-            
             <div class="project-content">
-              <h3 class="project-title">Real-Time Corrosion Detection using YOLOv8n</h3>
+              <h3 class="project-title">YOLOv8n Corrosion Detection Optimization</h3>
               
               <p class="project-description">
-                Optimized AI model for industrial infrastructure inspection using 
-                deep learning and computer vision techniques
+                Research and engineering to optimize YOLOv8n for real-time corrosion detection in
+                resource-constrained environments (drones/edge devices) using structured and
+                unstructured pruning, with fine-tuning to preserve accuracy
               </p>
               
               <div class="project-impact">
                 <h4>Impact:</h4>
                 <ul class="impact-list">
                   <li>
-                    11.39% model size reduction
+                    11.39% model size reduction via structured (L1-norm) filter pruning
                   </li>
                   <li>
-                    39.34% faster inference time
+                    39.34% faster inference; improved edge deployability
                   </li>
                   <li>
-                    89/100 grade with minimal precision trade-off
+                    7.43% mAP@50-95 drop post-pruning, mitigated by fine-tuning
+                  </li>
+                  <li>
+                    Demonstrated trade-offs: unstructured pruning risked higher accuracy loss at high sparsity
                   </li>
                 </ul>
               </div>
               
+              <div class="project-links">
+                <a href="https://github.com/mahesh989/corrosion-detection" target="_blank" class="project-link">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                  </svg>
+                  Code
+                </a>
+              </div>
             </div>
           </div>
           
           <!-- Project Card 2 -->
           <div class="project-card" data-category="ml">
-            <div class="project-image">
-              <img src="assets/images/projects/project2-thumbnail.jpg" 
-                   alt="Heart Attack Prediction Project"
-                   loading="lazy">
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a href="https://github.com/mahesh989/heart-attack-prediction" target="_blank" class="project-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M9 19c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9z"/>
-                      <path d="M9 12l2 2 4-4"/>
-                    </svg>
-                    Code
-                  </a>
-                  <a href="#" class="project-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                      <polyline points="15,3 21,3 21,9"/>
-                      <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                    Demo
-                  </a>
-                </div>
-              </div>
-            </div>
-            
             <div class="project-content">
-              <h3 class="project-title">Heart Attack Risk Prediction System</h3>
+              <h3 class="project-title">A Comparative Study for Machine Learning Models for Predicting Obesity</h3>
               
               <p class="project-description">
-                Machine learning system predicting cardiovascular risk using 
-                logistic regression, random forests, and deep learning
+                Comparative analysis of Logistic Regression, Decision Tree, and Random Forest models to predict obesity levels using lifestyle and demographic attributes. Includes preprocessing (OHE, outlier handling), EDA, and pipeline-based training.
               </p>
               
               <div class="project-impact">
                 <h4>Impact:</h4>
                 <ul class="impact-list">
                   <li>
-                    92% accuracy achieved
+                    Random Forest: 95.22% accuracy (best-performing model)
                   </li>
                   <li>
-                    Handled imbalanced datasets effectively
+                    Decision Tree: 94.10% accuracy at max depth 9
                   </li>
                   <li>
-                    Clear visualizations for medical decisions
+                    Logistic Regression: 85.01% baseline accuracy
                   </li>
                 </ul>
               </div>
               
+              <div class="project-links">
+                <a href="https://github.com/mahesh989/Machine-learning-project-Obesity_prediction" target="_blank" class="project-link">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                  </svg>
+                  Code
+                </a>
+              </div>
             </div>
           </div>
           
@@ -1108,46 +1063,37 @@
           
           <!-- Project Card 4 -->
           <div class="project-card" data-category="engineering">
-            <div class="project-image">
-              <img src="assets/images/projects/project4-thumbnail.jpg" 
-                   alt="SQL Pipeline Project"
-                   loading="lazy">
-              <div class="project-overlay">
-                <div class="project-links">
-                  <a href="https://github.com/mahesh989/sql-pipeline" target="_blank" class="project-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M9 19c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9z"/>
-                      <path d="M9 12l2 2 4-4"/>
-                    </svg>
-                    Code
-                  </a>
-                </div>
-              </div>
-            </div>
-            
             <div class="project-content">
-              <h3 class="project-title">SQL Data Pipeline Automation</h3>
+              <h3 class="project-title">Diagnosing Parkinson's Disease using Voice Sample Data Analysis</h3>
               
               <p class="project-description">
-                Automated ETL pipeline for property listing analysis with real-time 
-                data processing
+                Non-invasive PD diagnosis approach using acoustic features from voice samples. The study analyzes speech-derived indicators and frames a methodology toward a practical, reliable diagnostic tool.
               </p>
               
               <div class="project-impact">
                 <h4>Impact:</h4>
                 <ul class="impact-list">
                   <li>
-                    30% reduction in processing time
+                    Identified key acoustic markers (e.g., MaxPitch, StdDevPitch, Jitter(%), UPDRS)
                   </li>
                   <li>
-                    Improved data accuracy through validation
+                    Demonstrated feasibility of non-invasive, voice-based PD screening
                   </li>
                   <li>
-                    Enabled real-time BI reporting
+                    Provides groundwork for ML classification and clinical validation
                   </li>
                 </ul>
               </div>
               
+              <div class="project-links">
+                <a href="https://github.com/mahesh989/Parkinson_Disease" target="_blank" class="project-link">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                  </svg>
+                  Code
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -1191,6 +1137,9 @@
                     <span class="period">2023 - 2024</span>
                   </p>
                   <p class="gpa">GPA: <strong>6.35/7</strong></p>
+                <p class="thesis-title">
+                  <em>Thesis: <a href="data/9a558c47-01bb-4f59-808f-d0ee1414d75c.pdf" target="_blank" rel="noopener noreferrer">Master Thesis (Data Science)</a></em>
+                </p>
                 </div>
               </div>
               
@@ -1230,6 +1179,9 @@
                   <span class="location">Cergy-Pontoise, France</span>
                     <span class="period">2016 - 2018</span>
                   </p>
+                <p class="thesis-title">
+                  <em>Thesis: <a href="data/report_mahesh.pdf" target="_blank" rel="noopener noreferrer">Effect of magnetic field in square and honeycomb lattice (Internship Report, 2017–2018)</a></em>
+                </p>
                 </div>
               </div>
             </div>
@@ -1343,6 +1295,105 @@
       </div>
     </section>
 
+    <!-- Skills Section - Mobile Only (after Education) -->
+    <section id="core-skills-mobile" class="section skills-section mobile-only">
+      <div class="container">
+        <h2 class="section-title">Core Skills</h2>
+        <div class="section-divider"></div>
+        
+        <!-- Tech Stack - Mobile Version -->
+        <div class="sidebar-skills mobile-skills-container">
+          <!-- Tier 1: Core Skills -->
+          <div class="skills-tier-core">
+            <div class="core-skills-list">
+              <div class="core-skill-item">
+                <div class="skill-icon-large">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
+                    <path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.01.2-.01.13-.03.07-.05.05-.07.03-.08.02-.08.01-.08-.01-.08-.02-.07-.03-.05-.05-.03-.07-.01-.13.01-.2.04-.26.1-.3.16-.33.25-.34.34-.34.45-.32.59-.3.73-.26.9-.2.13-.02.07-.01.04-.01.02-.01.01-.01v.01h-.01l-.01-.01-.02-.01-.04-.01-.07-.01-.13-.02zm-2.43 1.1l-.1.04-.19.08-.26.13-.32.17-.36.22-.38.26-.38.3-.36.34-.32.36-.26.38-.18.38-.1.36-.04.32.02.26.08.2.14.14.2.08.26.02.32-.04.36-.1.38-.18.38-.26.36-.32.34-.36.3-.38.26-.38.22-.36.17-.32.13-.26.08-.19.04-.1.01-.05.01-.02.01-.01h-.01l-.01.01-.01.01-.02.01-.05.01-.1.04z"/>
+                    <path d="M12 2.5c-5.25 0-9.5 4.25-9.5 9.5s4.25 9.5 9.5 9.5 9.5-4.25 9.5-9.5-4.25-9.5-9.5-9.5zm0 17c-4.14 0-7.5-3.36-7.5-7.5s3.36-7.5 7.5-7.5 7.5 3.36 7.5 7.5-3.36 7.5-7.5 7.5z"/>
+                    <path d="M12 6.5c-3.03 0-5.5 2.47-5.5 5.5s2.47 5.5 5.5 5.5 5.5-2.47 5.5-5.5-2.47-5.5-5.5-5.5zm0 9c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                  </svg>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">Python</span>
+                  <span class="skill-sub">Pandas • NumPy</span>
+                </div>
+                <div class="skill-level expert"></div>
+              </div>
+              
+              <div class="core-skill-item">
+                <div class="skill-icon-large">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    <path d="M4 6h16v2H4zm0 4h16v2H4zm0 4h16v2H4z"/>
+                    <path d="M8 6h8v2H8zm0 4h8v2H8zm0 4h8v2H8z"/>
+                  </svg>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">SQL</span>
+                  <span class="skill-sub">PostgreSQL • MySQL</span>
+                </div>
+                <div class="skill-level expert"></div>
+              </div>
+              
+              <div class="core-skill-item">
+                <div class="skill-icon-large">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
+                    <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h10v2H7v-2zm0 4h6v2H7v-2z"/>
+                    <path d="M9 7h2v2H9V7zm0 4h2v2H9v-2zm0 4h2v2H9v-2zm4-8h2v2h-2V7zm0 4h2v2h-2v-2zm0 4h2v2h-2v-2zm4-8h2v2h-2V7zm0 4h2v2h-2v-2z"/>
+                  </svg>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">Tableau</span>
+                  <span class="skill-sub">Power BI</span>
+                </div>
+                <div class="skill-level expert"></div>
+              </div>
+              
+              <div class="core-skill-item">
+                <div class="skill-icon-large">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-color)" stroke="var(--primary-color)">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    <path d="M12 6l1.5 3L17 9.5l-2.5 2.5L16 15l-3-1.5L10 15l1.5-3L9 9.5l2.5-2.5L12 6z"/>
+                    <circle cx="12" cy="12" r="2"/>
+                  </svg>
+                </div>
+                <div class="skill-info">
+                  <span class="skill-name">Machine Learning</span>
+                  <span class="skill-sub">scikit-learn • TensorFlow</span>
+                </div>
+                <div class="skill-level expert"></div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tier 3: View All -->
+          <div class="skills-tier-expand">
+            <button class="view-all-skills-btn" id="viewAllSkillsBtnMobile">
+              <div class="skill-icon-large">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <path d="M9 9h6v6H9z"/>
+                  <path d="M9 1v6"/>
+                  <path d="M15 1v6"/>
+                  <path d="M9 17v6"/>
+                  <path d="M15 17v6"/>
+                  <path d="M1 9h6"/>
+                  <path d="M17 9h6"/>
+                  <path d="M1 15h6"/>
+                  <path d="M17 15h6"/>
+                </svg>
+              </div>
+              <div class="skill-info">
+                <span class="skill-name">View Full Tech Stack</span>
+              </div>
+              <div class="skill-level expert"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="section contact-section">
       <div class="container">
@@ -1432,7 +1483,7 @@
                 </div>
                 <div class="method-details">
                   <span class="method-label">Phone</span>
-                  <span class="method-value">0414 032 507</span>
+                  <span class="method-value">+61414032507</span>
                 </div>
               </a>
               
@@ -1538,7 +1589,7 @@
         <div class="footer-center">
           <nav class="footer-nav">
             <a href="#about">About</a>
-            <a href="#core-skills">Skills</a>
+            <a href="#core-skills-mobile">Skills</a>
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
             <a href="#education">Education</a>
@@ -1616,10 +1667,7 @@
                 <img src="assets/images/icons/postgresql.svg" alt="PostgreSQL">
                 <span>PostgreSQL</span>
               </div>
-              <div class="tech-skill advanced">
-                <img src="assets/images/icons/mongodb.svg" alt="MongoDB">
-                <span>MongoDB</span>
-              </div>
+              
               <div class="tech-skill expert">
                 <img src="assets/images/icons/mysql.svg" alt="MySQL">
                 <span>MySQL</span>
@@ -1641,7 +1689,6 @@
               <div class="tech-skill expert">
                 <img src="assets/images/icons/python.svg" alt="Python">
                 <span>Python</span>
-                <span class="skill-sub">Pandas, NumPy</span>
               </div>
               <div class="tech-skill advanced">
                 <img src="assets/images/icons/r.svg" alt="R">
@@ -1745,7 +1792,8 @@
   </div>
 
   <!-- JavaScript -->
-  <script type="module" src="js/main.js?v=110"></script>
+  <script type="module" src="js/main.js?v=115"></script>
+  <script type="module" src="js/modules/chatWidget.js?v=115"></script>
   
   <!-- Debug Script -->
   <script>

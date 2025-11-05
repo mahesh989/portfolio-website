@@ -29,6 +29,11 @@
   right: var(--space-3);
   width: 32px;
   height: 32px;
+  /* Mobile touch optimization */
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
   display: none; /* show only on mobile when visible */
   align-items: center;
   justify-content: center;
@@ -108,6 +113,13 @@
   border-radius: var(--radius-lg);
   padding: var(--space-2);
   box-shadow: var(--shadow-sm);
+}
+
+/* Hide sidebar navigation on desktop - show only on mobile */
+@media (min-width: 768px) {
+  .sidebar-nav {
+    display: none;
+  }
 }
 
 .nav-item {
@@ -299,7 +311,7 @@
 /* Mobile sidebar adjustments */
 @media (max-width: 767px) {
   .sidebar {
-    background: var(--bg-primary);
+    background: var(--bg-primary) !important; /* Deep black #0a0a0a */
     box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
     /* Width and position controlled in layout.css */
   }
@@ -327,12 +339,19 @@
     /* CRITICAL: Extra padding at bottom for scrolling to end - Reduced by 20% */
     padding-bottom: 100px;
     box-sizing: border-box;
+    background: var(--bg-primary) !important; /* Deep black #0a0a0a */
   }
   
   /* Prevent horizontal overflow */
   .sidebar-inner > * {
     max-width: 100%;
     overflow-x: hidden;
+  }
+  
+  /* Mobile: Remove headshot background glow - use deep black instead */
+  .profile-photo::before {
+    background: var(--bg-primary) !important; /* Deep black #0a0a0a instead of gradient */
+    opacity: 1 !important; /* Solid color, no transparency */
   }
   
   .profile-photo img {
@@ -359,11 +378,18 @@
     font-size: var(--text-sm);
   }
   
+  /* Mobile: All inner containers use deep black */
   .contact-info,
   .sidebar-nav,
   .skills-preview,
   .social-links {
     margin-bottom: var(--space-6);
+    background-color: var(--bg-primary) !important; /* Deep black #0a0a0a */
+  }
+  
+  /* Show sidebar navigation on mobile */
+  .sidebar-nav {
+    display: block;
   }
   
   .skills-preview {

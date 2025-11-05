@@ -13,11 +13,15 @@ export function initSkillsWorkflow() {
 // Tech Stack Modal Functionality
 function initTechStackModal() {
   const viewAllBtn = document.getElementById('viewAllSkillsBtn');
+  const viewAllBtnMobile = document.getElementById('viewAllSkillsBtnMobile');
   const modal = document.getElementById('techStackModal');
   const closeBtn = document.getElementById('closeTechStackModal');
   
-  if (viewAllBtn && modal) {
-    viewAllBtn.addEventListener('click', () => {
+  // Handle both desktop (sidebar) and mobile (main content) buttons
+  const buttons = [viewAllBtn, viewAllBtnMobile].filter(Boolean);
+  
+  if (buttons.length > 0 && modal) {
+    const handleViewAllClick = () => {
       modal.hidden = false;
       modal.style.display = 'flex';
       document.body.classList.add('no-scroll');
@@ -30,11 +34,26 @@ function initTechStackModal() {
           value: 1
         });
       }
+    };
+    
+    // Add handlers to all buttons (desktop and mobile)
+    buttons.forEach(btn => {
+      // Mobile touch handling
+      if (window.addMobileTouchHandling) {
+        window.addMobileTouchHandling(btn, handleViewAllClick);
+      }
+      btn.addEventListener('click', handleViewAllClick);
     });
     
-    closeBtn?.addEventListener('click', () => {
-      closeModal();
-    });
+    if (closeBtn) {
+      // Mobile touch handling
+      if (window.addMobileTouchHandling) {
+        window.addMobileTouchHandling(closeBtn, () => closeModal());
+      }
+      closeBtn.addEventListener('click', () => {
+        closeModal();
+      });
+    }
     
     // Close on escape key
     document.addEventListener('keydown', (e) => {

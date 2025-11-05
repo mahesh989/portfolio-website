@@ -5,7 +5,7 @@
     "tagline": "From Quantum Physics to Data Science: Turning Complex Data into Actionable Business Insights",
     "location": "Hurstville, Sydney, NSW, Australia",
     "email": "maheshtwari99@gmail.com",
-    "phone": "0414 032 507",
+    "phone": "+61414032507",
     "visaStatus": "Applying for Subclass 485 Graduate Visa",
     "availability": "Immediately Available | Open to Relocation",
     "photo": "assets/images/profile/headshot.png",
@@ -179,17 +179,17 @@
     },
     {
       "id": "proj2",
-      "title": "Heart Attack Risk Prediction System",
-      "description": "Machine learning system predicting cardiovascular risk using logistic regression, random forests, and deep learning",
+      "title": "A Comparative Study for Machine Learning Models for Predicting Obesity",
+      "description": "Comparative analysis of Logistic Regression, Decision Tree, and Random Forest to predict obesity levels using lifestyle and demographic attributes.",
       "impact": [
-        "Achieved 92% accuracy with imbalanced dataset handling",
-        "Implemented undersampling techniques to improve model reliability",
-        "Created clear visualizations for medical decision support"
+        "Random Forest achieved 95.22% accuracy (best-performing model)",
+        "Decision Tree achieved 94.10% accuracy at max depth 9",
+        "Logistic Regression baseline accuracy 85.01%"
       ],
-      "tech": ["Python", "Scikit-learn", "TensorFlow", "Pandas", "Data Visualization"],
+      "tech": ["Python", "Scikit-learn", "Pandas", "Matplotlib", "EDA"],
       "image": "assets/images/projects/project2-thumbnail.jpg",
       "links": {
-        "github": "https://github.com/mahesh989/heart-attack-prediction",
+        "github": "https://github.com/mahesh989/Machine-learning-project-Obesity_prediction",
         "demo": "#"
       },
       "featured": true
@@ -213,17 +213,17 @@
     },
     {
       "id": "proj4",
-      "title": "SQL Data Pipeline Automation",
-      "description": "Automated ETL pipeline for property listing analysis with real-time data processing",
+      "title": "Diagnosing Parkinson's Disease using Voice Sample Data Analysis",
+      "description": "Non-invasive PD diagnosis approach using acoustic features from voice samples; analyzes key speech-based indicators and outlines a path to reliable screening.",
       "impact": [
-        "Reduced data processing time by 30% (from 4 hours to 2.8 hours daily)",
-        "Improved data accuracy through automated validation",
-        "Enabled real-time business intelligence reporting"
+        "Identified key acoustic markers: MaxPitch, StdDevPitch, Jitter(%), UPDRS",
+        "Demonstrated feasibility of voice-based PD screening",
+        "Provides basis for ML modeling and clinical validation"
       ],
-      "tech": ["SQL", "Python", "Power BI", "ETL", "Data Engineering"],
+      "tech": ["Python", "Pandas", "NumPy", "SciPy", "Matplotlib"],
       "image": "assets/images/projects/project4-thumbnail.jpg",
       "links": {
-        "github": "https://github.com/mahesh989/sql-pipeline"
+        "github": "https://github.com/mahesh989/Parkinson_Disease"
       },
       "featured": false
     }

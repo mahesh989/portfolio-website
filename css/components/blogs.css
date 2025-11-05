@@ -13,6 +13,8 @@
   justify-content: flex-end;
   gap: var(--space-2);
   margin-bottom: var(--space-4);
+  position: relative;
+  z-index: 1000; /* Ensure buttons are above other content */
 }
 
 .view-btn {
@@ -27,6 +29,9 @@
   color: var(--text-primary);
   border: 1px solid var(--border-color);
   cursor: pointer;
+  pointer-events: auto; /* Ensure button is always clickable */
+  touch-action: manipulation; /* Optimize for mobile touch */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1); /* Mobile tap feedback */
   -webkit-transition: all var(--transition-base);
   transition: all var(--transition-base);
 }

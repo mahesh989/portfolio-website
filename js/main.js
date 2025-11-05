@@ -9,6 +9,77 @@ import { initSkillsWorkflow } from './modules/skillsWorkflow.js';
 import { initSidebarScroll } from './modules/sidebarScroll.js';
 import { debounce, throttle } from './utils/helpers.js';
 
+// Mobile Button Touch Handler - Universal function for all buttons
+function addMobileTouchHandling(element, clickHandler, options = {}) {
+  if (!element) return;
+  
+  const isMobile = () => window.innerWidth <= 767;
+  const {
+    deltaTimeThreshold = 500,
+    preventDefault = true,
+    stopPropagation = true
+  } = options;
+  
+  // Ensure element is touchable
+  element.style.pointerEvents = 'auto';
+  element.style.touchAction = 'manipulation';
+  element.style.cursor = 'pointer';
+  if (!element.style.zIndex || parseInt(element.style.zIndex) < 1000) {
+    element.style.zIndex = '1000';
+  }
+  
+  // Ensure child elements are also touchable
+  element.querySelectorAll('*').forEach(child => {
+    child.style.pointerEvents = 'auto';
+    child.style.touchAction = 'manipulation';
+  });
+  
+  let touchStartTime = 0;
+  
+  // Touch handlers
+  const handleTouchStart = (e) => {
+    touchStartTime = Date.now();
+    if (stopPropagation) {
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }
+  };
+  
+  const handleTouchEnd = (e) => {
+    const deltaTime = Date.now() - touchStartTime;
+    
+    if (deltaTime < deltaTimeThreshold) {
+      if (preventDefault) e.preventDefault();
+      if (stopPropagation) {
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+      }
+      clickHandler(e);
+    }
+  };
+  
+  // Add touch handlers with capture phase
+  element.addEventListener('touchstart', handleTouchStart, { passive: true, capture: true });
+  element.addEventListener('touchend', handleTouchEnd, { passive: false, capture: true });
+  
+  // Also add to child elements
+  element.querySelectorAll('*').forEach(child => {
+    child.addEventListener('touchstart', handleTouchStart, { passive: true, capture: true });
+    child.addEventListener('touchend', handleTouchEnd, { passive: false, capture: true });
+  });
+  
+  // Ensure click handler also uses capture phase
+  element.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    clickHandler(e);
+  }, { passive: false, capture: true });
+}
+
+// Make function globally available for modules
+window.addMobileTouchHandling = addMobileTouchHandling;
+
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', () => {
   // Hide loading screen
@@ -24,7 +95,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initSkillsWorkflow();
   initSidebarScroll();
   
-  // Initialize navigation FIRST (before mobile menu)
+  // CRITICAL: Initialize experience collapsible FIRST (before navigation)
+  // This ensures toggle handlers are registered before navigation handlers
+  initExperienceCollapsible();
+  
+  // Initialize navigation (after toggle handlers)
   initEnhancedNavigation();
   
   // Initialize additional functionality
@@ -38,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCopyEmail();
   initJourneyModal();
   initMobileQuickNav();
-  initExperienceCollapsible();
   
   // Desktop-only iframe to img replacement for puppy GIF
   replacePuppyIframeOnDesktop();
@@ -98,7 +172,8 @@ function initMobileQuickNav() {
       }
     }, 260);
   };
-  trigger.addEventListener('click', (e) => {
+  // Add mobile touch handling
+  addMobileTouchHandling(trigger, (e) => {
     e.stopPropagation();
     if (isAnimating) return;
     if (panel.classList.contains('open')) {
@@ -147,23 +222,124 @@ function initMobileQuickNav() {
 function initExperienceCollapsible() {
   const categories = document.querySelectorAll('.experience-category');
   if (!categories || categories.length === 0) return;
+  const isMobile = () => window.innerWidth <= 767;
+  
   categories.forEach((cat) => {
     const toggle = cat.querySelector('.exp-toggle');
     const panelId = toggle?.getAttribute('aria-controls');
     const panel = panelId ? document.getElementById(panelId) : cat.querySelector('.experience-timeline');
-    if (!toggle || !panel) return;
+    if (!toggle || !panel) {
+      console.warn('[Experience] Toggle or panel not found for category:', cat);
+      return;
+    }
+    
+    // Ensure buttons are clickable on mobile
+    toggle.style.pointerEvents = 'auto';
+    toggle.style.touchAction = 'manipulation';
+    toggle.style.cursor = 'pointer';
+    toggle.style.zIndex = '1000';
+    toggle.style.position = 'relative';
+    
+    // Mark button to prevent navigation handlers from intercepting
+    toggle.dataset.isToggleButton = 'true';
+    toggle.dataset.expToggle = 'true';
+    
+    // Ensure child elements are also touchable
+    toggle.querySelectorAll('*').forEach(child => {
+      child.style.pointerEvents = 'auto';
+      child.style.touchAction = 'manipulation';
+      child.dataset.isToggleButton = 'true';
+    });
+    
     // Ensure initial collapsed state per markup
     const isCollapsed = cat.classList.contains('is-collapsed');
     toggle.setAttribute('aria-expanded', String(!isCollapsed));
     const label = toggle.querySelector('.exp-toggle-label');
     if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
-    // Click handler
-    toggle.addEventListener('click', (e) => {
+    
+    const handleToggle = (e) => {
+      console.log('[Experience] Toggle button clicked/touched');
       e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation(); // CRITICAL: Prevent other handlers from firing
+      
       const nowCollapsed = cat.classList.toggle('is-collapsed');
       toggle.setAttribute('aria-expanded', String(!nowCollapsed));
       if (label) label.textContent = nowCollapsed ? 'Expand' : 'Collapse';
-    });
+      
+      console.log('[Experience] Toggle completed, collapsed:', nowCollapsed);
+      return false; // Additional safeguard
+    };
+    
+    // CRITICAL: Use document-level capture phase listener to catch events BEFORE anything else
+    const handleClickCapture = (e) => {
+      // Only handle if the event target is this toggle or its children
+      if (e.target === toggle || toggle.contains(e.target)) {
+        console.log('[Experience] Capture phase click detected on toggle');
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        handleToggle(e);
+      }
+    };
+    
+    // Add to document in capture phase - this runs BEFORE any other handlers
+    document.addEventListener('click', handleClickCapture, { capture: true, passive: false });
+    
+    // Also add directly to button as backup
+    toggle.addEventListener('click', handleToggle, { passive: false, capture: true });
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }, { passive: false });
+    
+    // Touch handlers for mobile - use document-level capture to run FIRST
+    let touchStartTime = 0;
+    
+    const handleTouchStartCapture = (e) => {
+      if (e.target === toggle || toggle.contains(e.target)) {
+        touchStartTime = Date.now();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        console.log('[Experience] Touch start on toggle');
+      }
+    };
+    
+    const handleTouchEndCapture = (e) => {
+      if (e.target === toggle || toggle.contains(e.target)) {
+        const deltaTime = Date.now() - touchStartTime;
+        console.log('[Experience] Touch end on toggle, deltaTime:', deltaTime);
+        
+        if (deltaTime < 500) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          handleToggle(e);
+        }
+      }
+    };
+    
+    // Add to document in capture phase
+    document.addEventListener('touchstart', handleTouchStartCapture, { passive: true, capture: true });
+    document.addEventListener('touchend', handleTouchEndCapture, { passive: false, capture: true });
+    
+    // Also add to button directly
+    toggle.addEventListener('touchstart', (e) => {
+      touchStartTime = Date.now();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }, { passive: true, capture: true });
+    
+    toggle.addEventListener('touchend', (e) => {
+      const deltaTime = Date.now() - touchStartTime;
+      if (deltaTime < 500) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        handleToggle(e);
+      }
+    }, { passive: false, capture: true });
   });
 }
 
@@ -183,78 +359,46 @@ function initMobileMenu() {
   const openSidebar = () => {
     scrollY = window.scrollY;
     
-    // Calculate scrollbar width BEFORE any changes
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    
     // Add classes
     sidebar.classList.add('active');
     document.body.classList.add('sidebar-open');
+    document.body.classList.add('active');
     if (overlay) overlay.classList.add('active');
     if (hamburger) hamburger.classList.add('active');
     
-    // Lock body WITHOUT causing shift
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'relative'; // Keep in flow
-    document.body.style.width = '100%';
-    
-    // Compensate for scrollbar disappearance
-    if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
-      
-      // Also add padding to fixed elements
-      const mainContent = document.querySelector('.main-content');
-      const topNav = document.querySelector('.top-nav');
-      
-      if (mainContent) mainContent.style.paddingRight = `${scrollbarWidth}px`;
-      if (topNav) topNav.style.paddingRight = `${scrollbarWidth}px`;
-    }
+    // CRITICAL: Ensure body can scroll on mobile
+    document.body.style.overflowY = 'auto';
+    document.body.style.overflowX = 'hidden';
+    document.body.style.position = 'relative';
+    document.body.style.height = 'auto';
+    document.documentElement.style.overflowY = 'auto';
+    document.documentElement.style.overflowX = 'hidden';
     
     // Reset sidebar scroll and enable scrolling
     sidebar.scrollTop = 0;
     
-    // CRITICAL: Force enable sidebar scrolling after a brief moment
-    setTimeout(() => {
-      if (sidebar) {
+    // CRITICAL: Force enable sidebar scrolling
         sidebar.style.overflowY = 'auto';
         sidebar.style.webkitOverflowScrolling = 'touch';
         sidebar.style.touchAction = 'pan-y';
-      }
-    }, 50);
   };
   
   const closeSidebar = () => {
     sidebar.classList.remove('active');
     document.body.classList.remove('sidebar-open');
+    document.body.classList.remove('active');
     if (overlay) overlay.classList.remove('active');
     if (hamburger) hamburger.classList.remove('active');
     
-    // CRITICAL: Explicitly restore scrolling on mobile
-    document.body.style.overflow = '';
-    document.body.style.overflowY = 'auto';
-    document.body.style.overflowX = 'hidden';
+    // CRITICAL: Restore scrolling - reset all inline styles
+    document.body.style.overflowY = '';
+    document.body.style.overflowX = '';
     document.body.style.position = '';
-    document.body.style.width = '';
-    document.body.style.height = ''; // Remove height restriction
-    document.body.style.paddingRight = '';
+    document.body.style.height = '';
+    document.documentElement.style.overflowY = '';
+    document.documentElement.style.overflowX = '';
     
-    const mainContent = document.querySelector('.main-content');
-    const topNav = document.querySelector('.top-nav');
-    
-    if (mainContent) {
-      mainContent.style.paddingRight = '';
-      // CRITICAL: Restore touch-action for mobile scrolling
-      mainContent.style.touchAction = '';
-      mainContent.style.overflow = '';
-      mainContent.style.overflowY = 'auto';
-      mainContent.style.overflowX = 'hidden';
-    }
-    if (topNav) topNav.style.paddingRight = '';
-    
-    // Restore scroll position
-    window.scrollTo(0, scrollY);
-    
-    // Force a reflow to ensure styles are applied
-    void document.body.offsetHeight;
+    // No need to restore scroll position since body wasn't locked
   };
   
   const toggleSidebar = () => {
@@ -263,14 +407,48 @@ function initMobileMenu() {
   
   // Event listeners - use click with capture to ensure it fires
   if (sidebarClose) {
+    // Mark button to prevent navigation handlers from intercepting
+    sidebarClose.dataset.isCloseButton = 'true';
+    sidebarClose.dataset.isToggleButton = 'true';
+    
+    // CRITICAL: Use document-level capture to run BEFORE navigation handlers
+    const handleCloseClickCapture = (e) => {
+      if (e.target === sidebarClose || sidebarClose.contains(e.target)) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation(); // CRITICAL: Stop all other handlers
+        closeSidebar();
+      }
+    };
+    
+    document.addEventListener('click', handleCloseClickCapture, { capture: true, passive: false });
+    
+    // Add mobile touch handling
+    addMobileTouchHandling(sidebarClose, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation(); // CRITICAL: Stop all other handlers
+      closeSidebar();
+    });
+    
+    // Also keep original click handler on button itself
     sidebarClose.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
+      e.stopImmediatePropagation(); // CRITICAL: Stop all other handlers
       closeSidebar();
-    }, true); // Use capture phase
+    }, { passive: false, capture: true });
   }
   
   if (hamburger) {
+    // Add mobile touch handling
+    addMobileTouchHandling(hamburger, (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleSidebar();
+    });
+    
+    // Also keep original click handler for desktop
     hamburger.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -312,6 +490,7 @@ function initMobileMenu() {
   let touchStartY = 0;
   let isTouchingInSidebar = false;
   let isTouchingNavLink = false;
+  let isTouchingButton = false;
   
   document.addEventListener('touchstart', (e) => {
     touchStartY = e.touches[0].clientY;
@@ -321,19 +500,48 @@ function initMobileMenu() {
     // Check if touch started on a navigation link (or parent is nav link)
     const navLink = target.closest('a[href^="#"]');
     isTouchingNavLink = !!(navLink || (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')));
+    
+    // Check if touching interactive buttons
+    isTouchingButton = !!(target.classList.contains('view-btn') || 
+                          target.closest('.view-btn') ||
+                          target.classList.contains('exp-toggle') ||
+                          target.closest('.exp-toggle') ||
+                          (target.tagName === 'BUTTON' && !target.disabled) ||
+                          target.closest('button:not([disabled])'));
   }, { passive: true });
   
   document.addEventListener('touchmove', (e) => {
     // Only if sidebar is open
     if (!sidebar || !sidebar.classList.contains('active')) return;
     
-    // CRITICAL: Always allow touches on navigation links (including top-nav)
     const target = e.target;
+    
+    // CRITICAL: ALWAYS allow scrolling inside the sidebar - check if target is inside sidebar
+    if (sidebar.contains(target)) {
+      return; // Don't prevent default - allow sidebar scrolling
+    }
+    
+    // CRITICAL: Always allow touches on navigation links (including top-nav)
     const targetLink = target.closest('a[href^="#"]'); // Check if target or parent is a nav link
     
     // Don't prevent default for nav links (anywhere on page, including top-nav)
     if (targetLink || (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#'))) {
       return; // Don't prevent default for nav links
+    }
+    
+    // CRITICAL: Allow touches on interactive buttons (view toggle buttons, expand buttons)
+    if (target.classList.contains('view-btn') || target.closest('.view-btn')) {
+      return; // Don't prevent default for view toggle buttons
+    }
+    if (target.classList.contains('exp-toggle') || target.closest('.exp-toggle')) {
+      return; // Don't prevent default for expand/collapse buttons
+    }
+    if (target.tagName === 'BUTTON' || target.closest('button')) {
+      const button = target.tagName === 'BUTTON' ? target : target.closest('button');
+      // Allow buttons that are interactive (not disabled)
+      if (button && !button.disabled) {
+        return; // Don't prevent default for interactive buttons
+      }
     }
     
     // If touch started inside sidebar, always allow scroll
@@ -342,8 +550,10 @@ function initMobileMenu() {
     // If touch started on nav link, allow it
     if (isTouchingNavLink) return;
     
+    // If touch started on interactive button, allow it
+    if (isTouchingButton) return;
+    
     // Also check if current target is inside sidebar or is a nav link
-    if (sidebar.contains(target)) return;
     if (target.closest('a[href^="#"]')) return; // Check if parent is nav link
     
     // CRITICAL: Also check if touching top-nav (it should always work)
@@ -359,6 +569,7 @@ function initMobileMenu() {
   document.addEventListener('touchend', (e) => {
     isTouchingInSidebar = false;
     isTouchingNavLink = false;
+    isTouchingButton = false;
   }, { passive: true });
   
   // Auto-open only on FIRST visit on index page (not blogs) and only on mobile
@@ -415,6 +626,15 @@ function initScrollToTop() {
     
     window.addEventListener('scroll', handleScroll, { passive: true });
     
+    // Add mobile touch handling
+    addMobileTouchHandling(scrollBtn, () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Also keep original click handler
     scrollBtn.addEventListener('click', () => {
       window.scrollTo({
         top: 0,
@@ -491,6 +711,17 @@ function initScrollToNext() {
       requestAnimationFrame(animate);
     };
 
+    // Add mobile touch handling
+    addMobileTouchHandling(nextBtn, () => {
+      // Scroll by one viewport height without overshooting the bottom
+      const maxTarget = document.body.scrollHeight - window.innerHeight;
+      const desired = window.pageYOffset + window.innerHeight;
+      const distance = Math.max(0, Math.min(window.innerHeight, maxTarget - window.pageYOffset));
+      if (distance > 0) smoothScrollBy(distance);
+      setTimeout(updateVisibility, 350);
+    });
+    
+    // Also keep original click handler
     nextBtn.addEventListener('click', () => {
       // Scroll by one viewport height without overshooting the bottom
       const maxTarget = document.body.scrollHeight - window.innerHeight;
@@ -562,9 +793,7 @@ function initTypingEffect() {
   
   const jobTitles = [
     'Data Analyst',
-    'AI Engineer', 
-    'Data Scientist',
-    'Data Engineer'
+    'AI Engineer'
   ];
   
   let currentIndex = 0;
@@ -620,7 +849,7 @@ function initProjectFilters() {
   
   try {
     filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
+      const handleFilterClick = () => {
         // Update active button
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -636,7 +865,13 @@ function initProjectFilters() {
             setTimeout(() => card.style.display = 'none', 300);
           }
         });
-      });
+      };
+      
+      // Add mobile touch handling
+      addMobileTouchHandling(btn, handleFilterClick);
+      
+      // Also keep original click handler
+      btn.addEventListener('click', handleFilterClick);
     });
   } catch (error) {
     console.error('Error initializing project filters:', error);
@@ -760,81 +995,70 @@ function initEnhancedNavigation() {
   
   console.log('[Navigation] Sidebar found, setting up navigation...');
   
-  // Sections in sidebar
+  // Sections in sidebar (only for desktop - on mobile, all sections are in main content)
   const sidebarSections = ['core-skills'];
   
   // Shared close sidebar function
   function closeSidebar() {
     sidebar.classList.remove('active');
     document.body.classList.remove('sidebar-open');
+    document.body.classList.remove('active');
     if (overlay) overlay.classList.remove('active');
     if (hamburger) hamburger.classList.remove('active');
     
-    // CRITICAL: Explicitly restore scrolling on mobile
+    // CRITICAL: Restore scrolling - keep it simple
     document.body.style.overflow = '';
-    document.body.style.overflowY = 'auto';
-    document.body.style.overflowX = 'hidden';
+    document.body.style.overflowY = '';
+    document.body.style.overflowX = '';
     document.body.style.position = '';
     document.body.style.width = '';
-    document.body.style.height = ''; // Remove height restriction
-    document.body.style.paddingRight = '';
+    document.body.style.height = '';
     document.documentElement.style.overflow = '';
-    document.documentElement.style.overflowY = 'auto';
+    document.documentElement.style.overflowY = '';
     document.documentElement.style.overflowX = 'hidden';
     
-    const mainContent = document.querySelector('.main-content');
-    const topNav = document.querySelector('.top-nav');
-    if (mainContent) {
-      mainContent.style.paddingRight = '';
-      mainContent.style.overflow = '';
-      mainContent.style.overflowY = 'auto';
-      mainContent.style.overflowX = 'hidden';
-      mainContent.style.touchAction = ''; // Restore touch-action
-    }
-    if (topNav) topNav.style.paddingRight = '';
-    
-    // Force a reflow to ensure styles are applied
-    void document.body.offsetHeight;
+    // No padding adjustments needed since we didn't lock scroll
+    // No need to force reflow
   }
   
   // Function to open sidebar and navigate to a section within it
   function openSidebarAndNavigate(sectionId) {
     console.log(`[Navigation] openSidebarAndNavigate called for: ${sectionId}`);
     if (isMobile() && sidebar) {
-      // Calculate scrollbar width
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      
       // Open sidebar on mobile
       sidebar.classList.add('active');
       if (overlay) overlay.classList.add('active');
       if (hamburger) hamburger.classList.add('active');
       document.body.classList.add('sidebar-open');
+      document.body.classList.add('active');
       
-      // Lock body WITHOUT causing shift
-      document.body.style.overflow = 'hidden';
+      // CRITICAL: Ensure body can scroll on mobile
+      document.body.style.overflowY = 'auto';
+      document.body.style.overflowX = 'hidden';
       document.body.style.position = 'relative';
-      document.body.style.width = '100%';
+      document.body.style.height = 'auto';
+      document.documentElement.style.overflowY = 'auto';
+      document.documentElement.style.overflowX = 'hidden';
       
-      // Compensate for scrollbar disappearance
-      if (scrollbarWidth > 0) {
-        document.body.style.paddingRight = `${scrollbarWidth}px`;
-        const mainContent = document.querySelector('.main-content');
-        const topNav = document.querySelector('.top-nav');
-        if (mainContent) mainContent.style.paddingRight = `${scrollbarWidth}px`;
-        if (topNav) topNav.style.paddingRight = `${scrollbarWidth}px`;
-      }
+      // CRITICAL: Enable sidebar scrolling immediately
+      sidebar.style.overflowY = 'auto';
+      sidebar.style.overflowX = 'hidden';
+      sidebar.style.webkitOverflowScrolling = 'touch';
+      sidebar.style.touchAction = 'pan-y';
+      sidebar.style.overscrollBehaviorY = 'contain';
       
-      // Reset sidebar scroll
-      sidebar.scrollTop = 0;
-      
-      // Enable sidebar scrolling
+      // Navigate to section first (scroll to it)
       setTimeout(() => {
-        if (sidebar) {
-          sidebar.style.overflowY = 'auto';
-          sidebar.style.webkitOverflowScrolling = 'touch';
-          sidebar.style.touchAction = 'pan-y';
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+          // Scroll the sidebar to show the target section
+          targetSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start',
+            inline: 'nearest'
+          });
         }
-      }, 50);
+      }, 100);
     }
     
     // Navigate to section in sidebar
@@ -926,7 +1150,9 @@ function initEnhancedNavigation() {
     console.log(`[Navigation] Link clicked/touched for section: ${sectionId}, Mobile: ${isMobile()}`);
     // Define proceed navigation first so callbacks can reference it
     const proceed = () => {
-    if (sidebarSections.includes(sectionId)) {
+    // On mobile, always navigate to main content (even if it's core-skills-mobile)
+    // On desktop, check if it's a sidebar section
+    if (!isMobile() && sidebarSections.includes(sectionId)) {
       console.log(`[Navigation] Navigating to sidebar section: ${sectionId}`);
       openSidebarAndNavigate(sectionId);
     } else {
@@ -971,6 +1197,20 @@ function initEnhancedNavigation() {
       
       // Handle click events (desktop and mobile fallback)
       link.addEventListener('click', (e) => {
+        // CRITICAL: Don't handle navigation if click came from a toggle button or close button
+        const target = e.target;
+        if (target.closest('.exp-toggle') || 
+            target.closest('[data-is-toggle-button="true"]') ||
+            target.closest('[data-exp-toggle="true"]') ||
+            target.closest('.sidebar-close') ||
+            target.closest('[data-is-close-button="true"]') ||
+            target.dataset.isToggleButton === 'true' ||
+            target.dataset.expToggle === 'true' ||
+            target.dataset.isCloseButton === 'true') {
+          console.log('[Navigation] Ignoring click - came from toggle/close button');
+          return; // Let button handle its own click
+        }
+        
         // On mobile, skip if touch was already handled for this link
         if (isMobile() && touchedLinks.has(link)) {
           touchedLinks.delete(link);
@@ -996,6 +1236,20 @@ function initEnhancedNavigation() {
       // CRITICAL: Add touchend handler for mobile devices (<= 767px)
       // touchend fires when tap completes, more reliable than click on mobile
       link.addEventListener('touchend', (e) => {
+        // CRITICAL: Don't handle navigation if touch came from a toggle button or close button
+        const target = e.target;
+        if (target.closest('.exp-toggle') || 
+            target.closest('[data-is-toggle-button="true"]') ||
+            target.closest('[data-exp-toggle="true"]') ||
+            target.closest('.sidebar-close') ||
+            target.closest('[data-is-close-button="true"]') ||
+            target.dataset.isToggleButton === 'true' ||
+            target.dataset.expToggle === 'true' ||
+            target.dataset.isCloseButton === 'true') {
+          console.log('[Navigation] Ignoring touchend - came from toggle/close button');
+          return; // Let button handle its own touch
+        }
+        
         // Only handle if on mobile and touch was started on this link
         if (isMobile() && link.dataset.touchHandled === 'true') {
           console.log(`[Navigation] Touch end detected on mobile for: ${href}`);

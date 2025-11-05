@@ -15,17 +15,23 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 0;
+  margin: 0; /* Normalize margins for consistent alignment */
   padding-bottom: var(--space-2);
   border-bottom: 2px solid var(--border-color);
+  line-height: 1.4; /* Consistent line height for multi-line titles */
+  min-height: 3.5rem; /* Ensure consistent height for alignment (accommodates 2 lines) */
+  display: block; /* Let the grid column define the width */
+  justify-self: stretch; /* Fill the grid column up to the toggle */
+  box-sizing: border-box; /* Border uses the full available width */
 }
 
 .experience-category-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto; /* Title grows, truncate before toggle */
+  align-items: center; /* Center align items vertically */
   gap: var(--space-4);
   margin-bottom: var(--space-4);
+  min-height: 3.5rem; /* Ensure consistent header height for alignment */
 }
 
 .exp-toggle {
@@ -38,7 +44,15 @@
   border-radius: var(--radius-full);
   padding: var(--space-2) var(--space-3);
   cursor: pointer;
+  pointer-events: auto !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 999999; /* Extremely high z-index to ensure buttons are always above other elements */
   transition: background var(--transition-base), border-color var(--transition-base), transform var(--transition-base);
+  flex-shrink: 0; /* Prevent button from shrinking */
+  height: fit-content; /* Button height matches content */
+  justify-self: end; /* Align toggle to far right in grid header */
 }
 
 .exp-toggle .chevron {
@@ -61,6 +75,20 @@
 
 .experience-timeline {
   position: relative;
+}
+
+/* Ensure Academic and Professional timelines align perfectly */
+.experience-category[data-collapsible="academic"] .experience-timeline,
+.experience-category[data-collapsible="professional"] .experience-timeline {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* Normalize headers alignment across categories */
+.experience-category[data-collapsible="academic"] .experience-category-header,
+.experience-category[data-collapsible="professional"] .experience-category-header {
+  margin-left: 0;
+  padding-left: 0;
 }
 
 /* Removed vertical timeline line */
@@ -202,7 +230,9 @@
 
 .achievements-list {
   list-style: none;
+  list-style-type: none;
   margin-bottom: var(--space-6);
+  padding-left: 0;
 }
 
 .achievements-list li {
@@ -211,9 +241,18 @@
   gap: var(--space-3);
   margin-bottom: var(--space-4);
   padding: var(--space-3);
+  padding-left: var(--space-3);
   background-color: var(--bg-secondary);
   border-radius: var(--radius-base);
   transition: background-color var(--transition-hover), transform var(--transition-hover);
+  font-size: var(--text-base);
+  list-style: none;
+  list-style-type: none;
+}
+
+.achievements-list li::before {
+  display: none;
+  content: none;
 }
 
 /* Hover effect removed */
@@ -280,6 +319,29 @@
   /* .experience-timeline::before {
     left: 20px;
   } */
+  
+  /* Ensure alignment is maintained on mobile */
+  .experience-category-header {
+    align-items: center; /* Maintain center alignment on mobile */
+    min-height: 3.5rem; /* Maintain consistent height on mobile */
+    /* Enforce identical layout for title and toggle across categories */
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: var(--space-4);
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+  
+  .experience-category-title {
+    min-height: 3.5rem; /* Maintain consistent height on mobile */
+    line-height: 1.4; /* Maintain consistent line height on mobile */
+    margin: 0; /* Normalize margins */
+  }
+  
+  /* Ensure the toggle aligns to the far right consistently */
+  .experience-category .exp-toggle {
+    justify-self: end;
+  }
   
   .experience-card::before {
     left: -30px;

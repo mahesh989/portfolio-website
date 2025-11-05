@@ -504,6 +504,21 @@ img {
   transform: translateY(0);
 }
 
+/* Mobile-only Skills Section - Hidden on desktop */
+.mobile-only {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-only {
+    display: block;
+  }
+  /* Hide sidebar core skills on mobile (skills now shown in main content) */
+  .sidebar .sidebar-skills {
+    display: none !important;
+  }
+}
+
 /* Scroll to Top Button */
 .scroll-to-top {
   position: fixed;
@@ -511,6 +526,11 @@ img {
   right: var(--space-8); /* Increased from var(--space-6) */
   width: 50px;
   height: 50px;
+  /* Mobile touch optimization */
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
   background-color: var(--primary-color);
   color: white;
   border: none;
@@ -543,6 +563,11 @@ img {
   right: var(--space-8);
   width: 50px;
   height: 50px;
+  /* Mobile touch optimization */
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
   background-color: var(--primary-color);
   color: white;
   border: none;
@@ -575,10 +600,10 @@ img {
     /* Mobile: Smaller size, better positioning for touch */
     width: 44px !important; /* Touch-friendly minimum size (44x44px recommended) */
     height: 44px !important;
-    /* Position: Bottom-left corner (doesn't interfere with sidebar/hamburger on right) */
-    right: auto !important;
-    left: var(--space-4) !important;
-    /* Stack vertically in bottom-left */
+    /* Position: Bottom-RIGHT corner (aligned with hamburger on right) */
+    left: auto !important;
+    right: var(--space-4) !important; /* Right side - 16px from right edge */
+    /* Stack vertically in bottom-right */
     bottom: auto !important;
     /* Use z-index above mobile elements but below sidebar when open */
     z-index: 9999 !important; /* Below sidebar (10004) but above most content */
@@ -591,12 +616,12 @@ img {
     border: 2px solid var(--bg-primary) !important;
   }
 
-  /* Scroll to Top - Bottom-left, higher position */
+  /* Scroll to Top - Bottom-right, higher position */
   .scroll-to-top {
     bottom: calc(80px + env(safe-area-inset-bottom)) !important; /* Positioned above next button */
   }
 
-  /* Scroll to Next - Bottom-left, lower position */
+  /* Scroll to Next - Bottom-right, lower position */
   .scroll-to-next {
     bottom: calc(20px + env(safe-area-inset-bottom)) !important; /* Near bottom, above safe area */
   }

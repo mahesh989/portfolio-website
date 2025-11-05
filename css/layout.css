@@ -35,6 +35,15 @@
   z-index: 10005; /* Above sidebar, top-nav, overlay */
   margin-right: 4px; /* Fixed 4px from right edge for all screen sizes */
   position: relative;
+  /* Mobile touch optimization */
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+}
+
+.hamburger * {
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .hamburger span {
@@ -738,7 +747,7 @@
     z-index: -1 !important; /* Push behind everything when closed */
   }
   
-  /* Main content - NO TRANSFORM, NO TRANSITION */
+  /* Main content - ALLOW SCROLLING ALWAYS */
   .main-content {
     margin-left: 0;
     max-width: 100%;
@@ -747,18 +756,30 @@
     padding-right: var(--space-4);
     transition: none !important; /* Prevent any movement */
     transform: none !important;
-    /* CRITICAL: Allow overflow for puppy circle on mobile */
-    overflow-x: visible !important; /* Allow horizontal overflow for puppy circle */
-    overflow-y: auto !important; /* Allow vertical scrolling */
+    /* CRITICAL: Allow proper scrolling on mobile */
+    overflow-x: hidden !important; /* Prevent horizontal scroll */
+    overflow-y: auto !important; /* Enable vertical scrolling */
+    min-height: 100vh; /* Ensure content is scrollable */
   }
   
-  /* Body lock - stays in place */
+  /* Body - ALWAYS scrollable on mobile */
+  body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    position: relative;
+    height: auto !important;
+    min-height: 100vh;
+  }
+  
+  /* When sidebar is open - body remains scrollable */
   body.sidebar-open {
-    overflow: hidden;
-    position: relative; /* NOT fixed */
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    position: relative;
+    height: auto !important;
   }
   
-  /* Prevent ALL content from moving */
+  /* Allow content to remain scrollable when sidebar is open */
   body.sidebar-open .main-content,
   body.sidebar-open footer,
   body.sidebar-open .hero,

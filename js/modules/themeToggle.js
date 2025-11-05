@@ -8,7 +8,7 @@ export function initThemeToggle() {
   body.setAttribute('data-theme', currentTheme);
   
   if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
+    const handleThemeToggle = () => {
       const currentTheme = body.getAttribute('data-theme');
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
       
@@ -25,7 +25,13 @@ export function initThemeToggle() {
           event_label: newTheme
         });
       }
-    });
+    };
+    
+    // Mobile touch handling
+    if (window.addMobileTouchHandling) {
+      window.addMobileTouchHandling(themeToggle, handleThemeToggle);
+    }
+    themeToggle.addEventListener('click', handleThemeToggle);
     
     // Initialize toggle button
     updateToggleButton(currentTheme);

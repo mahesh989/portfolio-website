@@ -19,6 +19,17 @@
   font-weight: var(--font-medium);
   cursor: pointer;
   transition: border-color var(--transition-hover), color var(--transition-hover), transform var(--transition-hover);
+  /* Mobile touch optimization */
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1000;
+}
+
+.filter-btn * {
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .filter-btn:hover {

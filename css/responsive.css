@@ -55,12 +55,14 @@
 
 /* Mobile: < 768px - AUTO-OPENING SIDEBAR FIXED VERSION */
 @media (max-width: 767px) {
-  /* CRITICAL: Reset body scrolling */
+  /* CRITICAL: Enable body scrolling on mobile */
   html, body {
-    height: 100% !important;
+    height: auto !important;
+    min-height: 100vh !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
     position: relative !important;
+    -webkit-overflow-scrolling: touch !important; /* Smooth iOS scrolling */
   }
 
   /* Mobile header removed - top-nav handles all mobile navigation */
@@ -78,9 +80,10 @@
   /* Main content - layout controlled in layout.css */
   .main-content {
     padding-top: 60px !important;
-    /* CRITICAL: Allow overflow for puppy circle on mobile */
-    overflow-x: visible !important; /* Allow horizontal overflow for puppy circle */
-    overflow-y: auto !important; /* Allow vertical scrolling */
+    /* CRITICAL: Enable scrolling */
+    overflow-x: hidden !important; /* Prevent horizontal scroll */
+    overflow-y: auto !important; /* Enable vertical scrolling */
+    -webkit-overflow-scrolling: touch !important; /* Smooth iOS scrolling */
   }
 
   /* Hero section fixes - CONSOLIDATED to prevent conflicts */
@@ -89,10 +92,9 @@
     padding: 168px 0 var(--space-6) 0 !important; /* Increased from 134px to 168px (lowered by another 34px) */
     position: relative !important;
     margin-top: 0 !important; /* Remove conflicting margins */
-    /* CRITICAL: Allow overflow for full puppy circle visibility */
+    /* CRITICAL: Allow proper overflow and scrolling */
     overflow-x: hidden !important; /* Prevent horizontal scroll */
-    overflow-y: visible !important; /* Allow vertical overflow for puppy circle */
-    overflow: visible !important; /* Override any conflicting settings */
+    overflow-y: visible !important; /* Allow content to flow naturally */
   }
 
   .hero-content {
@@ -115,14 +117,16 @@
     padding: calc(var(--space-12) * 0.72) 0 !important; /* Reduced by 28% total (20% + 10% of remaining) */
     padding-bottom: calc(var(--space-12) * 0.72) !important; /* Consistent bottom padding for all sections */
     position: relative !important;
-    overflow: visible !important;
+    overflow-x: hidden !important; /* Prevent horizontal scroll */
+    overflow-y: visible !important; /* Allow content to flow naturally */
   }
 
   /* Fix viewport height issues */
   .container {
     max-width: 100% !important;
     padding: 0 var(--space-4) !important;
-    overflow: visible !important;
+    overflow-x: hidden !important; /* Prevent horizontal scroll */
+    overflow-y: visible !important; /* Allow content to flow naturally */
   }
   
   .hero-content {
