@@ -99,6 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // This ensures toggle handlers are registered before navigation handlers
   initExperienceCollapsible();
   
+  // Initialize conferences collapsible
+  initConferencesCollapsible();
+  
   // Initialize navigation (after toggle handlers)
   initEnhancedNavigation();
   
@@ -310,6 +313,128 @@ function initExperienceCollapsible() {
       if (e.target === toggle || toggle.contains(e.target)) {
         const deltaTime = Date.now() - touchStartTime;
         console.log('[Experience] Touch end on toggle, deltaTime:', deltaTime);
+        
+        if (deltaTime < 500) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          handleToggle(e);
+        }
+      }
+    };
+    
+    // Add to document in capture phase
+    document.addEventListener('touchstart', handleTouchStartCapture, { passive: true, capture: true });
+    document.addEventListener('touchend', handleTouchEndCapture, { passive: false, capture: true });
+    
+    // Also add to button directly
+    toggle.addEventListener('touchstart', (e) => {
+      touchStartTime = Date.now();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }, { passive: true, capture: true });
+    
+    toggle.addEventListener('touchend', (e) => {
+      const deltaTime = Date.now() - touchStartTime;
+      if (deltaTime < 500) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        handleToggle(e);
+      }
+    }, { passive: false, capture: true });
+  });
+}
+
+// Collapsible Conferences Sections
+function initConferencesCollapsible() {
+  const conferenceItems = document.querySelectorAll('.conference-item');
+  if (!conferenceItems || conferenceItems.length === 0) return;
+  const isMobile = () => window.innerWidth <= 767;
+  
+  conferenceItems.forEach((item) => {
+    const toggle = item.querySelector('.conference-header');
+    const panel = item.querySelector('.conference-details');
+    if (!toggle || !panel) {
+      console.warn('[Conferences] Toggle or panel not found for item:', item);
+      return;
+    }
+    
+    // Ensure buttons are clickable on mobile
+    toggle.style.pointerEvents = 'auto';
+    toggle.style.touchAction = 'manipulation';
+    toggle.style.cursor = 'pointer';
+    toggle.style.zIndex = '1000';
+    toggle.style.position = 'relative';
+    
+    // Mark button to prevent navigation handlers from intercepting
+    toggle.dataset.isToggleButton = 'true';
+    toggle.dataset.confToggle = 'true';
+    
+    // Ensure child elements are also touchable
+    toggle.querySelectorAll('*').forEach(child => {
+      child.style.pointerEvents = 'auto';
+      child.style.touchAction = 'manipulation';
+      child.dataset.isToggleButton = 'true';
+    });
+    
+    // Ensure initial collapsed state (aria-expanded starts as false)
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(isExpanded));
+    
+    const handleToggle = (e) => {
+      console.log('[Conferences] Toggle button clicked/touched');
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation(); // CRITICAL: Prevent other handlers from firing
+      
+      const currentlyExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      const newState = !currentlyExpanded;
+      toggle.setAttribute('aria-expanded', String(newState));
+      
+      console.log('[Conferences] Toggle completed, expanded:', newState);
+      return false; // Additional safeguard
+    };
+    
+    // CRITICAL: Use document-level capture phase listener to catch events BEFORE anything else
+    const handleClickCapture = (e) => {
+      // Only handle if the event target is this toggle or its children
+      if (e.target === toggle || toggle.contains(e.target)) {
+        console.log('[Conferences] Capture phase click detected on toggle');
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        handleToggle(e);
+      }
+    };
+    
+    // Add to document in capture phase - this runs BEFORE any other handlers
+    document.addEventListener('click', handleClickCapture, { capture: true, passive: false });
+    
+    // Also add directly to button as backup
+    toggle.addEventListener('click', handleToggle, { passive: false, capture: true });
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }, { passive: false });
+    
+    // Touch handlers for mobile - use document-level capture to run FIRST
+    let touchStartTime = 0;
+    
+    const handleTouchStartCapture = (e) => {
+      if (e.target === toggle || toggle.contains(e.target)) {
+        touchStartTime = Date.now();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        console.log('[Conferences] Touch start on toggle');
+      }
+    };
+    
+    const handleTouchEndCapture = (e) => {
+      if (e.target === toggle || toggle.contains(e.target)) {
+        const deltaTime = Date.now() - touchStartTime;
+        console.log('[Conferences] Touch end on toggle, deltaTime:', deltaTime);
         
         if (deltaTime < 500) {
           e.preventDefault();
@@ -1200,12 +1325,15 @@ function initEnhancedNavigation() {
         // CRITICAL: Don't handle navigation if click came from a toggle button or close button
         const target = e.target;
         if (target.closest('.exp-toggle') || 
+            target.closest('.conference-header') ||
             target.closest('[data-is-toggle-button="true"]') ||
             target.closest('[data-exp-toggle="true"]') ||
+            target.closest('[data-conf-toggle="true"]') ||
             target.closest('.sidebar-close') ||
             target.closest('[data-is-close-button="true"]') ||
             target.dataset.isToggleButton === 'true' ||
             target.dataset.expToggle === 'true' ||
+            target.dataset.confToggle === 'true' ||
             target.dataset.isCloseButton === 'true') {
           console.log('[Navigation] Ignoring click - came from toggle/close button');
           return; // Let button handle its own click
@@ -1239,12 +1367,15 @@ function initEnhancedNavigation() {
         // CRITICAL: Don't handle navigation if touch came from a toggle button or close button
         const target = e.target;
         if (target.closest('.exp-toggle') || 
+            target.closest('.conference-header') ||
             target.closest('[data-is-toggle-button="true"]') ||
             target.closest('[data-exp-toggle="true"]') ||
+            target.closest('[data-conf-toggle="true"]') ||
             target.closest('.sidebar-close') ||
             target.closest('[data-is-close-button="true"]') ||
             target.dataset.isToggleButton === 'true' ||
             target.dataset.expToggle === 'true' ||
+            target.dataset.confToggle === 'true' ||
             target.dataset.isCloseButton === 'true') {
           console.log('[Navigation] Ignoring touchend - came from toggle/close button');
           return; // Let button handle its own touch

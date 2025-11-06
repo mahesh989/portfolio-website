@@ -298,5 +298,47 @@
       "credentialUrl": "https://achieve.snowflake.com/d850d80f-b30f-427b-96e8-1047613fbdfb",
       "featured": false
     }
+  ],
+  
+  "conferences": [
+    {
+      "id": "conf1",
+      "name": "SCESAMM 2022: Strongly Correlated Electron Systems",
+      "institution": "CY Cergy Paris University",
+      "location": "France",
+      "period": "May 3-5, 2022",
+      "type": "Conference",
+      "achievements": [
+        "Attended a major physics conference and presented my research, demonstrating curiosity and analytical thinking",
+        "Engaged in discussions in energy-efficient cooling technologies, highlighting communication and problem-solving skills"
+      ],
+      "tags": ["Research Presentation", "Physics", "Energy Efficiency"]
+    },
+    {
+      "id": "conf2",
+      "name": "DPG Spring Meeting of the Condensed Matter Section",
+      "institution": "University Regensburg",
+      "location": "Germany",
+      "period": "Mar 30 - Apr 4, 2019",
+      "type": "Conference",
+      "achievements": [
+        "Participated in one of Europe's largest physics congresses, exhibiting eagerness to learn and effective communication",
+        "Presented a poster session, addressed questions, and discussed research findings, featuring presentation and interpersonal skills"
+      ],
+      "tags": ["Poster Presentation", "Physics Congress", "Networking"]
+    },
+    {
+      "id": "conf3",
+      "name": "CP-PAW Hands-on Course",
+      "institution": "George-August University",
+      "location": "Germany",
+      "period": "Sep 3 - Sep 7, 2017",
+      "type": "Workshop",
+      "achievements": [
+        "Completed a course on advanced computational techniques, acquiring skills in theoretical calculations and data analysis",
+        "Developed proficiency in software for computational materials science, elevating technical capabilities and showcasing adaptability"
+      ],
+      "tags": ["Computational Physics", "Software Training", "Materials Science"]
+    }
   ]
 }
