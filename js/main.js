@@ -348,9 +348,65 @@ function initExperienceCollapsible() {
 
 // Collapsible Conferences Sections
 function initConferencesCollapsible() {
+  const isMobile = () => window.innerWidth <= 767;
+  
+  // Handle section-level toggle
+  const category = document.querySelector('.conferences-category');
+  const sectionToggle = document.querySelector('.conf-section-toggle');
+  
+  if (category && sectionToggle) {
+    // Ensure initial collapsed state
+    category.classList.add('is-collapsed');
+    sectionToggle.setAttribute('aria-expanded', 'false');
+    const label = sectionToggle.querySelector('.conf-toggle-label');
+    if (label) label.textContent = 'Expand';
+    
+    // Mark button to prevent navigation handlers
+    sectionToggle.dataset.isToggleButton = 'true';
+    sectionToggle.dataset.confSectionToggle = 'true';
+    sectionToggle.style.pointerEvents = 'auto';
+    sectionToggle.style.touchAction = 'manipulation';
+    sectionToggle.style.cursor = 'pointer';
+    sectionToggle.style.zIndex = '1000';
+    
+    const handleSectionToggle = (e) => {
+      console.log('[Conferences] Section toggle clicked');
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      
+      const isCollapsed = category.classList.toggle('is-collapsed');
+      sectionToggle.setAttribute('aria-expanded', String(!isCollapsed));
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+      
+      console.log('[Conferences] Section toggled, collapsed:', isCollapsed);
+      return false;
+    };
+    
+    // Add click handler with capture phase
+    sectionToggle.addEventListener('click', handleSectionToggle, { passive: false, capture: true });
+    
+    // Touch handlers for mobile
+    let touchStartTime = 0;
+    sectionToggle.addEventListener('touchstart', (e) => {
+      touchStartTime = Date.now();
+      e.stopPropagation();
+    }, { passive: true, capture: true });
+    
+    sectionToggle.addEventListener('touchend', (e) => {
+      const deltaTime = Date.now() - touchStartTime;
+      if (deltaTime < 500) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        handleSectionToggle(e);
+      }
+    }, { passive: false, capture: true });
+  }
+  
+  // Handle individual conference items
   const conferenceItems = document.querySelectorAll('.conference-item');
   if (!conferenceItems || conferenceItems.length === 0) return;
-  const isMobile = () => window.innerWidth <= 767;
   
   conferenceItems.forEach((item) => {
     const toggle = item.querySelector('.conference-header');
@@ -1326,14 +1382,17 @@ function initEnhancedNavigation() {
         const target = e.target;
         if (target.closest('.exp-toggle') || 
             target.closest('.conference-header') ||
+            target.closest('.conf-section-toggle') ||
             target.closest('[data-is-toggle-button="true"]') ||
             target.closest('[data-exp-toggle="true"]') ||
             target.closest('[data-conf-toggle="true"]') ||
+            target.closest('[data-conf-section-toggle="true"]') ||
             target.closest('.sidebar-close') ||
             target.closest('[data-is-close-button="true"]') ||
             target.dataset.isToggleButton === 'true' ||
             target.dataset.expToggle === 'true' ||
             target.dataset.confToggle === 'true' ||
+            target.dataset.confSectionToggle === 'true' ||
             target.dataset.isCloseButton === 'true') {
           console.log('[Navigation] Ignoring click - came from toggle/close button');
           return; // Let button handle its own click
@@ -1368,14 +1427,17 @@ function initEnhancedNavigation() {
         const target = e.target;
         if (target.closest('.exp-toggle') || 
             target.closest('.conference-header') ||
+            target.closest('.conf-section-toggle') ||
             target.closest('[data-is-toggle-button="true"]') ||
             target.closest('[data-exp-toggle="true"]') ||
             target.closest('[data-conf-toggle="true"]') ||
+            target.closest('[data-conf-section-toggle="true"]') ||
             target.closest('.sidebar-close') ||
             target.closest('[data-is-close-button="true"]') ||
             target.dataset.isToggleButton === 'true' ||
             target.dataset.expToggle === 'true' ||
             target.dataset.confToggle === 'true' ||
+            target.dataset.confSectionToggle === 'true' ||
             target.dataset.isCloseButton === 'true') {
           console.log('[Navigation] Ignoring touchend - came from toggle/close button');
           return; // Let button handle its own touch

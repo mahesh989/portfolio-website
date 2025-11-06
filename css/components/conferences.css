@@ -7,9 +7,87 @@
   padding: var(--space-20) 0;
 }
 
-.conferences-timeline {
+/* Conferences Category (Collapsible Wrapper) */
+.conferences-category {
   max-width: 900px;
   margin: 0 auto;
+  transition: var(--transition-base);
+}
+
+.conferences-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+.conferences-category-subtitle {
+  flex: 1;
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: var(--leading-normal);
+}
+
+/* Section Toggle Button */
+.conf-section-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-base);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  white-space: nowrap;
+}
+
+.conf-section-toggle:hover {
+  background: rgba(136, 192, 208, 0.1);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.conf-section-toggle .chevron {
+  transition: transform var(--transition-base);
+  stroke: currentColor;
+}
+
+.conf-section-toggle[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Collapsed State */
+.conferences-category.is-collapsed .conferences-timeline {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-top: 0;
+  transition: max-height var(--transition-slow) ease-out, 
+              opacity var(--transition-base) ease-out,
+              margin-top var(--transition-base) ease-out;
+}
+
+/* Expanded State */
+.conferences-category:not(.is-collapsed) .conferences-timeline {
+  max-height: 5000px;
+  opacity: 1;
+  margin-top: var(--space-6);
+  transition: max-height var(--transition-slow) ease-in, 
+              opacity var(--transition-base) ease-in,
+              margin-top var(--transition-base) ease-in;
+}
+
+.conferences-timeline {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
@@ -226,6 +304,28 @@
 @media (max-width: 768px) {
   .conferences-section {
     padding: var(--space-16) 0;
+  }
+
+  .conferences-category-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3);
+  }
+
+  .conferences-category-subtitle {
+    font-size: var(--text-sm);
+  }
+
+  .conf-section-toggle {
+    align-self: flex-end;
+    font-size: var(--text-xs);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .conf-section-toggle .chevron {
+    width: 14px;
+    height: 14px;
   }
 
   .conferences-timeline {

@@ -1403,11 +1403,19 @@
       <div class="container">
         <h2 class="section-title">Conferences & Seminars</h2>
         <div class="section-divider"></div>
-        <p class="section-subtitle">
-          Research presentations and professional development through international conferences and workshops
-        </p>
-
-        <div class="conferences-timeline">
+        
+        <!-- Conferences Category (Collapsible) -->
+        <div class="conferences-category is-collapsed" data-collapsible="conferences">
+          <div class="conferences-category-header">
+            <p class="conferences-category-subtitle">
+              Research presentations and professional development through international conferences and workshops
+            </p>
+            <button class="conf-section-toggle" aria-expanded="false" aria-controls="conferencesTimeline">
+              <span class="conf-toggle-label">Expand</span>
+              <svg class="chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+          <div class="conferences-timeline" id="conferencesTimeline">
           <!-- Conference 1: SCESAMM 2022 -->
           <div class="conference-item" data-conference-id="conf1">
             <button class="conference-header" type="button" aria-expanded="false">
@@ -1539,6 +1547,8 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
           </div>
         </div>
       </div>
